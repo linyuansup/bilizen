@@ -1,0 +1,84 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"workbench.colorCustomizations": {
+			"editor.lineHighlightBorder": "#ffffff3d",
+			"activityBar.background": "#351579",
+			"titleBar.activeBackground": "#4B1EA9",
+			"titleBar.activeForeground": "#FAF9FE"
+		},
+		"cmake.ignoreCMakeListsMissing": true,
+		"files.exclude": {
+			"**/.git": true,
+			"**/.svn": true,
+			"**/.hg": true,
+			"**/.DS_Store": true,
+			"**/Thumbs.db": true,
+			"**/*.freezed.dart": true,
+			"**/*.config.dart": true,
+			"**/*.g.dart": true,
+			"**/*.future.dart": true,
+			".idea": true,
+			".dart_tool": true,
+			"build": true,
+			".flutter-plugins-dependencies": true,
+			".gitignore": true,
+			".metadata": true,
+			".cookies": true,
+			"pubspec.lock": true,
+			"bilizen.iml": true,
+			"custom_lint.log": true,
+		},
+		"cSpell.words": [
+			"bili",
+			"bilibili",
+			"bilizen",
+			"buildlog",
+			"bvid",
+			"cupertino",
+			"Danmaku",
+			"elems",
+			"fixnum",
+			"fontsize",
+			"KHTML",
+			"objectbox",
+			"pubspec",
+			"rxdart",
+			"scaletempo",
+			"swiftpm",
+			"Symbolication",
+			"unmaximize",
+			"upic",
+			"uploaders"
+		]
+	},
+	"launch": {
+		"version": "0.2.0",
+		"configurations": [
+			{
+				"name": "Debug",
+				"type": "dart",
+				"request": "launch",
+				"program": "lib/main.dart"
+			},
+			{
+				"name": "Profile",
+				"type": "dart",
+				"request": "launch",
+				"program": "lib/main.dart",
+				"flutterMode": "profile"
+			},
+			{
+				"name": "Release",
+				"type": "dart",
+				"request": "launch",
+				"program": "lib/main.dart",
+				"flutterMode": "release"
+			},
+		]
+	}
+}

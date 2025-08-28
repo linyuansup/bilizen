@@ -1,0 +1,13 @@
+targets:
+  $default:
+    builders:
+      bilizen|future_class_generator:
+        enabled: true
+
+builders:
+  future_class_generator:
+    import: "package:bilizen/package/future_class/builder.dart"
+    builder_factories: ["futureClassBuilder"]
+    build_extensions: { ".dart": [".future.dart"] }
+    auto_apply: dependents
+    build_to: source

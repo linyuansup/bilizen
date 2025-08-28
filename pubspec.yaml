@@ -1,0 +1,91 @@
+name: bilizen
+description: "A cross platform video app."
+publish_to: "none"
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.8.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+  dio: ^5.8.0+1
+  talker: ^4.9.3
+  meta: ^1.9.1
+  talker_flutter: ^4.9.3
+  talker_dio_logger: ^4.9.3
+  talker_riverpod_logger:
+    git:
+      url: https://github.com/DmitrySboychakov/talker.git
+      path: packages/talker_riverpod_logger
+  window_manager: ^0.5.1
+  injectable: ^2.5.1
+  get_it: ^8.0.3
+  fluent_ui: ^4.12.0
+  rxdart: ^0.28.0
+  freezed_annotation: ^3.1.0
+  flutter_riverpod: ^3.0.0-dev.17
+  riverpod_annotation: ^3.0.0-dev.17
+  dio_cookie_manager: ^3.2.0
+  fixnum: ^1.1.1
+  cookie_jar: ^4.0.8
+  pretty_qr_code: ^3.5.0
+  protobuf: ^4.2.0
+  crypto: ^3.0.6
+  path_provider: ^2.1.5
+  objectbox: ^4.3.0
+  objectbox_flutter_libs: ^4.3.0
+  shared_preferences: ^2.5.3
+  cached_network_image: ^3.4.1
+  source_gen: ^3.0.0
+  analyzer: ^7.4.0
+  build: ^3.0.0
+  dio_smart_retry: ^7.0.1
+  dyn_mouse_scroll: ^1.0.7
+  media_kit:
+  media_kit_video:
+  media_kit_libs_video:
+  go_router: ^16.1.0
+  easy_debounce: ^2.0.3
+  clipboard: ^2.0.2
+  toastification: ^3.0.3
+  go_router_builder: ^3.3.1
+  build_verify: ^3.1.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^5.0.0
+  bloc_lint: ^0.2.1
+  injectable_generator: ^2.8.0
+  build_runner: ^2.6.0
+  freezed: ^3.2.0
+  riverpod_generator: ^3.0.0-dev.17
+  custom_lint: ^0.8.0
+  riverpod_lint: ^3.0.0-dev.17
+  test: ^1.24.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/bilibili_blue.png
+
+dependency_overrides:
+  source_gen: ^3.0.0
+  media_kit:
+    git:
+      url: https://github.com/linyuansup/media-kit
+      path: media_kit
+  media_kit_video:
+    git:
+      url: https://github.com/linyuansup/media-kit
+      path: media_kit_video
+  media_kit_libs_video:
+    git:
+      url: https://github.com/linyuansup/media-kit
+      path: libs/universal/media_kit_libs_video
