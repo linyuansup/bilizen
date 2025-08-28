@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:bilizen/init.dart';
 import 'package:bilizen/inject/inject.dart';
-import 'package:bilizen/page/windows/app.dart';
+import 'package:bilizen/ui/windows/page/app.dart';
 import 'package:flutter/material.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:talker/talker.dart';

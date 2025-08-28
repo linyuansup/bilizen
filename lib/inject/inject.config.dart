@@ -15,6 +15,7 @@ import 'package:bilizen/data/api/search/request.dart' as _i61;
 import 'package:bilizen/data/api/search/suggest.dart' as _i692;
 import 'package:bilizen/data/api/user/info.dart' as _i80;
 import 'package:bilizen/data/api/video/info.dart' as _i501;
+import 'package:bilizen/data/api/video/online.dart' as _i185;
 import 'package:bilizen/data/api/video/recommend.dart' as _i174;
 import 'package:bilizen/data/api/video/video_stream_url.dart' as _i1029;
 import 'package:bilizen/data/logic/account_manager/account_manager.dart'
@@ -87,6 +88,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.singleton<_i1029.VideoStreamUrlApi>(
       () => _i1029.VideoStreamUrlApi(gh<_i361.Dio>()),
+    );
+    gh.singleton<_i185.VideoOnlineApi>(
+      () => _i185.VideoOnlineApi(gh<_i361.Dio>()),
     );
     gh.singleton<_i907.PlaybackManager>(
       () => _i907.PlaybackManager(talker: gh<_i207.Talker>()),

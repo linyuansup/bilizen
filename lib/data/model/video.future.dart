@@ -277,6 +277,25 @@ abstract class _$Video extends FutureClassBase {
     clearCached(_coinKey);
   }
 
+  static const String _uploadTimeKey = 'uploadTime';
+
+  Future<int> get $uploadTime async {
+    if (isCached(_uploadTimeKey)) {
+      return getCached<int>(_uploadTimeKey)!;
+    }
+
+    await basicInfo();
+    return getCached<int>(_uploadTimeKey)!;
+  }
+
+  void setUploadTime(int value) {
+    setCached(_uploadTimeKey, value);
+  }
+
+  void clearUploadTime() {
+    clearCached(_uploadTimeKey);
+  }
+
   static const String _shareKey = 'share';
 
   Future<int> get $share async {

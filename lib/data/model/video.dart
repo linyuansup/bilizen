@@ -58,6 +58,9 @@ class Video extends _$Video {
   Future<int> get coin => $coin;
 
   @FutureData(loader: "basicInfo")
+  Future<int> get uploadTime => $uploadTime;
+
+  @FutureData(loader: "basicInfo")
   Future<int> get share => $share;
 
   @FutureData(loader: "basicInfo")
@@ -70,6 +73,7 @@ class Video extends _$Video {
     setCover(info["pic"]);
     setTitle(info["title"]);
     setDescription(info["desc"]);
+    setUploadTime(info["pubdate"]);
     setTotalDuration(info["duration"]);
     final user = User(id: info["owner"]["mid"]);
     user.setNickName(info["owner"]["name"]);
@@ -93,9 +97,13 @@ class Video extends _$Video {
       setStaff(
         (info["staff"] as List)
             .map((staff) {
+              final user = User(id: staff["mid"]);
+              user.setNickName(staff["name"]);
+              user.setAvatar(staff["face"]);
+              user.setFans(staff["follower"]);
               return Staff(
                 role: staff["title"],
-                user: User(id: staff["mid"]),
+                user: user,
               );
             })
             .toList(growable: false),
