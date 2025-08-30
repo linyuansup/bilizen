@@ -19,56 +19,43 @@ class VideoInfoProvider extends _$VideoInfoProvider {
         .distinct()
         .listen((video) async {
           if (video == null) {
-            state = state.copyWith(
-              basicInfo: VideoBasicInfo.loading(),
-              recommendInfo: VideoRecommendInfo.loading(),
-            );
+            state = VideoInfoState.loading();
             return;
           }
-          state = state.copyWith(
-            basicInfo: VideoBasicInfo.loaded(
-              staffs: await Future.wait(
-                (await video.video.staff).map((e) async {
-                  return Staff(
-                    role: e.role,
-                    name: await e.user.nickName,
-                    avatar: await e.user.avatar,
-                  );
-                }).toList(),
-              ),
-              view: await video.video.view,
-              danmaku: await video.video.danmaku,
-              uploadTime: await video.video.uploadTime,
-              onlineUser: await (await video.video.playlist)[video.pIndex - 1]
-                  .onlineUser,
+          state = VideoInfoState.loaded(
+            staffs: await Future.wait(
+              (await video.video.staff).map((e) async {
+                return Staff(
+                  role: e.role,
+                  name: await e.user.nickName,
+                  avatar: await e.user.avatar,
+                );
+              }).toList(),
             ),
+            view: await video.video.view,
+            danmaku: await video.video.danmaku,
+            uploadTime: await video.video.uploadTime,
+            onlineUser:
+                await (await video.video.playlist)[video.pIndex - 1].onlineUser,
+            description: await video.video.description,
           );
         });
-    return VideoInfoState.initial(
-      basicInfo: VideoBasicInfo.loading(),
-      recommendInfo: VideoRecommendInfo.loading(),
-    );
+    return VideoInfoState.loading();
   }
 }
 
 @freezed
 sealed class VideoInfoState with _$VideoInfoState {
-  const factory VideoInfoState.initial({
-    required VideoBasicInfo basicInfo,
-    required VideoRecommendInfo recommendInfo,
-  }) = VideoInfoStateInitial;
-}
+  const factory VideoInfoState.loading() = VideoInfoStateLoading;
 
-@freezed
-sealed class VideoBasicInfo with _$VideoBasicInfo {
-  const factory VideoBasicInfo.loading() = VideoBasicInfoLoading;
-  const factory VideoBasicInfo.loaded({
+  const factory VideoInfoState.loaded({
     required List<Staff> staffs,
     required int view,
     required int danmaku,
     required int uploadTime,
     required String onlineUser,
-  }) = VideoBasicInfoLoaded;
+    required String description,
+  }) = VideoInfoStateLoaded;
 }
 
 @freezed
@@ -78,10 +65,4 @@ sealed class Staff with _$Staff {
     required String name,
     required String avatar,
   }) = _Staff;
-}
-
-@freezed
-sealed class VideoRecommendInfo with _$VideoRecommendInfo {
-  const factory VideoRecommendInfo.loading() = VideoRecommendInfoLoading;
-  const factory VideoRecommendInfo.loaded() = VideoRecommendInfoLoaded;
 }

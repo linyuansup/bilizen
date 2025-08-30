@@ -1,72 +1,50 @@
 import 'package:bilizen/ui/windows/page/video/right_bar/info/provider.dart';
+import 'package:bilizen/ui/windows/widget/at_format_text.dart';
 import 'package:bilizen/ui/windows/widget/scroll_bar_list_view.dart';
+import 'package:bilizen/util/string.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class VideoInfoArea extends StatelessWidget {
+class VideoInfoArea extends ConsumerWidget {
   const VideoInfoArea({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        _BasicInfoArea(),
-        Expanded(child: _RecommendArea()),
-      ],
-    );
-  }
-}
-
-class _RecommendArea extends ConsumerWidget {
-  const _RecommendArea();
-
-  @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return const Placeholder();
-  }
-}
-
-class _BasicInfoArea extends ConsumerWidget {
-  const _BasicInfoArea();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final provider = ref.watch(
-      videoInfoProvider.select(
-        (value) => value.basicInfo,
-      ),
-    );
+    final provider = ref.watch(videoInfoProvider);
     return switch (provider) {
-      VideoBasicInfoLoading() => Center(
+      VideoInfoStateLoading() => Center(
         child: RepaintBoundary(
           child: ProgressRing(),
         ),
       ),
-      VideoBasicInfoLoaded(
+      VideoInfoStateLoaded(
         :final staffs,
         :final view,
         :final danmaku,
         :final uploadTime,
         :final onlineUser,
+        :final description,
       ) =>
-        _BasicInfoContent(
+        _VideoInfoAreaContent(
           staffs: staffs,
           view: view,
           danmaku: danmaku,
           uploadTime: uploadTime,
           onlineUser: onlineUser,
+          description: description,
         ),
     };
   }
 }
 
-class _BasicInfoContent extends StatelessWidget {
-  const _BasicInfoContent({
+class _VideoInfoAreaContent extends StatelessWidget {
+  const _VideoInfoAreaContent({
     required this.staffs,
     required this.view,
     required this.danmaku,
     required this.uploadTime,
     required this.onlineUser,
+    required this.description,
   });
 
   final List<Staff> staffs;
@@ -74,13 +52,122 @@ class _BasicInfoContent extends StatelessWidget {
   final int danmaku;
   final int uploadTime;
   final String onlineUser;
+  final String description;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         _StaffArea(staffs: staffs),
+        Expanded(
+          child: ListView.builder(
+            itemCount: 2,
+            itemBuilder: (context, index) {
+              switch (index) {
+                case 0:
+                  return _CountArea(
+                    view: view,
+                    danmaku: danmaku,
+                    uploadTime: uploadTime,
+                    onlineUser: onlineUser,
+                  );
+                case 1:
+                  return _DescriptionArea(
+                    description: description,
+                  );
+                default:
+                  return const SizedBox();
+              }
+            },
+          ),
+        ),
       ],
+    );
+  }
+}
+
+class _DescriptionArea extends StatelessWidget {
+  const _DescriptionArea({
+    required this.description,
+  });
+
+  final String description;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 4),
+      child: AtFormatText(
+        text: description,
+        style: TextStyle(
+          color: FluentTheme.of(context).resources.textFillColorSecondary,
+        ),
+      ),
+    );
+  }
+}
+
+class _CountArea extends StatelessWidget {
+  const _CountArea({
+    required this.view,
+    required this.danmaku,
+    required this.uploadTime,
+    required this.onlineUser,
+  });
+
+  final int view;
+  final int danmaku;
+  final int uploadTime;
+  final String onlineUser;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 4),
+      child: Row(
+        spacing: 8,
+        children: [
+          Icon(
+            FluentIcons.play,
+            size: 14,
+            color: FluentTheme.of(context).resources.textFillColorSecondary,
+          ),
+          Text(
+            formatNumber(view),
+            style: TextStyle(
+              color: FluentTheme.of(context).resources.textFillColorSecondary,
+            ),
+          ),
+          Icon(
+            FluentIcons.comment,
+            size: 14,
+            color: FluentTheme.of(context).resources.textFillColorSecondary,
+          ),
+          Text(
+            formatNumber(danmaku),
+            style: TextStyle(
+              color: FluentTheme.of(context).resources.textFillColorSecondary,
+            ),
+          ),
+          Text(
+            formatDate(uploadTime),
+            style: TextStyle(
+              color: FluentTheme.of(context).resources.textFillColorSecondary,
+            ),
+          ),
+          Icon(
+            FluentIcons.user_event,
+            size: 14,
+            color: FluentTheme.of(context).resources.textFillColorSecondary,
+          ),
+          Text(
+            onlineUser,
+            style: TextStyle(
+              color: FluentTheme.of(context).resources.textFillColorSecondary,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

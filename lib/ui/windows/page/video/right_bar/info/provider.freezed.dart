@@ -14,80 +14,30 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$VideoInfoState {
 
- VideoBasicInfo get basicInfo; VideoRecommendInfo get recommendInfo;
-/// Create a copy of VideoInfoState
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$VideoInfoStateCopyWith<VideoInfoState> get copyWith => _$VideoInfoStateCopyWithImpl<VideoInfoState>(this as VideoInfoState, _$identity);
+
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is VideoInfoState&&(identical(other.basicInfo, basicInfo) || other.basicInfo == basicInfo)&&(identical(other.recommendInfo, recommendInfo) || other.recommendInfo == recommendInfo));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is VideoInfoState);
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,basicInfo,recommendInfo);
+int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'VideoInfoState(basicInfo: $basicInfo, recommendInfo: $recommendInfo)';
+  return 'VideoInfoState()';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $VideoInfoStateCopyWith<$Res>  {
-  factory $VideoInfoStateCopyWith(VideoInfoState value, $Res Function(VideoInfoState) _then) = _$VideoInfoStateCopyWithImpl;
-@useResult
-$Res call({
- VideoBasicInfo basicInfo, VideoRecommendInfo recommendInfo
-});
-
-
-$VideoBasicInfoCopyWith<$Res> get basicInfo;$VideoRecommendInfoCopyWith<$Res> get recommendInfo;
-
-}
-/// @nodoc
-class _$VideoInfoStateCopyWithImpl<$Res>
-    implements $VideoInfoStateCopyWith<$Res> {
-  _$VideoInfoStateCopyWithImpl(this._self, this._then);
-
-  final VideoInfoState _self;
-  final $Res Function(VideoInfoState) _then;
-
-/// Create a copy of VideoInfoState
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? basicInfo = null,Object? recommendInfo = null,}) {
-  return _then(_self.copyWith(
-basicInfo: null == basicInfo ? _self.basicInfo : basicInfo // ignore: cast_nullable_to_non_nullable
-as VideoBasicInfo,recommendInfo: null == recommendInfo ? _self.recommendInfo : recommendInfo // ignore: cast_nullable_to_non_nullable
-as VideoRecommendInfo,
-  ));
-}
-/// Create a copy of VideoInfoState
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$VideoBasicInfoCopyWith<$Res> get basicInfo {
-  
-  return $VideoBasicInfoCopyWith<$Res>(_self.basicInfo, (value) {
-    return _then(_self.copyWith(basicInfo: value));
-  });
-}/// Create a copy of VideoInfoState
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$VideoRecommendInfoCopyWith<$Res> get recommendInfo {
-  
-  return $VideoRecommendInfoCopyWith<$Res>(_self.recommendInfo, (value) {
-    return _then(_self.copyWith(recommendInfo: value));
-  });
-}
+class $VideoInfoStateCopyWith<$Res>  {
+$VideoInfoStateCopyWith(VideoInfoState _, $Res Function(VideoInfoState) __);
 }
 
 
@@ -105,251 +55,11 @@ extension VideoInfoStatePatterns on VideoInfoState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( VideoInfoStateInitial value)?  initial,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( VideoInfoStateLoading value)?  loading,TResult Function( VideoInfoStateLoaded value)?  loaded,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case VideoInfoStateInitial() when initial != null:
-return initial(_that);case _:
-  return orElse();
-
-}
-}
-/// A `switch`-like method, using callbacks.
-///
-/// Callbacks receives the raw object, upcasted.
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case final Subclass2 value:
-///     return ...;
-/// }
-/// ```
-
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( VideoInfoStateInitial value)  initial,}){
-final _that = this;
-switch (_that) {
-case VideoInfoStateInitial():
-return initial(_that);}
-}
-/// A variant of `map` that fallback to returning `null`.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case _:
-///     return null;
-/// }
-/// ```
-
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( VideoInfoStateInitial value)?  initial,}){
-final _that = this;
-switch (_that) {
-case VideoInfoStateInitial() when initial != null:
-return initial(_that);case _:
-  return null;
-
-}
-}
-/// A variant of `when` that fallback to an `orElse` callback.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case _:
-///     return orElse();
-/// }
-/// ```
-
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( VideoBasicInfo basicInfo,  VideoRecommendInfo recommendInfo)?  initial,required TResult orElse(),}) {final _that = this;
-switch (_that) {
-case VideoInfoStateInitial() when initial != null:
-return initial(_that.basicInfo,_that.recommendInfo);case _:
-  return orElse();
-
-}
-}
-/// A `switch`-like method, using callbacks.
-///
-/// As opposed to `map`, this offers destructuring.
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case Subclass2(:final field2):
-///     return ...;
-/// }
-/// ```
-
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( VideoBasicInfo basicInfo,  VideoRecommendInfo recommendInfo)  initial,}) {final _that = this;
-switch (_that) {
-case VideoInfoStateInitial():
-return initial(_that.basicInfo,_that.recommendInfo);}
-}
-/// A variant of `when` that fallback to returning `null`
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case _:
-///     return null;
-/// }
-/// ```
-
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( VideoBasicInfo basicInfo,  VideoRecommendInfo recommendInfo)?  initial,}) {final _that = this;
-switch (_that) {
-case VideoInfoStateInitial() when initial != null:
-return initial(_that.basicInfo,_that.recommendInfo);case _:
-  return null;
-
-}
-}
-
-}
-
-/// @nodoc
-
-
-class VideoInfoStateInitial implements VideoInfoState {
-  const VideoInfoStateInitial({required this.basicInfo, required this.recommendInfo});
-  
-
-@override final  VideoBasicInfo basicInfo;
-@override final  VideoRecommendInfo recommendInfo;
-
-/// Create a copy of VideoInfoState
-/// with the given fields replaced by the non-null parameter values.
-@override @JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$VideoInfoStateInitialCopyWith<VideoInfoStateInitial> get copyWith => _$VideoInfoStateInitialCopyWithImpl<VideoInfoStateInitial>(this, _$identity);
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is VideoInfoStateInitial&&(identical(other.basicInfo, basicInfo) || other.basicInfo == basicInfo)&&(identical(other.recommendInfo, recommendInfo) || other.recommendInfo == recommendInfo));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,basicInfo,recommendInfo);
-
-@override
-String toString() {
-  return 'VideoInfoState.initial(basicInfo: $basicInfo, recommendInfo: $recommendInfo)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class $VideoInfoStateInitialCopyWith<$Res> implements $VideoInfoStateCopyWith<$Res> {
-  factory $VideoInfoStateInitialCopyWith(VideoInfoStateInitial value, $Res Function(VideoInfoStateInitial) _then) = _$VideoInfoStateInitialCopyWithImpl;
-@override @useResult
-$Res call({
- VideoBasicInfo basicInfo, VideoRecommendInfo recommendInfo
-});
-
-
-@override $VideoBasicInfoCopyWith<$Res> get basicInfo;@override $VideoRecommendInfoCopyWith<$Res> get recommendInfo;
-
-}
-/// @nodoc
-class _$VideoInfoStateInitialCopyWithImpl<$Res>
-    implements $VideoInfoStateInitialCopyWith<$Res> {
-  _$VideoInfoStateInitialCopyWithImpl(this._self, this._then);
-
-  final VideoInfoStateInitial _self;
-  final $Res Function(VideoInfoStateInitial) _then;
-
-/// Create a copy of VideoInfoState
-/// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? basicInfo = null,Object? recommendInfo = null,}) {
-  return _then(VideoInfoStateInitial(
-basicInfo: null == basicInfo ? _self.basicInfo : basicInfo // ignore: cast_nullable_to_non_nullable
-as VideoBasicInfo,recommendInfo: null == recommendInfo ? _self.recommendInfo : recommendInfo // ignore: cast_nullable_to_non_nullable
-as VideoRecommendInfo,
-  ));
-}
-
-/// Create a copy of VideoInfoState
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$VideoBasicInfoCopyWith<$Res> get basicInfo {
-  
-  return $VideoBasicInfoCopyWith<$Res>(_self.basicInfo, (value) {
-    return _then(_self.copyWith(basicInfo: value));
-  });
-}/// Create a copy of VideoInfoState
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$VideoRecommendInfoCopyWith<$Res> get recommendInfo {
-  
-  return $VideoRecommendInfoCopyWith<$Res>(_self.recommendInfo, (value) {
-    return _then(_self.copyWith(recommendInfo: value));
-  });
-}
-}
-
-/// @nodoc
-mixin _$VideoBasicInfo {
-
-
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is VideoBasicInfo);
-}
-
-
-@override
-int get hashCode => runtimeType.hashCode;
-
-@override
-String toString() {
-  return 'VideoBasicInfo()';
-}
-
-
-}
-
-/// @nodoc
-class $VideoBasicInfoCopyWith<$Res>  {
-$VideoBasicInfoCopyWith(VideoBasicInfo _, $Res Function(VideoBasicInfo) __);
-}
-
-
-/// Adds pattern-matching-related methods to [VideoBasicInfo].
-extension VideoBasicInfoPatterns on VideoBasicInfo {
-/// A variant of `map` that fallback to returning `orElse`.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case _:
-///     return orElse();
-/// }
-/// ```
-
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( VideoBasicInfoLoading value)?  loading,TResult Function( VideoBasicInfoLoaded value)?  loaded,required TResult orElse(),}){
-final _that = this;
-switch (_that) {
-case VideoBasicInfoLoading() when loading != null:
-return loading(_that);case VideoBasicInfoLoaded() when loaded != null:
+case VideoInfoStateLoading() when loading != null:
+return loading(_that);case VideoInfoStateLoaded() when loaded != null:
 return loaded(_that);case _:
   return orElse();
 
@@ -368,11 +78,11 @@ return loaded(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( VideoBasicInfoLoading value)  loading,required TResult Function( VideoBasicInfoLoaded value)  loaded,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( VideoInfoStateLoading value)  loading,required TResult Function( VideoInfoStateLoaded value)  loaded,}){
 final _that = this;
 switch (_that) {
-case VideoBasicInfoLoading():
-return loading(_that);case VideoBasicInfoLoaded():
+case VideoInfoStateLoading():
+return loading(_that);case VideoInfoStateLoaded():
 return loaded(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
@@ -387,11 +97,11 @@ return loaded(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( VideoBasicInfoLoading value)?  loading,TResult? Function( VideoBasicInfoLoaded value)?  loaded,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( VideoInfoStateLoading value)?  loading,TResult? Function( VideoInfoStateLoaded value)?  loaded,}){
 final _that = this;
 switch (_that) {
-case VideoBasicInfoLoading() when loading != null:
-return loading(_that);case VideoBasicInfoLoaded() when loaded != null:
+case VideoInfoStateLoading() when loading != null:
+return loading(_that);case VideoInfoStateLoaded() when loaded != null:
 return loaded(_that);case _:
   return null;
 
@@ -409,11 +119,11 @@ return loaded(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  loading,TResult Function( List<Staff> staffs,  int view,  int danmaku,  int uploadTime,  String onlineUser)?  loaded,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  loading,TResult Function( List<Staff> staffs,  int view,  int danmaku,  int uploadTime,  String onlineUser,  String description)?  loaded,required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case VideoBasicInfoLoading() when loading != null:
-return loading();case VideoBasicInfoLoaded() when loaded != null:
-return loaded(_that.staffs,_that.view,_that.danmaku,_that.uploadTime,_that.onlineUser);case _:
+case VideoInfoStateLoading() when loading != null:
+return loading();case VideoInfoStateLoaded() when loaded != null:
+return loaded(_that.staffs,_that.view,_that.danmaku,_that.uploadTime,_that.onlineUser,_that.description);case _:
   return orElse();
 
 }
@@ -431,11 +141,11 @@ return loaded(_that.staffs,_that.view,_that.danmaku,_that.uploadTime,_that.onlin
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  loading,required TResult Function( List<Staff> staffs,  int view,  int danmaku,  int uploadTime,  String onlineUser)  loaded,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  loading,required TResult Function( List<Staff> staffs,  int view,  int danmaku,  int uploadTime,  String onlineUser,  String description)  loaded,}) {final _that = this;
 switch (_that) {
-case VideoBasicInfoLoading():
-return loading();case VideoBasicInfoLoaded():
-return loaded(_that.staffs,_that.view,_that.danmaku,_that.uploadTime,_that.onlineUser);}
+case VideoInfoStateLoading():
+return loading();case VideoInfoStateLoaded():
+return loaded(_that.staffs,_that.view,_that.danmaku,_that.uploadTime,_that.onlineUser,_that.description);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -449,11 +159,11 @@ return loaded(_that.staffs,_that.view,_that.danmaku,_that.uploadTime,_that.onlin
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  loading,TResult? Function( List<Staff> staffs,  int view,  int danmaku,  int uploadTime,  String onlineUser)?  loaded,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  loading,TResult? Function( List<Staff> staffs,  int view,  int danmaku,  int uploadTime,  String onlineUser,  String description)?  loaded,}) {final _that = this;
 switch (_that) {
-case VideoBasicInfoLoading() when loading != null:
-return loading();case VideoBasicInfoLoaded() when loaded != null:
-return loaded(_that.staffs,_that.view,_that.danmaku,_that.uploadTime,_that.onlineUser);case _:
+case VideoInfoStateLoading() when loading != null:
+return loading();case VideoInfoStateLoaded() when loaded != null:
+return loaded(_that.staffs,_that.view,_that.danmaku,_that.uploadTime,_that.onlineUser,_that.description);case _:
   return null;
 
 }
@@ -464,8 +174,8 @@ return loaded(_that.staffs,_that.view,_that.danmaku,_that.uploadTime,_that.onlin
 /// @nodoc
 
 
-class VideoBasicInfoLoading implements VideoBasicInfo {
-  const VideoBasicInfoLoading();
+class VideoInfoStateLoading implements VideoInfoState {
+  const VideoInfoStateLoading();
   
 
 
@@ -475,7 +185,7 @@ class VideoBasicInfoLoading implements VideoBasicInfo {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is VideoBasicInfoLoading);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is VideoInfoStateLoading);
 }
 
 
@@ -484,7 +194,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'VideoBasicInfo.loading()';
+  return 'VideoInfoState.loading()';
 }
 
 
@@ -496,8 +206,8 @@ String toString() {
 /// @nodoc
 
 
-class VideoBasicInfoLoaded implements VideoBasicInfo {
-  const VideoBasicInfoLoaded({required final  List<Staff> staffs, required this.view, required this.danmaku, required this.uploadTime, required this.onlineUser}): _staffs = staffs;
+class VideoInfoStateLoaded implements VideoInfoState {
+  const VideoInfoStateLoaded({required final  List<Staff> staffs, required this.view, required this.danmaku, required this.uploadTime, required this.onlineUser, required this.description}): _staffs = staffs;
   
 
  final  List<Staff> _staffs;
@@ -511,38 +221,39 @@ class VideoBasicInfoLoaded implements VideoBasicInfo {
  final  int danmaku;
  final  int uploadTime;
  final  String onlineUser;
+ final  String description;
 
-/// Create a copy of VideoBasicInfo
+/// Create a copy of VideoInfoState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$VideoBasicInfoLoadedCopyWith<VideoBasicInfoLoaded> get copyWith => _$VideoBasicInfoLoadedCopyWithImpl<VideoBasicInfoLoaded>(this, _$identity);
+$VideoInfoStateLoadedCopyWith<VideoInfoStateLoaded> get copyWith => _$VideoInfoStateLoadedCopyWithImpl<VideoInfoStateLoaded>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is VideoBasicInfoLoaded&&const DeepCollectionEquality().equals(other._staffs, _staffs)&&(identical(other.view, view) || other.view == view)&&(identical(other.danmaku, danmaku) || other.danmaku == danmaku)&&(identical(other.uploadTime, uploadTime) || other.uploadTime == uploadTime)&&(identical(other.onlineUser, onlineUser) || other.onlineUser == onlineUser));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is VideoInfoStateLoaded&&const DeepCollectionEquality().equals(other._staffs, _staffs)&&(identical(other.view, view) || other.view == view)&&(identical(other.danmaku, danmaku) || other.danmaku == danmaku)&&(identical(other.uploadTime, uploadTime) || other.uploadTime == uploadTime)&&(identical(other.onlineUser, onlineUser) || other.onlineUser == onlineUser)&&(identical(other.description, description) || other.description == description));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_staffs),view,danmaku,uploadTime,onlineUser);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_staffs),view,danmaku,uploadTime,onlineUser,description);
 
 @override
 String toString() {
-  return 'VideoBasicInfo.loaded(staffs: $staffs, view: $view, danmaku: $danmaku, uploadTime: $uploadTime, onlineUser: $onlineUser)';
+  return 'VideoInfoState.loaded(staffs: $staffs, view: $view, danmaku: $danmaku, uploadTime: $uploadTime, onlineUser: $onlineUser, description: $description)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $VideoBasicInfoLoadedCopyWith<$Res> implements $VideoBasicInfoCopyWith<$Res> {
-  factory $VideoBasicInfoLoadedCopyWith(VideoBasicInfoLoaded value, $Res Function(VideoBasicInfoLoaded) _then) = _$VideoBasicInfoLoadedCopyWithImpl;
+abstract mixin class $VideoInfoStateLoadedCopyWith<$Res> implements $VideoInfoStateCopyWith<$Res> {
+  factory $VideoInfoStateLoadedCopyWith(VideoInfoStateLoaded value, $Res Function(VideoInfoStateLoaded) _then) = _$VideoInfoStateLoadedCopyWithImpl;
 @useResult
 $Res call({
- List<Staff> staffs, int view, int danmaku, int uploadTime, String onlineUser
+ List<Staff> staffs, int view, int danmaku, int uploadTime, String onlineUser, String description
 });
 
 
@@ -550,22 +261,23 @@ $Res call({
 
 }
 /// @nodoc
-class _$VideoBasicInfoLoadedCopyWithImpl<$Res>
-    implements $VideoBasicInfoLoadedCopyWith<$Res> {
-  _$VideoBasicInfoLoadedCopyWithImpl(this._self, this._then);
+class _$VideoInfoStateLoadedCopyWithImpl<$Res>
+    implements $VideoInfoStateLoadedCopyWith<$Res> {
+  _$VideoInfoStateLoadedCopyWithImpl(this._self, this._then);
 
-  final VideoBasicInfoLoaded _self;
-  final $Res Function(VideoBasicInfoLoaded) _then;
+  final VideoInfoStateLoaded _self;
+  final $Res Function(VideoInfoStateLoaded) _then;
 
-/// Create a copy of VideoBasicInfo
+/// Create a copy of VideoInfoState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? staffs = null,Object? view = null,Object? danmaku = null,Object? uploadTime = null,Object? onlineUser = null,}) {
-  return _then(VideoBasicInfoLoaded(
+@pragma('vm:prefer-inline') $Res call({Object? staffs = null,Object? view = null,Object? danmaku = null,Object? uploadTime = null,Object? onlineUser = null,Object? description = null,}) {
+  return _then(VideoInfoStateLoaded(
 staffs: null == staffs ? _self._staffs : staffs // ignore: cast_nullable_to_non_nullable
 as List<Staff>,view: null == view ? _self.view : view // ignore: cast_nullable_to_non_nullable
 as int,danmaku: null == danmaku ? _self.danmaku : danmaku // ignore: cast_nullable_to_non_nullable
 as int,uploadTime: null == uploadTime ? _self.uploadTime : uploadTime // ignore: cast_nullable_to_non_nullable
 as int,onlineUser: null == onlineUser ? _self.onlineUser : onlineUser // ignore: cast_nullable_to_non_nullable
+as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -829,229 +541,5 @@ as String,
 
 
 }
-
-/// @nodoc
-mixin _$VideoRecommendInfo {
-
-
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is VideoRecommendInfo);
-}
-
-
-@override
-int get hashCode => runtimeType.hashCode;
-
-@override
-String toString() {
-  return 'VideoRecommendInfo()';
-}
-
-
-}
-
-/// @nodoc
-class $VideoRecommendInfoCopyWith<$Res>  {
-$VideoRecommendInfoCopyWith(VideoRecommendInfo _, $Res Function(VideoRecommendInfo) __);
-}
-
-
-/// Adds pattern-matching-related methods to [VideoRecommendInfo].
-extension VideoRecommendInfoPatterns on VideoRecommendInfo {
-/// A variant of `map` that fallback to returning `orElse`.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case _:
-///     return orElse();
-/// }
-/// ```
-
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( VideoRecommendInfoLoading value)?  loading,TResult Function( VideoRecommendInfoLoaded value)?  loaded,required TResult orElse(),}){
-final _that = this;
-switch (_that) {
-case VideoRecommendInfoLoading() when loading != null:
-return loading(_that);case VideoRecommendInfoLoaded() when loaded != null:
-return loaded(_that);case _:
-  return orElse();
-
-}
-}
-/// A `switch`-like method, using callbacks.
-///
-/// Callbacks receives the raw object, upcasted.
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case final Subclass2 value:
-///     return ...;
-/// }
-/// ```
-
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( VideoRecommendInfoLoading value)  loading,required TResult Function( VideoRecommendInfoLoaded value)  loaded,}){
-final _that = this;
-switch (_that) {
-case VideoRecommendInfoLoading():
-return loading(_that);case VideoRecommendInfoLoaded():
-return loaded(_that);}
-}
-/// A variant of `map` that fallback to returning `null`.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case _:
-///     return null;
-/// }
-/// ```
-
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( VideoRecommendInfoLoading value)?  loading,TResult? Function( VideoRecommendInfoLoaded value)?  loaded,}){
-final _that = this;
-switch (_that) {
-case VideoRecommendInfoLoading() when loading != null:
-return loading(_that);case VideoRecommendInfoLoaded() when loaded != null:
-return loaded(_that);case _:
-  return null;
-
-}
-}
-/// A variant of `when` that fallback to an `orElse` callback.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case _:
-///     return orElse();
-/// }
-/// ```
-
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  loading,TResult Function()?  loaded,required TResult orElse(),}) {final _that = this;
-switch (_that) {
-case VideoRecommendInfoLoading() when loading != null:
-return loading();case VideoRecommendInfoLoaded() when loaded != null:
-return loaded();case _:
-  return orElse();
-
-}
-}
-/// A `switch`-like method, using callbacks.
-///
-/// As opposed to `map`, this offers destructuring.
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case Subclass2(:final field2):
-///     return ...;
-/// }
-/// ```
-
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  loading,required TResult Function()  loaded,}) {final _that = this;
-switch (_that) {
-case VideoRecommendInfoLoading():
-return loading();case VideoRecommendInfoLoaded():
-return loaded();}
-}
-/// A variant of `when` that fallback to returning `null`
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case _:
-///     return null;
-/// }
-/// ```
-
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  loading,TResult? Function()?  loaded,}) {final _that = this;
-switch (_that) {
-case VideoRecommendInfoLoading() when loading != null:
-return loading();case VideoRecommendInfoLoaded() when loaded != null:
-return loaded();case _:
-  return null;
-
-}
-}
-
-}
-
-/// @nodoc
-
-
-class VideoRecommendInfoLoading implements VideoRecommendInfo {
-  const VideoRecommendInfoLoading();
-  
-
-
-
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is VideoRecommendInfoLoading);
-}
-
-
-@override
-int get hashCode => runtimeType.hashCode;
-
-@override
-String toString() {
-  return 'VideoRecommendInfo.loading()';
-}
-
-
-}
-
-
-
-
-/// @nodoc
-
-
-class VideoRecommendInfoLoaded implements VideoRecommendInfo {
-  const VideoRecommendInfoLoaded();
-  
-
-
-
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is VideoRecommendInfoLoaded);
-}
-
-
-@override
-int get hashCode => runtimeType.hashCode;
-
-@override
-String toString() {
-  return 'VideoRecommendInfo.loaded()';
-}
-
-
-}
-
-
-
 
 // dart format on

@@ -2,6 +2,7 @@ import 'package:bilizen/data/model/play_item.dart';
 import 'package:bilizen/data/model/video.dart';
 import 'package:bilizen/inject/inject.dart';
 import 'package:bilizen/package/playback_manager/playback_manager.dart';
+import 'package:bilizen/util/string.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 
@@ -45,26 +46,6 @@ class VideoCardData {
       danmakuCount: await video.danmaku,
       totalDuration: await video.totalDuration,
     );
-  }
-}
-
-class _VideoCardFormatter {
-  static String formatDuration(int seconds) {
-    final hours = seconds ~/ 3600;
-    final minutes = (seconds % 3600) ~/ 60;
-    final remainingSeconds = seconds % 60;
-
-    if (hours > 0) {
-      return '$hours:${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
-    }
-    return '${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
-  }
-
-  static String formatNumber(int number) {
-    if (number >= 10000) {
-      return '${(number / 10000).toStringAsFixed(1)}万';
-    }
-    return number.toString();
   }
 }
 
@@ -139,17 +120,17 @@ class _VideoStats extends StatelessWidget {
             children: [
               _StatItem(
                 icon: FluentIcons.play,
-                value: _VideoCardFormatter.formatNumber(viewCount),
+                value: formatNumber(viewCount),
               ),
               const SizedBox(width: 12),
               _StatItem(
                 icon: FluentIcons.comment,
-                value: _VideoCardFormatter.formatNumber(danmakuCount),
+                value: formatNumber(danmakuCount),
               ),
             ],
           ),
           Text(
-            _VideoCardFormatter.formatDuration(duration),
+            formatDuration(duration),
             style: const TextStyle(
               color: Colors.white,
               fontSize: 12,

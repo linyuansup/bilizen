@@ -55,9 +55,6 @@ class PlaybackManager {
       }
       await next();
     });
-    final pp = player.platform as NativePlayer;
-    pp.setProperty("af", "scaletempo2=max-speed=8");
-    pp.setProperty("volume-max", "100");
     CombineLatestStream(
       [player.stream.position, player.stream.playing],
       (value) {
