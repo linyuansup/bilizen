@@ -10,16 +10,18 @@ class RightArea extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(rightBarProvider);
-    return TabView(
-      currentIndex: state.page.index,
-      tabs: [
-        Tab(text: Text("简介"), body: VideoInfoArea()),
-        Tab(text: Text("评论"), body: VideoCommentArea()),
-      ],
-      onChanged: (index) {
-        ref.read(rightBarProvider.notifier).page =
-            VideoRightBarPage.values[index];
-      },
+    return RepaintBoundary(
+      child: TabView(
+        currentIndex: state.page.index,
+        tabs: [
+          Tab(text: Text("简介"), body: VideoInfoArea()),
+          Tab(text: Text("评论"), body: VideoCommentArea()),
+        ],
+        onChanged: (index) {
+          ref.read(rightBarProvider.notifier).page =
+              VideoRightBarPage.values[index];
+        },
+      ),
     );
   }
 }

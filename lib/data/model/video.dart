@@ -109,7 +109,11 @@ class Video extends _$Video {
             .toList(growable: false),
       );
     } else {
-      setStaff([]);
+      final owner = info["owner"];
+      final user = User(id: owner["mid"]);
+      user.setNickName(owner["name"]);
+      user.setAvatar(owner["face"]);
+      setStaff([Staff(role: "UP主", user: user)]);
     }
     setView(info["stat"]["view"]);
     setDanmaku(info["stat"]["danmaku"]);

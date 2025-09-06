@@ -15,7 +15,7 @@ class VideoPage extends StatelessWidget {
       padding: EdgeInsets.zero,
       content: Column(
         children: [
-          WindowDraggable(child: TopBar()),
+          RepaintBoundary(child: WindowDraggable(child: TopBar())),
           Expanded(
             child: LayoutBuilder(
               builder: (context, constraints) {

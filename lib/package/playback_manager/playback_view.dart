@@ -26,9 +26,11 @@ class _PlaybackViewState extends State<PlaybackView> {
 
   @override
   Widget build(BuildContext context) {
-    return Video(
-      controller: VideoController(
-        widget.player,
+    return RepaintBoundary(
+      child: Video(
+        controller: VideoController(
+          widget.player,
+        ),
       ),
     );
   }

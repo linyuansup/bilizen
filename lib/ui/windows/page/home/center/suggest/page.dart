@@ -1,19 +1,14 @@
-import 'package:bilizen/ui/windows/page/home/center/home/provider.dart';
+import 'package:bilizen/ui/windows/page/home/center/suggest/provider.dart';
 import 'package:bilizen/ui/windows/widget/auto_scale_grid_view.dart';
 import 'package:bilizen/ui/windows/widget/video_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class HomePage extends ConsumerStatefulWidget {
-  const HomePage({super.key});
+class SuggestPage extends ConsumerWidget {
+  const SuggestPage({super.key});
 
   @override
-  ConsumerState<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends ConsumerState<HomePage> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final video = ref.watch(homePageProvider);
     return switch (video) {
       HomePageStateLoading() => Builder(

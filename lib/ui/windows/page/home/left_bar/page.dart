@@ -1,7 +1,7 @@
-import 'package:bilizen/data/logic/homepage_router.dart';
 import 'package:bilizen/ui/windows/page/home/left_bar/provider.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class LeftBar extends StatelessWidget {
   const LeftBar({super.key});
@@ -22,7 +22,7 @@ class LeftBar extends StatelessWidget {
       child: Column(
         children: [
           const SizedBox(height: 10),
-          _buildNavItem(FluentIcons.home, HomePageKind.home),
+          _buildNavItem(FluentIcons.home, HomePageKind.suggest),
           const SizedBox(height: 5),
           _buildNavItem(FluentIcons.heart, HomePageKind.focus),
           const SizedBox(height: 5),
@@ -48,7 +48,7 @@ class LeftBar extends StatelessWidget {
               style: ButtonStyle(
                 padding: WidgetStateProperty.all(EdgeInsets.zero),
                 backgroundColor: WidgetStateProperty.resolveWith((states) {
-                  if (leftSelectedItem.page.kind == item) {
+                  if (leftSelectedItem.page == item) {
                     return FluentTheme.of(
                       context,
                     ).accentColor.withValues(alpha: 0.15);
@@ -67,13 +67,13 @@ class LeftBar extends StatelessWidget {
                   ),
                 ),
               ),
-              onPressed: () {
-                ref.read(leftBarProvider.notifier).selectItem(item);
+              onPressed: () async {
+                await context.pushNamed(item.name);
               },
               child: Icon(
                 icon,
                 size: 18,
-                color: leftSelectedItem.page.kind == item
+                color: leftSelectedItem.page == item
                     ? FluentTheme.of(context).accentColor
                     : FluentTheme.of(context).typography.body?.color,
               ),

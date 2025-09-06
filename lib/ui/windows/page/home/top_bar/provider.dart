@@ -1,10 +1,9 @@
 import 'package:bilizen/data/logic/account_manager/account_manager.dart';
-import 'package:bilizen/data/logic/homepage_router.dart';
 import 'package:bilizen/data/logic/search/search_manager.dart';
 import 'package:bilizen/data/logic/window_state.dart';
 import 'package:bilizen/data/model/self.dart';
 import 'package:bilizen/inject/inject.dart';
-import 'package:easy_debounce/easy_debounce.dart';
+import 'package:bilizen/ui/windows/router.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:window_manager/window_manager.dart';
@@ -26,10 +25,17 @@ class TopBarProvider extends _$TopBarProvider {
     _account.listen((self) async {
       state = state.copyWith(userInfo: await _getUserInfo(self));
     });
+    getIt<WindowsAppRouter>().homepageRouter.stream
+        .map((value) => value.canPop())
+        .distinct()
+        .listen((value) {
+          state = state.copyWith(canPop: value);
+        });
     return TopBarState(
       windowState: _windowStateStream.value,
       userInfo: null,
       searchRecommends: [],
+      canPop: false,
     );
   }
 
@@ -45,31 +51,18 @@ class TopBarProvider extends _$TopBarProvider {
     }
   }
 
-  void gotoSearch(String keyword) {
-    getIt<HomepageRouter>().navigateTo(
-      HomePageKind.search,
-      keyword,
-    );
-  }
-
   Future<void> onMinimumClick() async {
     await windowManager.minimize();
   }
 
   Future<void> updateSearchRecommend(String keyword) async {
-    EasyDebounce.debounce(
-      'search_recommend',
-      Duration(milliseconds: 500),
-      () async {
-        if (keyword.isEmpty) {
-          state = state.copyWith(searchRecommends: []);
-          return;
-        }
-        final mid = (await _account.value?.user)?.id;
-        final recommends = await _searchManager.recommend(keyword, mid);
-        state = state.copyWith(searchRecommends: recommends);
-      },
-    );
+    if (keyword.isEmpty) {
+      state = state.copyWith(searchRecommends: []);
+      return;
+    }
+    final mid = (await _account.value?.user)?.id;
+    final recommends = await _searchManager.recommend(keyword, mid);
+    state = state.copyWith(searchRecommends: recommends);
   }
 
   Future<UserInfo?> _getUserInfo(Self? self) async {
@@ -91,6 +84,7 @@ sealed class TopBarState with _$TopBarState {
     required WindowState windowState,
     required UserInfo? userInfo,
     required List<String> searchRecommends,
+    required bool canPop,
   }) = _TopBarState;
 }
 

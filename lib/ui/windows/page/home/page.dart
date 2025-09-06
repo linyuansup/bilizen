@@ -1,12 +1,13 @@
 import 'package:bilizen/ui/windows/page/home/bottom_bar/bottom_bar.dart';
-import 'package:bilizen/ui/windows/page/home/center/page.dart';
 import 'package:bilizen/ui/windows/page/home/left_bar/page.dart';
 import 'package:bilizen/ui/windows/page/home/top_bar/page.dart';
 import 'package:bilizen/ui/windows/widget/window_draggable.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  const HomePage({super.key, required this.center});
+
+  final Widget center;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class HomePage extends StatelessWidget {
                   children: [
                     LeftBar(),
                     Expanded(
-                      child: CenterPage(),
+                      child: center,
                     ),
                   ],
                 ),

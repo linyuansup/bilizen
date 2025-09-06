@@ -38,7 +38,7 @@ final class LeftBarProviderProvider
   }
 }
 
-String _$leftBarProviderHash() => r'ac974a5af8fe07d23a83699bc6734662e572a89a';
+String _$leftBarProviderHash() => r'74e7c245688bbb43b275d170be2c5e80fbf0c40e';
 
 abstract class _$LeftBarProvider extends $Notifier<LeftBarState> {
   LeftBarState build();

@@ -96,7 +96,7 @@ class _DescriptionArea extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 4),
+      padding: const EdgeInsets.all(4),
       child: AtFormatText(
         text: description,
         style: TextStyle(

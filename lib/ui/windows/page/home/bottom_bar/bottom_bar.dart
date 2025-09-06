@@ -1,12 +1,12 @@
 import 'package:bilizen/package/playback_manager/playback_manager.dart';
-import 'package:bilizen/ui/windows/page/app.dart';
 import 'package:bilizen/ui/windows/page/home/bottom_bar/provider.dart';
-import 'package:bilizen/util/string.dart';
 import 'package:bilizen/ui/windows/widget/video_card.dart';
+import 'package:bilizen/util/string.dart';
+import 'package:bilizen/util/toastification.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:toastification/toastification.dart';
+import 'package:go_router/go_router.dart';
 
 class BottomBar extends StatelessWidget {
   const BottomBar({super.key});
@@ -97,7 +97,7 @@ class _CoverArea extends ConsumerWidget {
     state = state as BottomBarStatePlaying;
     return GestureDetector(
       onTap: () async {
-        VideoPageRoute().go(context);
+        await context.pushNamed("video");
       },
       child: RepaintBoundary(
         child: CachedNetworkImage(
@@ -265,11 +265,7 @@ class _MoreControlArea extends StatelessWidget {
           builder: (context, ref, child) {
             return _buildMoreControlButton(FluentIcons.link, () async {
               await ref.read(bottomBarProvider.notifier).copyLink();
-              toastification.show(
-                type: ToastificationType.success,
-                title: Text('链接已复制'),
-                autoCloseDuration: const Duration(seconds: 5),
-              );
+              Toast.success("链接已复制");
             });
           },
         ),
@@ -282,9 +278,9 @@ class _MoreControlArea extends StatelessWidget {
             if (switchMode == SwitchMode.random) {
               logo = FluentIcons.remote;
             } else if (switchMode == SwitchMode.repeat) {
-              logo = FluentIcons.repeat_all;
-            } else {
               logo = FluentIcons.repeat_one;
+            } else {
+              logo = FluentIcons.repeat_all;
             }
             return _buildMoreControlButton(logo, () {
               ref.read(bottomBarProvider.notifier).changePlayMode();

@@ -1,11 +1,12 @@
-import 'package:bilizen/data/logic/homepage_router.dart';
 import 'package:bilizen/data/logic/window_state.dart' as manager;
-import 'package:bilizen/ui/windows/page/home/center/provider.dart';
+import 'package:bilizen/inject/inject.dart';
 import 'package:bilizen/ui/windows/page/home/top_bar/provider.dart';
+import 'package:bilizen/ui/windows/router.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class TopBar extends StatelessWidget {
   const TopBar({super.key});
@@ -25,11 +26,39 @@ class TopBar extends StatelessWidget {
       ),
       child: Row(
         children: [
+          _BackButton(),
           _Logo(),
           _SearchBar(),
           _UserIcon(),
           _WindowController(),
         ],
+      ),
+    );
+  }
+}
+
+class _BackButton extends StatelessWidget {
+  const _BackButton();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 10),
+      child: RepaintBoundary(
+        child: Consumer(
+          builder: (context, ref, child) {
+            return IconButton(
+              icon: Icon(FluentIcons.back),
+              onPressed:
+                  ref.watch(topBarProvider.select((value) => value.canPop))
+                  ? () {
+                      getIt<WindowsAppRouter>().homepageRouter.stream.value
+                          .pop();
+                    }
+                  : null,
+            );
+          },
+        ),
       ),
     );
   }
@@ -253,14 +282,9 @@ class _SearchBar extends StatelessWidget {
             ),
             Consumer(
               builder: (context, ref, child) {
-                var color = Colors.transparent;
-                if (ref.watch(
-                  centerProvider.select(
-                    (state) => state.page.kind == HomePageKind.search,
-                  ),
-                )) {
-                  color = FluentTheme.of(context).accentColor;
-                }
+                final color = GoRouter.of(context).state.name == "search"
+                    ? Colors.blue
+                    : Colors.transparent;
                 return Container(
                   height: 1,
                   color: color,
@@ -286,7 +310,10 @@ class __SearchInputAreaState extends ConsumerState<_SearchInputArea> {
   late final FocusNode _focusNode = FocusNode(
     onKeyEvent: (node, event) {
       if (event.logicalKey == LogicalKeyboardKey.enter) {
-        ref.read(topBarProvider.notifier).gotoSearch(_controller.text);
+        context.pushNamed(
+          "search",
+          pathParameters: {"keyword": _controller.text},
+        );
         key.currentState?.dismissOverlay();
         return KeyEventResult.handled;
       }
@@ -337,8 +364,11 @@ class __SearchInputAreaState extends ConsumerState<_SearchInputArea> {
           ).typography.caption?.color,
         ),
       ),
-      onSelected: (value) {
-        ref.read(topBarProvider.notifier).gotoSearch(value.label);
+      onSelected: (value) async {
+        await context.pushNamed(
+          "search",
+          pathParameters: {"keyword": _controller.text},
+        );
       },
     );
   }
@@ -350,7 +380,7 @@ class _Logo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 16.0, right: 12.0),
+      padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: Container(
         width: 45,
         height: 45,

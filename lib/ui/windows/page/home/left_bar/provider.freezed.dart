@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$LeftBarState {
 
- RouterInfo get page;
+ HomePageKind get page;
 /// Create a copy of LeftBarState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -45,7 +45,7 @@ abstract mixin class $LeftBarStateCopyWith<$Res>  {
   factory $LeftBarStateCopyWith(LeftBarState value, $Res Function(LeftBarState) _then) = _$LeftBarStateCopyWithImpl;
 @useResult
 $Res call({
- RouterInfo page
+ HomePageKind page
 });
 
 
@@ -65,7 +65,7 @@ class _$LeftBarStateCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') @override $Res call({Object? page = null,}) {
   return _then(_self.copyWith(
 page: null == page ? _self.page : page // ignore: cast_nullable_to_non_nullable
-as RouterInfo,
+as HomePageKind,
   ));
 }
 
@@ -147,7 +147,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( RouterInfo page)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( HomePageKind page)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _LeftBarState() when $default != null:
 return $default(_that.page);case _:
@@ -168,7 +168,7 @@ return $default(_that.page);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( RouterInfo page)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( HomePageKind page)  $default,) {final _that = this;
 switch (_that) {
 case _LeftBarState():
 return $default(_that.page);}
@@ -185,7 +185,7 @@ return $default(_that.page);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( RouterInfo page)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( HomePageKind page)?  $default,) {final _that = this;
 switch (_that) {
 case _LeftBarState() when $default != null:
 return $default(_that.page);case _:
@@ -203,7 +203,7 @@ class _LeftBarState implements LeftBarState {
   const _LeftBarState({required this.page});
   
 
-@override final  RouterInfo page;
+@override final  HomePageKind page;
 
 /// Create a copy of LeftBarState
 /// with the given fields replaced by the non-null parameter values.
@@ -235,7 +235,7 @@ abstract mixin class _$LeftBarStateCopyWith<$Res> implements $LeftBarStateCopyWi
   factory _$LeftBarStateCopyWith(_LeftBarState value, $Res Function(_LeftBarState) _then) = __$LeftBarStateCopyWithImpl;
 @override @useResult
 $Res call({
- RouterInfo page
+ HomePageKind page
 });
 
 
@@ -255,7 +255,7 @@ class __$LeftBarStateCopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? page = null,}) {
   return _then(_LeftBarState(
 page: null == page ? _self.page : page // ignore: cast_nullable_to_non_nullable
-as RouterInfo,
+as HomePageKind,
   ));
 }
 

@@ -20,7 +20,6 @@ import 'package:bilizen/data/api/video/recommend.dart' as _i174;
 import 'package:bilizen/data/api/video/video_stream_url.dart' as _i1029;
 import 'package:bilizen/data/logic/account_manager/account_manager.dart'
     as _i825;
-import 'package:bilizen/data/logic/homepage_router.dart' as _i475;
 import 'package:bilizen/data/logic/search/search_manager.dart' as _i671;
 import 'package:bilizen/data/logic/video_recommend/video_recommend.dart'
     as _i829;
@@ -31,6 +30,7 @@ import 'package:bilizen/inject/logger.dart' as _i489;
 import 'package:bilizen/inject/shared_preferences.dart' as _i383;
 import 'package:bilizen/package/playback_manager/playback_manager.dart'
     as _i907;
+import 'package:bilizen/ui/windows/router.dart' as _i130;
 import 'package:bilizen/util/path_resolver.dart' as _i625;
 import 'package:cookie_jar/cookie_jar.dart' as _i557;
 import 'package:dio/dio.dart' as _i361;
@@ -51,7 +51,6 @@ extension GetItInjectableX on _i174.GetIt {
     final loggerInjectable = _$LoggerInjectable();
     final sharedPreferencesInjectable = _$SharedPreferencesInjectable();
     final dioInjectable = _$DioInjectable();
-    gh.singleton<_i475.HomepageRouter>(() => _i475.HomepageRouter());
     gh.singleton<_i1071.WindowStateManager>(() => _i1071.WindowStateManager());
     gh.singleton<_i557.PersistCookieJar>(
       () => persistCookieJarInjectable.cookieJar,
@@ -65,6 +64,7 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i625.PathResolver.create(),
       preResolve: true,
     );
+    gh.singleton<_i130.WindowsAppRouter>(() => _i130.WindowsAppRouter());
     gh.singleton<_i361.Dio>(
       () => dioInjectable.dio(gh<_i557.PersistCookieJar>(), gh<_i993.Talker>()),
     );
@@ -83,14 +83,14 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.singleton<_i80.UserInfoApi>(() => _i80.UserInfoApi(gh<_i361.Dio>()));
     gh.singleton<_i501.VideoApi>(() => _i501.VideoApi(gh<_i361.Dio>()));
+    gh.singleton<_i185.VideoOnlineApi>(
+      () => _i185.VideoOnlineApi(gh<_i361.Dio>()),
+    );
     gh.singleton<_i174.VideoRecommendApi>(
       () => _i174.VideoRecommendApi(gh<_i361.Dio>()),
     );
     gh.singleton<_i1029.VideoStreamUrlApi>(
       () => _i1029.VideoStreamUrlApi(gh<_i361.Dio>()),
-    );
-    gh.singleton<_i185.VideoOnlineApi>(
-      () => _i185.VideoOnlineApi(gh<_i361.Dio>()),
     );
     gh.singleton<_i907.PlaybackManager>(
       () => _i907.PlaybackManager(talker: gh<_i207.Talker>()),

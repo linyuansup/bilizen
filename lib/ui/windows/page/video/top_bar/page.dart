@@ -57,11 +57,13 @@ class _BackButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(left: 10),
-      child: IconButton(
-        icon: Icon(FluentIcons.back),
-        onPressed: () {
-          context.pop();
-        },
+      child: RepaintBoundary(
+        child: IconButton(
+          icon: Icon(FluentIcons.back),
+          onPressed: () {
+            context.pop();
+          },
+        ),
       ),
     );
   }
@@ -94,37 +96,39 @@ class _AlwaysOnTopButton extends StatelessWidget {
       height: 50,
       child: Consumer(
         builder: (context, ref, child) {
-          return Button(
-            style: ButtonStyle(
-              backgroundColor: WidgetStateProperty.resolveWith((states) {
-                if (states.contains(WidgetState.hovered)) {
-                  return Colors.grey.withValues(alpha: 0.1);
-                }
-                return Colors.transparent;
-              }),
-              shape: WidgetStateProperty.all(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.zero,
-                  side: BorderSide.none,
+          return RepaintBoundary(
+            child: Button(
+              style: ButtonStyle(
+                backgroundColor: WidgetStateProperty.resolveWith((states) {
+                  if (states.contains(WidgetState.hovered)) {
+                    return Colors.grey.withValues(alpha: 0.1);
+                  }
+                  return Colors.transparent;
+                }),
+                shape: WidgetStateProperty.all(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.zero,
+                    side: BorderSide.none,
+                  ),
                 ),
               ),
-            ),
-            onPressed: () async {
-              ref.read(topBarProvider.notifier).switchOnTop();
-            },
-            child: Consumer(
-              builder: (context, ref, child) {
-                final isOnTop = ref.watch(
-                  topBarProvider.select((state) => state.onTop),
-                );
-                return Icon(
-                  isOnTop
-                      ? FluentIcons.pin_solid12
-                      : FluentIcons.pin_solid_off12,
-                  size: 12,
-                  color: FluentTheme.of(context).typography.body?.color,
-                );
+              onPressed: () async {
+                ref.read(topBarProvider.notifier).switchOnTop();
               },
+              child: Consumer(
+                builder: (context, ref, child) {
+                  final isOnTop = ref.watch(
+                    topBarProvider.select((state) => state.onTop),
+                  );
+                  return Icon(
+                    isOnTop
+                        ? FluentIcons.pin_solid12
+                        : FluentIcons.pin_solid_off12,
+                    size: 12,
+                    color: FluentTheme.of(context).typography.body?.color,
+                  );
+                },
+              ),
             ),
           );
         },
@@ -141,28 +145,30 @@ class _CloseButton extends StatelessWidget {
     return SizedBox(
       width: 46,
       height: 50,
-      child: Button(
-        style: ButtonStyle(
-          backgroundColor: WidgetStateProperty.resolveWith((states) {
-            if (states.contains(WidgetState.hovered)) {
-              return Colors.red.withValues(alpha: 0.8);
-            }
-            return Colors.transparent;
-          }),
-          shape: WidgetStateProperty.all(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.zero,
-              side: BorderSide.none,
+      child: RepaintBoundary(
+        child: Button(
+          style: ButtonStyle(
+            backgroundColor: WidgetStateProperty.resolveWith((states) {
+              if (states.contains(WidgetState.hovered)) {
+                return Colors.red.withValues(alpha: 0.8);
+              }
+              return Colors.transparent;
+            }),
+            shape: WidgetStateProperty.all(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.zero,
+                side: BorderSide.none,
+              ),
             ),
           ),
-        ),
-        onPressed: () async {
-          await windowManager.close();
-        },
-        child: Icon(
-          FluentIcons.chrome_close,
-          size: 12,
-          color: FluentTheme.of(context).typography.body?.color,
+          onPressed: () async {
+            await windowManager.close();
+          },
+          child: Icon(
+            FluentIcons.chrome_close,
+            size: 12,
+            color: FluentTheme.of(context).typography.body?.color,
+          ),
         ),
       ),
     );
@@ -177,43 +183,45 @@ class _MaximumButton extends StatelessWidget {
     return SizedBox(
       width: 46,
       height: 50,
-      child: Button(
-        style: ButtonStyle(
-          backgroundColor: WidgetStateProperty.resolveWith((states) {
-            if (states.contains(WidgetState.hovered)) {
-              return Colors.grey.withValues(alpha: 0.1);
-            }
-            return Colors.transparent;
-          }),
-          shape: WidgetStateProperty.all(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.zero,
-              side: BorderSide.none,
+      child: RepaintBoundary(
+        child: Button(
+          style: ButtonStyle(
+            backgroundColor: WidgetStateProperty.resolveWith((states) {
+              if (states.contains(WidgetState.hovered)) {
+                return Colors.grey.withValues(alpha: 0.1);
+              }
+              return Colors.transparent;
+            }),
+            shape: WidgetStateProperty.all(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.zero,
+                side: BorderSide.none,
+              ),
             ),
           ),
-        ),
-        onPressed: () async {
-          if (await windowManager.isMaximized()) {
-            await windowManager.unmaximize();
-          } else {
-            await windowManager.maximize();
-          }
-        },
-        child: Consumer(
-          builder: (context, ref, child) {
-            final isMaximum = ref.watch(
-              topBarProvider.select(
-                (state) => state.windowState == manager.WindowState.maximized,
-              ),
-            );
-            return Icon(
-              isMaximum
-                  ? FluentIcons.chrome_restore
-                  : FluentIcons.single_column,
-              size: 12,
-              color: FluentTheme.of(context).typography.body?.color,
-            );
+          onPressed: () async {
+            if (await windowManager.isMaximized()) {
+              await windowManager.unmaximize();
+            } else {
+              await windowManager.maximize();
+            }
           },
+          child: Consumer(
+            builder: (context, ref, child) {
+              final isMaximum = ref.watch(
+                topBarProvider.select(
+                  (state) => state.windowState == manager.WindowState.maximized,
+                ),
+              );
+              return Icon(
+                isMaximum
+                    ? FluentIcons.chrome_restore
+                    : FluentIcons.single_column,
+                size: 12,
+                color: FluentTheme.of(context).typography.body?.color,
+              );
+            },
+          ),
         ),
       ),
     );
@@ -228,28 +236,30 @@ class _MinimumButton extends StatelessWidget {
     return SizedBox(
       width: 46,
       height: 50,
-      child: Button(
-        style: ButtonStyle(
-          backgroundColor: WidgetStateProperty.resolveWith((states) {
-            if (states.contains(WidgetState.hovered)) {
-              return Colors.grey.withValues(alpha: 0.1);
-            }
-            return Colors.transparent;
-          }),
-          shape: WidgetStateProperty.all(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.zero,
-              side: BorderSide.none,
+      child: RepaintBoundary(
+        child: Button(
+          style: ButtonStyle(
+            backgroundColor: WidgetStateProperty.resolveWith((states) {
+              if (states.contains(WidgetState.hovered)) {
+                return Colors.grey.withValues(alpha: 0.1);
+              }
+              return Colors.transparent;
+            }),
+            shape: WidgetStateProperty.all(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.zero,
+                side: BorderSide.none,
+              ),
             ),
           ),
-        ),
-        onPressed: () async {
-          await windowManager.minimize();
-        },
-        child: Icon(
-          FluentIcons.chrome_minimize,
-          size: 12,
-          color: FluentTheme.of(context).typography.body?.color,
+          onPressed: () async {
+            await windowManager.minimize();
+          },
+          child: Icon(
+            FluentIcons.chrome_minimize,
+            size: 12,
+            color: FluentTheme.of(context).typography.body?.color,
+          ),
         ),
       ),
     );

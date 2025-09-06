@@ -1,3 +1,4 @@
+import 'package:dyn_mouse_scroll/dyn_mouse_scroll.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 
 class ScrollBarListView extends StatefulWidget {
@@ -19,7 +20,7 @@ class ScrollBarListView extends StatefulWidget {
 }
 
 class _ScrollBarListViewState extends State<ScrollBarListView> {
-  final _controller = ScrollController();
+  late ScrollController _controller;
 
   @override
   void dispose() {
@@ -29,15 +30,21 @@ class _ScrollBarListViewState extends State<ScrollBarListView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scrollbar(
-      controller: _controller,
-      child: ListView.builder(
-        scrollDirection: widget.scrollDirection,
-        controller: _controller,
-        itemCount: widget.itemCount,
-        padding: widget.padding,
-        itemBuilder: widget.itemBuilder,
-      ),
+    return DynMouseScroll(
+      builder: (context, controller, physics) {
+        _controller = controller;
+        return Scrollbar(
+          controller: _controller,
+          child: ListView.builder(
+            physics: physics,
+            scrollDirection: widget.scrollDirection,
+            controller: _controller,
+            itemCount: widget.itemCount,
+            padding: widget.padding,
+            itemBuilder: widget.itemBuilder,
+          ),
+        );
+      },
     );
   }
 }
