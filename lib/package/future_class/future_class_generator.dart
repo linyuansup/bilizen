@@ -40,7 +40,7 @@ class FutureClassGenerator extends GeneratorForAnnotation<FutureClass> {
 
     final futureDataGetters = <PropertyAccessorElement2>[];
     for (final accessor in element.getters2) {
-      final futureDataAnnotation = TypeChecker.fromRuntime(
+      final futureDataAnnotation = TypeChecker.typeNamed(
         FutureData,
       ).firstAnnotationOf(accessor);
       if (futureDataAnnotation != null) {
@@ -53,7 +53,7 @@ class FutureClassGenerator extends GeneratorForAnnotation<FutureClass> {
     for (final getter in futureDataGetters) {
       final getterName = getter.name3!;
       final returnType = getter.returnType;
-      final annotation = TypeChecker.fromRuntime(
+      final annotation = TypeChecker.typeNamed(
         FutureData,
       ).firstAnnotationOf(getter);
 

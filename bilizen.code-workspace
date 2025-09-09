@@ -6,10 +6,7 @@
 	],
 	"settings": {
 		"workbench.colorCustomizations": {
-			"editor.lineHighlightBorder": "#ffffff3d",
-			"activityBar.background": "#351579",
-			"titleBar.activeBackground": "#4B1EA9",
-			"titleBar.activeForeground": "#FAF9FE"
+			"editor.lineHighlightBorder": "#ffffff3d"
 		},
 		"cmake.ignoreCMakeListsMissing": true,
 		"files.exclude": {
