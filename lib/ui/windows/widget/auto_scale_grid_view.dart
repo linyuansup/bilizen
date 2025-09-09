@@ -1,5 +1,5 @@
 import 'package:dyn_mouse_scroll/dyn_mouse_scroll.dart';
-import 'package:flutter/material.dart';
+import 'package:fluent_ui/fluent_ui.dart';
 
 typedef OnBottom = Future<void> Function();
 

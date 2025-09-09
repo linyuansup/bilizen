@@ -29,7 +29,6 @@ class _PhoneLoginPageState extends State<PhoneLoginPage> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // 手机号输入框
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -60,8 +59,6 @@ class _PhoneLoginPageState extends State<PhoneLoginPage> {
               ],
             ),
             const SizedBox(height: 20),
-
-            // 验证码输入框
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -121,8 +118,6 @@ class _PhoneLoginPageState extends State<PhoneLoginPage> {
               ],
             ),
             const SizedBox(height: 32),
-
-            // 登录按钮
             SizedBox(
               width: double.infinity,
               height: 44,

@@ -1,4 +1,6 @@
 import 'package:bilizen/data/model/play_item.dart';
+import 'package:bilizen/package/talker_extension/playback.dart';
+import 'package:bilizen/util/toastification.dart';
 import 'package:injectable/injectable.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:rxdart/rxdart.dart';
@@ -45,7 +47,7 @@ class PlaybackManager {
   PlaybackManager({required Talker talker}) : _talker = talker {
     player.stream.volume.listen((v) => volume.add(v));
     player.stream.log.listen((log) {
-      _talker.debug(
+      _talker.playback(
         "Player log: ${log.text} (level: ${log.level}, prefix: ${log.prefix})",
       );
     });
@@ -123,11 +125,11 @@ class PlaybackManager {
 
   Future<void> seekTo(int index) async {
     if (playlist.value.isEmpty) {
-      _talker.warning("Playlist is empty.");
+      _talker.playback("Playlist is empty.");
       return;
     }
     if (index < 0 || index >= playlist.value.length) {
-      _talker.warning("Index out of bounds: $index");
+      _talker.playback("Index out of bounds: $index");
       return;
     }
     await _startNew(playlist.value[index]);
@@ -136,12 +138,12 @@ class PlaybackManager {
   Future<void> seek(Duration duration) async {
     final playing = currentPlaying.value;
     if (playing == null) {
-      _talker.warning("No item is currently playing.");
+      _talker.playback("No item is currently playing.");
       return;
     }
     if ((await playing.item.video.playlist)[playing.item.pIndex - 1].duration <
         duration.inSeconds) {
-      _talker.warning("Seeking beyond video duration.");
+      _talker.playback("Seeking beyond video duration.");
       return;
     }
     await player.seek(duration);
@@ -149,7 +151,7 @@ class PlaybackManager {
 
   Future<void> play() async {
     if (currentPlaying.value == null) {
-      _talker.warning("No item is currently playing.");
+      _talker.playback("No item is currently playing.");
       return;
     }
     await player.play();
@@ -204,7 +206,7 @@ class PlaybackManager {
     }
     final index = _indexOfItem(currentPlaying.value!.item);
     if (index == -1) {
-      _talker.warning(
+      _talker.playback(
         "Item not found in playlist: ${currentPlaying.value!.item.video.bid} at p${currentPlaying.value!.item.pIndex}",
       );
       insertPlayItemAtLast(item);
@@ -298,7 +300,6 @@ class PlaybackManager {
       "audio-files",
       audioUrl.url,
     );
-    await player.play();
     currentPlaying.add(
       PlayingItem(
         item: item,
@@ -308,5 +309,15 @@ class PlaybackManager {
         videoFormat: videoUrl,
       ),
     );
+    if (!_hasAudioDevices()) {
+      Toast.error(
+        "音频引擎启动失败",
+        description: "请检查系统音频服务是否正常运行",
+      );
+      return;
+    }
+    await player.play();
   }
+
+  bool _hasAudioDevices() => player.state.audioDevices.length > 1;
 }

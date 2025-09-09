@@ -2,7 +2,6 @@ import 'package:bilizen/ui/windows/page/home/center/self/login/page.dart';
 import 'package:bilizen/ui/windows/page/home/center/self/provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:flutter/material.dart' show CircularProgressIndicator;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class SelfPage extends ConsumerWidget {
@@ -17,7 +16,7 @@ class SelfPage extends ConsumerWidget {
         builder: (context) {
           ref.read(selfProvider.notifier).getSelfInfo(self);
           return const Center(
-            child: RepaintBoundary(child: CircularProgressIndicator()),
+            child: RepaintBoundary(child: ProgressRing()),
           );
         },
       ),

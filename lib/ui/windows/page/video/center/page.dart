@@ -1,7 +1,7 @@
 import 'package:bilizen/inject/inject.dart';
 import 'package:bilizen/package/playback_manager/playback_manager.dart';
 import 'package:bilizen/package/playback_manager/playback_view.dart';
-import 'package:flutter/material.dart';
+import 'package:fluent_ui/fluent_ui.dart';
 
 class CenterArea extends StatelessWidget {
   CenterArea({super.key, required this.size});

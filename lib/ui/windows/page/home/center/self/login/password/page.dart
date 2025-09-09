@@ -29,7 +29,6 @@ class _PasswordLoginPageState extends State<PasswordLoginPage> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // 用户名输入框
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -60,8 +59,6 @@ class _PasswordLoginPageState extends State<PasswordLoginPage> {
               ],
             ),
             const SizedBox(height: 20),
-
-            // 密码输入框
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -84,8 +81,6 @@ class _PasswordLoginPageState extends State<PasswordLoginPage> {
               ],
             ),
             const SizedBox(height: 16),
-
-            // 选项行
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -133,8 +128,6 @@ class _PasswordLoginPageState extends State<PasswordLoginPage> {
               ],
             ),
             const SizedBox(height: 24),
-
-            // 登录按钮
             SizedBox(
               width: double.infinity,
               height: 44,

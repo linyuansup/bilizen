@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:fluent_ui/fluent_ui.dart';
 
-final _linkStyle = const TextStyle(
+final _linkStyle = TextStyle(
   color: Colors.blue,
 );
 
@@ -26,14 +26,14 @@ class AtFormatText extends StatelessWidget {
 }
 
 List<String> _spiltAtString(String input) {
-  final regex = RegExp(r'@[^ \n]+(?: |$|\n)');
+  final regex = RegExp(r'@[^ \n]+');
   final result = <String>[];
   int lastEnd = 0;
   for (final match in regex.allMatches(input)) {
     if (match.start > lastEnd) {
       result.add(input.substring(lastEnd, match.start));
     }
-    result.add(input.substring(match.start, match.end).trim());
+    result.add(input.substring(match.start, match.end));
     lastEnd = match.end;
   }
   if (lastEnd < input.length) {

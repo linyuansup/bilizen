@@ -28,4 +28,5 @@ sealed class RightBarState with _$RightBarState {
 enum VideoRightBarPage {
   info,
   comment,
+  recommend,
 }

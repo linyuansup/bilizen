@@ -40,11 +40,21 @@ class _ScrollBarListViewState extends State<ScrollBarListView> {
             scrollDirection: widget.scrollDirection,
             controller: _controller,
             itemCount: widget.itemCount,
-            padding: widget.padding,
+            padding: _calculatePadding(),
             itemBuilder: widget.itemBuilder,
           ),
         );
       },
     );
+  }
+
+  EdgeInsetsGeometry _calculatePadding() {
+    const scrollbarWidth = 16.0;
+    EdgeInsetsGeometry basePadding = widget.padding ?? EdgeInsets.zero;
+    if (widget.scrollDirection == Axis.vertical) {
+      return basePadding.add(const EdgeInsets.only(right: scrollbarWidth));
+    } else {
+      return basePadding.add(const EdgeInsets.only(bottom: scrollbarWidth));
+    }
   }
 }

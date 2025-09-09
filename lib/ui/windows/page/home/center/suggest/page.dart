@@ -1,7 +1,7 @@
 import 'package:bilizen/ui/windows/page/home/center/suggest/provider.dart';
 import 'package:bilizen/ui/windows/widget/auto_scale_grid_view.dart';
 import 'package:bilizen/ui/windows/widget/video_card.dart';
-import 'package:flutter/material.dart';
+import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class SuggestPage extends ConsumerWidget {
@@ -15,7 +15,7 @@ class SuggestPage extends ConsumerWidget {
         builder: (context) {
           ref.read(homePageProvider.notifier).fetch();
           return const Center(
-            child: RepaintBoundary(child: CircularProgressIndicator()),
+            child: RepaintBoundary(child: ProgressRing()),
           );
         },
       ),
