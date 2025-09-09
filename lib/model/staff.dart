@@ -1,4 +1,4 @@
-import 'package:bilizen/data/model/user.dart';
+import 'package:bilizen/model/user.dart';
 
 class Staff {
   final String role;

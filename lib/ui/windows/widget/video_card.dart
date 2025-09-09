@@ -1,5 +1,5 @@
-import 'package:bilizen/data/model/play_item.dart';
-import 'package:bilizen/data/model/video.dart';
+import 'package:bilizen/model/play_item.dart';
+import 'package:bilizen/model/video.dart';
 import 'package:bilizen/inject/inject.dart';
 import 'package:bilizen/package/playback_manager/playback_manager.dart';
 import 'package:bilizen/util/string.dart';

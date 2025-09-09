@@ -1,7 +1,7 @@
 import 'package:bilizen/data/api/video/info.dart';
-import 'package:bilizen/data/model/staff.dart';
-import 'package:bilizen/data/model/user.dart';
-import 'package:bilizen/data/model/video_playlist.dart';
+import 'package:bilizen/model/staff.dart';
+import 'package:bilizen/model/user.dart';
+import 'package:bilizen/model/video_playlist.dart';
 import 'package:bilizen/package/future_class/annotations.dart';
 import 'package:bilizen/package/future_class/future_class_base.dart';
 import 'package:bilizen/inject/inject.dart';

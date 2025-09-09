@@ -1,7 +1,7 @@
-import 'package:bilizen/data/logic/account_manager/account_manager.dart';
-import 'package:bilizen/data/logic/search/search_manager.dart';
-import 'package:bilizen/data/logic/window_state.dart';
-import 'package:bilizen/data/model/self.dart';
+import 'package:bilizen/logic/account_manager/account_manager.dart';
+import 'package:bilizen/logic/search/search_manager.dart';
+import 'package:bilizen/logic/window_state.dart';
+import 'package:bilizen/model/self.dart';
 import 'package:bilizen/inject/inject.dart';
 import 'package:bilizen/ui/windows/router.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';

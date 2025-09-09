@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:bilizen/data/storage/wbi.dart';
+import 'package:bilizen/data/storage/pref/wbi.dart';
 import 'package:bilizen/inject/inject.dart';
 import 'package:crypto/crypto.dart';
 import 'package:dio/dio.dart';

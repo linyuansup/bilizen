@@ -1,6 +1,6 @@
 import 'package:bilizen/data/api/search/request.dart';
 import 'package:bilizen/data/api/search/suggest.dart';
-import 'package:bilizen/data/logic/search/video_result.dart';
+import 'package:bilizen/logic/search/video_result.dart';
 import 'package:injectable/injectable.dart';
 
 @singleton

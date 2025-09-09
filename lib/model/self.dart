@@ -1,5 +1,5 @@
 import 'package:bilizen/data/api/user/info.dart';
-import 'package:bilizen/data/model/user.dart';
+import 'package:bilizen/model/user.dart';
 import 'package:bilizen/package/future_class/annotations.dart';
 import 'package:bilizen/package/future_class/future_class_base.dart';
 import 'package:bilizen/inject/inject.dart';

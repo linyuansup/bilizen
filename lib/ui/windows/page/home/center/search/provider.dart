@@ -1,5 +1,5 @@
-import 'package:bilizen/data/logic/search/search_manager.dart';
-import 'package:bilizen/data/logic/search/video_result.dart';
+import 'package:bilizen/logic/search/search_manager.dart';
+import 'package:bilizen/logic/search/video_result.dart';
 import 'package:bilizen/inject/inject.dart';
 import 'package:bilizen/ui/windows/widget/video_card.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';

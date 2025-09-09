@@ -9,6 +9,7 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:bilizen/data/api/comment/list.dart' as _i937;
 import 'package:bilizen/data/api/login/login_action/qr.dart' as _i348;
 import 'package:bilizen/data/api/login/login_info.dart' as _i1038;
 import 'package:bilizen/data/api/search/request.dart' as _i61;
@@ -18,16 +19,16 @@ import 'package:bilizen/data/api/video/info.dart' as _i501;
 import 'package:bilizen/data/api/video/online.dart' as _i185;
 import 'package:bilizen/data/api/video/recommend.dart' as _i174;
 import 'package:bilizen/data/api/video/video_stream_url.dart' as _i1029;
-import 'package:bilizen/data/logic/account_manager/account_manager.dart'
-    as _i825;
-import 'package:bilizen/data/logic/search/search_manager.dart' as _i671;
-import 'package:bilizen/data/logic/video_recommend/video_recommend.dart'
-    as _i829;
-import 'package:bilizen/data/logic/window_state.dart' as _i1071;
-import 'package:bilizen/data/storage/wbi.dart' as _i89;
+import 'package:bilizen/data/storage/db/emotion.dart' as _i911;
+import 'package:bilizen/data/storage/pref/wbi.dart' as _i408;
 import 'package:bilizen/inject/dio.dart' as _i550;
 import 'package:bilizen/inject/logger.dart' as _i489;
 import 'package:bilizen/inject/shared_preferences.dart' as _i383;
+import 'package:bilizen/logic/account_manager/account_manager.dart' as _i72;
+import 'package:bilizen/logic/search/search_manager.dart' as _i786;
+import 'package:bilizen/logic/video_online_manager.dart' as _i814;
+import 'package:bilizen/logic/video_recommend/video_recommend.dart' as _i847;
+import 'package:bilizen/logic/window_state.dart' as _i224;
 import 'package:bilizen/package/playback_manager/playback_manager.dart'
     as _i907;
 import 'package:bilizen/ui/windows/router.dart' as _i130;
@@ -51,7 +52,7 @@ extension GetItInjectableX on _i174.GetIt {
     final loggerInjectable = _$LoggerInjectable();
     final sharedPreferencesInjectable = _$SharedPreferencesInjectable();
     final dioInjectable = _$DioInjectable();
-    gh.singleton<_i1071.WindowStateManager>(() => _i1071.WindowStateManager());
+    gh.singleton<_i911.EmotionStorage>(() => _i911.EmotionStorage());
     gh.singleton<_i557.PersistCookieJar>(
       () => persistCookieJarInjectable.cookieJar,
     );
@@ -60,6 +61,8 @@ extension GetItInjectableX on _i174.GetIt {
       () => sharedPreferencesInjectable.prefs,
       preResolve: true,
     );
+    gh.singleton<_i814.VideoOnlineManager>(() => _i814.VideoOnlineManager());
+    gh.singleton<_i224.WindowStateManager>(() => _i224.WindowStateManager());
     gh.singleton<_i130.WindowsAppRouter>(() => _i130.WindowsAppRouter());
     await gh.singletonAsync<_i625.PathResolver>(
       () => _i625.PathResolver.create(),
@@ -68,8 +71,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i361.Dio>(
       () => dioInjectable.dio(gh<_i557.PersistCookieJar>(), gh<_i993.Talker>()),
     );
-    gh.singleton<_i89.WbiStorage>(
-      () => _i89.WbiStorage(gh<_i460.SharedPreferences>()),
+    gh.singleton<_i408.WbiStorage>(
+      () => _i408.WbiStorage(gh<_i460.SharedPreferences>()),
+    );
+    gh.singleton<_i937.CommentListApi>(
+      () => _i937.CommentListApi(gh<_i361.Dio>()),
     );
     gh.singleton<_i348.QrLoginApi>(() => _i348.QrLoginApi(gh<_i361.Dio>()));
     gh.singleton<_i1038.LoginInfoApi>(
@@ -93,19 +99,22 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i1029.VideoStreamUrlApi(gh<_i361.Dio>()),
     );
     gh.singleton<_i907.PlaybackManager>(
-      () => _i907.PlaybackManager(talker: gh<_i207.Talker>()),
+      () => _i907.PlaybackManager(
+        talker: gh<_i207.Talker>(),
+        videoOnlineManager: gh<_i814.VideoOnlineManager>(),
+      ),
     );
-    gh.singleton<_i671.SearchManager>(
-      () => _i671.SearchManager(
+    gh.singleton<_i786.SearchManager>(
+      () => _i786.SearchManager(
         gh<_i692.SearchSuggestApi>(),
         gh<_i61.SearchRequestApi>(),
       ),
     );
-    gh.singleton<_i829.VideoRecommend>(
-      () => _i829.VideoRecommend(gh<_i174.VideoRecommendApi>()),
+    gh.singleton<_i847.VideoRecommend>(
+      () => _i847.VideoRecommend(gh<_i174.VideoRecommendApi>()),
     );
-    gh.singleton<_i825.AccountManager>(
-      () => _i825.AccountManager(
+    gh.singleton<_i72.AccountManager>(
+      () => _i72.AccountManager(
         gh<_i348.QrLoginApi>(),
         gh<_i1038.LoginInfoApi>(),
       ),

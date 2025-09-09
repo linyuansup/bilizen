@@ -1,4 +1,4 @@
-import 'package:bilizen/data/logic/window_state.dart' as manager;
+import 'package:bilizen/logic/window_state.dart' as manager;
 import 'package:bilizen/inject/inject.dart';
 import 'package:bilizen/ui/windows/page/home/top_bar/provider.dart';
 import 'package:bilizen/ui/windows/router.dart';
@@ -30,9 +30,23 @@ class TopBar extends StatelessWidget {
           _Logo(),
           _SearchBar(),
           _UserIcon(),
+          // _TestButton(),
           _WindowController(),
         ],
       ),
+    );
+  }
+}
+
+// ignore: unused_element
+class _TestButton extends StatelessWidget {
+  const _TestButton();
+
+  @override
+  Widget build(BuildContext context) {
+    return Button(
+      child: Text("data"),
+      onPressed: () async {},
     );
   }
 }

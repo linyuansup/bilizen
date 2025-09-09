@@ -1,4 +1,5 @@
-import 'package:bilizen/data/model/play_item.dart';
+import 'package:bilizen/logic/video_online_manager.dart';
+import 'package:bilizen/model/play_item.dart';
 import 'package:bilizen/package/talker_extension/playback.dart';
 import 'package:bilizen/util/toastification.dart';
 import 'package:injectable/injectable.dart';
@@ -18,6 +19,7 @@ class PlayingItem {
   final bool isPlaying;
   final AudioUrl audioFormat;
   final VideoUrl videoFormat;
+  final String onlineUser;
 
   PlayingItem({
     required this.item,
@@ -25,6 +27,7 @@ class PlayingItem {
     required this.isPlaying,
     required this.audioFormat,
     required this.videoFormat,
+    required this.onlineUser,
   });
 }
 
@@ -43,8 +46,13 @@ class PlaybackManager {
     configuration: PlayerConfiguration(logLevel: MPVLogLevel.debug),
   );
   final Talker _talker;
+  final VideoOnlineManager _videoOnlineManager;
 
-  PlaybackManager({required Talker talker}) : _talker = talker {
+  PlaybackManager({
+    required Talker talker,
+    required VideoOnlineManager videoOnlineManager,
+  }) : _talker = talker,
+       _videoOnlineManager = videoOnlineManager {
     player.stream.volume.listen((v) => volume.add(v));
     player.stream.log.listen((log) {
       _talker.playback(
@@ -58,16 +66,21 @@ class PlaybackManager {
       await next();
     });
     CombineLatestStream(
-      [player.stream.position, player.stream.playing],
+      [
+        player.stream.position,
+        player.stream.playing,
+        _videoOnlineManager.stream,
+      ],
       (value) {
         final current = currentPlaying.value;
         if (current == null) return null;
         return PlayingItem(
           item: current.item,
-          position: value.first as Duration,
-          isPlaying: value.last as bool,
+          position: value[0] as Duration,
+          isPlaying: value[1] as bool,
           audioFormat: current.audioFormat,
           videoFormat: current.videoFormat,
+          onlineUser: value[2] as String,
         );
       },
     ).listen((playingItem) => currentPlaying.add(playingItem));
@@ -300,6 +313,7 @@ class PlaybackManager {
       "audio-files",
       audioUrl.url,
     );
+    await _videoOnlineManager.changeTo(item.video.bid, await item.getCid());
     currentPlaying.add(
       PlayingItem(
         item: item,
@@ -307,6 +321,7 @@ class PlaybackManager {
         isPlaying: true,
         audioFormat: audioUrl,
         videoFormat: videoUrl,
+        onlineUser: "0",
       ),
     );
     if (!_hasAudioDevices()) {

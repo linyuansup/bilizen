@@ -1,7 +1,7 @@
 import 'package:bilizen/data/api/login/login_action/qr.dart';
 import 'package:bilizen/data/api/login/login_info.dart';
-import 'package:bilizen/data/logic/account_manager/qr_login_status.dart';
-import 'package:bilizen/data/model/self.dart';
+import 'package:bilizen/logic/account_manager/qr_login_status.dart';
+import 'package:bilizen/model/self.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 

@@ -1,5 +1,5 @@
 import 'package:bilizen/data/api/video/video_stream_url.dart';
-import 'package:bilizen/data/model/video.dart';
+import 'package:bilizen/model/video.dart';
 import 'package:bilizen/package/future_class/annotations.dart';
 import 'package:bilizen/package/future_class/future_class_base.dart';
 import 'package:bilizen/inject/inject.dart';
@@ -12,6 +12,17 @@ class PlayItem extends _$PlayItem {
   final int pIndex;
 
   final _videoStreamUrlApi = getIt<VideoStreamUrlApi>();
+
+  Future<int> getCid() async {
+    final playlist = video.playlist;
+    final targetItem = playlist.then(
+      (list) => list.firstWhere(
+        (item) => item.index == pIndex,
+        orElse: () => throw ArgumentError('未找到对应的播放项: pIndex=$pIndex'),
+      ),
+    );
+    return targetItem.then((item) => item.cid);
+  }
 
   PlayItem({required this.video, required this.pIndex});
 

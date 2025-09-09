@@ -1,4 +1,4 @@
-import 'package:bilizen/data/logic/window_state.dart';
+import 'package:bilizen/logic/window_state.dart';
 import 'package:bilizen/inject/inject.dart';
 import 'package:bilizen/package/playback_manager/playback_manager.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';

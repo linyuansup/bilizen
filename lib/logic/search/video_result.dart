@@ -1,6 +1,6 @@
 import 'package:bilizen/data/api/search/request.dart';
-import 'package:bilizen/data/model/user.dart';
-import 'package:bilizen/data/model/video.dart';
+import 'package:bilizen/model/user.dart';
+import 'package:bilizen/model/video.dart';
 import 'package:bilizen/inject/inject.dart';
 import 'package:bilizen/util/string.dart';
 

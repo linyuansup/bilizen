@@ -1,5 +1,5 @@
 import 'package:bilizen/ui/windows/page/video/right_bar/info/provider.dart';
-import 'package:bilizen/ui/windows/widget/at_format_text.dart';
+import 'package:bilizen/ui/windows/widget/bili_format_text.dart';
 import 'package:bilizen/ui/windows/widget/scroll_bar_list_view.dart';
 import 'package:bilizen/util/string.dart';
 import 'package:fluent_ui/fluent_ui.dart';
@@ -299,7 +299,7 @@ class _DescriptionCard extends StatelessWidget {
             title: '视频简介',
           ),
           const SizedBox(height: 12),
-          AtFormatText(
+          BiliFormatText(
             text: description,
             style: theme.typography.body?.copyWith(
               color: theme.resources.textFillColorPrimary,
@@ -426,7 +426,7 @@ class _StaffAvatar extends StatelessWidget {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         border: Border.all(
-          color: theme.accentColor.withOpacity(0.3),
+          color: theme.accentColor.withValues(alpha: 0.3),
           width: 2,
         ),
       ),
@@ -465,7 +465,7 @@ class _StaffInfo extends StatelessWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
           decoration: BoxDecoration(
-            color: theme.accentColor.withOpacity(0.1),
+            color: theme.accentColor.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(4),
           ),
           child: Text(

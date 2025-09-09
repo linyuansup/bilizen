@@ -1,5 +1,5 @@
-import 'package:bilizen/data/logic/account_manager/account_manager.dart';
-import 'package:bilizen/data/model/self.dart';
+import 'package:bilizen/logic/account_manager/account_manager.dart';
+import 'package:bilizen/model/self.dart';
 import 'package:bilizen/inject/inject.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

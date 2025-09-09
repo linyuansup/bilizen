@@ -1,5 +1,5 @@
 import 'package:bilizen/data/api/video/recommend.dart';
-import 'package:bilizen/data/model/video.dart';
+import 'package:bilizen/model/video.dart';
 import 'package:bilizen/inject/inject.dart';
 
 class HomepageVideoRecommender {

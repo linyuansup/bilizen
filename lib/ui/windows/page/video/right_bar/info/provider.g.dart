@@ -38,7 +38,7 @@ final class VideoInfoProviderProvider
   }
 }
 
-String _$videoInfoProviderHash() => r'f9e1031b0dcc37e7419dc6eab7ab9cd4f29abdcb';
+String _$videoInfoProviderHash() => r'c7406643394d809f8029155f9024ba75b14f4bed';
 
 abstract class _$VideoInfoProvider extends $Notifier<VideoInfoState> {
   VideoInfoState build();
