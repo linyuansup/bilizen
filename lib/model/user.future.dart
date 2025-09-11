@@ -87,23 +87,23 @@ abstract class _$User extends FutureClassBase {
     clearCached(_levelKey);
   }
 
-  static const String _isFollowedKey = 'isFollowed';
+  static const String _isFollowingKey = 'isFollowing';
 
-  Future<bool> get $isFollowed async {
-    if (isCached(_isFollowedKey)) {
-      return getCached<bool>(_isFollowedKey)!;
+  Future<bool> get $isFollowing async {
+    if (isCached(_isFollowingKey)) {
+      return getCached<bool>(_isFollowingKey)!;
     }
 
     await basicInfo();
-    return getCached<bool>(_isFollowedKey)!;
+    return getCached<bool>(_isFollowingKey)!;
   }
 
-  void setIsFollowed(bool value) {
-    setCached(_isFollowedKey, value);
+  void setIsFollowing(bool value) {
+    setCached(_isFollowingKey, value);
   }
 
-  void clearIsFollowed() {
-    clearCached(_isFollowedKey);
+  void clearIsFollowing() {
+    clearCached(_isFollowingKey);
   }
 
   static const String _archiveCountKey = 'archiveCount';

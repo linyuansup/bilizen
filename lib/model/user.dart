@@ -26,7 +26,7 @@ class User extends _$User {
   Future<int> get level => $level;
 
   @FutureData(loader: "basicInfo")
-  Future<bool> get isFollowed => $isFollowed;
+  Future<bool> get isFollowing => $isFollowing;
 
   @FutureData(loader: "cardInfo")
   Future<int> get archiveCount => $archiveCount;
@@ -50,7 +50,7 @@ class User extends _$User {
     setAvatar(user["data"]["face"]);
     setSex(user["data"]["sex"]);
     setLevel(user["data"]["level"]);
-    setIsFollowed(user["data"]["is_followed"]);
+    setIsFollowing(user["data"]["is_followed"]);
   }
 
   @override

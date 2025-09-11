@@ -19,12 +19,12 @@ import 'package:bilizen/data/api/video/info.dart' as _i501;
 import 'package:bilizen/data/api/video/online.dart' as _i185;
 import 'package:bilizen/data/api/video/recommend.dart' as _i174;
 import 'package:bilizen/data/api/video/video_stream_url.dart' as _i1029;
-import 'package:bilizen/data/storage/db/emotion.dart' as _i911;
 import 'package:bilizen/data/storage/pref/wbi.dart' as _i408;
 import 'package:bilizen/inject/dio.dart' as _i550;
 import 'package:bilizen/inject/logger.dart' as _i489;
 import 'package:bilizen/inject/shared_preferences.dart' as _i383;
 import 'package:bilizen/logic/account_manager/account_manager.dart' as _i72;
+import 'package:bilizen/logic/comment_manager/comment_manager.dart' as _i644;
 import 'package:bilizen/logic/search/search_manager.dart' as _i786;
 import 'package:bilizen/logic/video_online_manager.dart' as _i814;
 import 'package:bilizen/logic/video_recommend/video_recommend.dart' as _i847;
@@ -52,7 +52,6 @@ extension GetItInjectableX on _i174.GetIt {
     final loggerInjectable = _$LoggerInjectable();
     final sharedPreferencesInjectable = _$SharedPreferencesInjectable();
     final dioInjectable = _$DioInjectable();
-    gh.singleton<_i911.EmotionStorage>(() => _i911.EmotionStorage());
     gh.singleton<_i557.PersistCookieJar>(
       () => persistCookieJarInjectable.cookieJar,
     );
@@ -103,6 +102,9 @@ extension GetItInjectableX on _i174.GetIt {
         talker: gh<_i207.Talker>(),
         videoOnlineManager: gh<_i814.VideoOnlineManager>(),
       ),
+    );
+    gh.singleton<_i644.CommentManager>(
+      () => _i644.CommentManager(gh<_i937.CommentListApi>()),
     );
     gh.singleton<_i786.SearchManager>(
       () => _i786.SearchManager(

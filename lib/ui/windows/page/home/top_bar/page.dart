@@ -1,7 +1,5 @@
 import 'package:bilizen/logic/window_state.dart' as manager;
-import 'package:bilizen/inject/inject.dart';
 import 'package:bilizen/ui/windows/page/home/top_bar/provider.dart';
-import 'package:bilizen/ui/windows/router.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/services.dart';
@@ -65,10 +63,7 @@ class _BackButton extends StatelessWidget {
               icon: Icon(FluentIcons.back),
               onPressed:
                   ref.watch(topBarProvider.select((value) => value.canPop))
-                  ? () {
-                      getIt<WindowsAppRouter>().homepageRouter.stream.value
-                          .pop();
-                    }
+                  ? () {}
                   : null,
             );
           },

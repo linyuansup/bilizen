@@ -38,7 +38,7 @@ final class SelfProviderProvider
   }
 }
 
-String _$selfProviderHash() => r'17d2258684113a717c4ea3d42eeb0fc0ddaa4558';
+String _$selfProviderHash() => r'872a5f066d38fe2d18eeac066ca9656c34d5ecf7';
 
 abstract class _$SelfProvider extends $Notifier<SelfState> {
   SelfState build();

@@ -353,7 +353,7 @@ $UserInfoCardCopyWith<$Res> get userInfoCard {
 /// @nodoc
 mixin _$UserInfoCard {
 
- String get nickName; String get avatar; String get sex; String get sign; int get level; int get archiveCount; int get likeNum; int get fans; int get focus; bool get isFollowed;
+ String get nickName; String get avatar; String get sex; String get sign; int get level; int get archiveCount; int get likeNum; int get fans; int get focus;
 /// Create a copy of UserInfoCard
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -364,16 +364,16 @@ $UserInfoCardCopyWith<UserInfoCard> get copyWith => _$UserInfoCardCopyWithImpl<U
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserInfoCard&&(identical(other.nickName, nickName) || other.nickName == nickName)&&(identical(other.avatar, avatar) || other.avatar == avatar)&&(identical(other.sex, sex) || other.sex == sex)&&(identical(other.sign, sign) || other.sign == sign)&&(identical(other.level, level) || other.level == level)&&(identical(other.archiveCount, archiveCount) || other.archiveCount == archiveCount)&&(identical(other.likeNum, likeNum) || other.likeNum == likeNum)&&(identical(other.fans, fans) || other.fans == fans)&&(identical(other.focus, focus) || other.focus == focus)&&(identical(other.isFollowed, isFollowed) || other.isFollowed == isFollowed));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserInfoCard&&(identical(other.nickName, nickName) || other.nickName == nickName)&&(identical(other.avatar, avatar) || other.avatar == avatar)&&(identical(other.sex, sex) || other.sex == sex)&&(identical(other.sign, sign) || other.sign == sign)&&(identical(other.level, level) || other.level == level)&&(identical(other.archiveCount, archiveCount) || other.archiveCount == archiveCount)&&(identical(other.likeNum, likeNum) || other.likeNum == likeNum)&&(identical(other.fans, fans) || other.fans == fans)&&(identical(other.focus, focus) || other.focus == focus));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,nickName,avatar,sex,sign,level,archiveCount,likeNum,fans,focus,isFollowed);
+int get hashCode => Object.hash(runtimeType,nickName,avatar,sex,sign,level,archiveCount,likeNum,fans,focus);
 
 @override
 String toString() {
-  return 'UserInfoCard(nickName: $nickName, avatar: $avatar, sex: $sex, sign: $sign, level: $level, archiveCount: $archiveCount, likeNum: $likeNum, fans: $fans, focus: $focus, isFollowed: $isFollowed)';
+  return 'UserInfoCard(nickName: $nickName, avatar: $avatar, sex: $sex, sign: $sign, level: $level, archiveCount: $archiveCount, likeNum: $likeNum, fans: $fans, focus: $focus)';
 }
 
 
@@ -384,7 +384,7 @@ abstract mixin class $UserInfoCardCopyWith<$Res>  {
   factory $UserInfoCardCopyWith(UserInfoCard value, $Res Function(UserInfoCard) _then) = _$UserInfoCardCopyWithImpl;
 @useResult
 $Res call({
- String nickName, String avatar, String sex, String sign, int level, int archiveCount, int likeNum, int fans, int focus, bool isFollowed
+ String nickName, String avatar, String sex, String sign, int level, int archiveCount, int likeNum, int fans, int focus
 });
 
 
@@ -401,7 +401,7 @@ class _$UserInfoCardCopyWithImpl<$Res>
 
 /// Create a copy of UserInfoCard
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? nickName = null,Object? avatar = null,Object? sex = null,Object? sign = null,Object? level = null,Object? archiveCount = null,Object? likeNum = null,Object? fans = null,Object? focus = null,Object? isFollowed = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? nickName = null,Object? avatar = null,Object? sex = null,Object? sign = null,Object? level = null,Object? archiveCount = null,Object? likeNum = null,Object? fans = null,Object? focus = null,}) {
   return _then(_self.copyWith(
 nickName: null == nickName ? _self.nickName : nickName // ignore: cast_nullable_to_non_nullable
 as String,avatar: null == avatar ? _self.avatar : avatar // ignore: cast_nullable_to_non_nullable
@@ -412,8 +412,7 @@ as int,archiveCount: null == archiveCount ? _self.archiveCount : archiveCount //
 as int,likeNum: null == likeNum ? _self.likeNum : likeNum // ignore: cast_nullable_to_non_nullable
 as int,fans: null == fans ? _self.fans : fans // ignore: cast_nullable_to_non_nullable
 as int,focus: null == focus ? _self.focus : focus // ignore: cast_nullable_to_non_nullable
-as int,isFollowed: null == isFollowed ? _self.isFollowed : isFollowed // ignore: cast_nullable_to_non_nullable
-as bool,
+as int,
   ));
 }
 
@@ -495,10 +494,10 @@ return loaded(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String nickName,  String avatar,  String sex,  String sign,  int level,  int archiveCount,  int likeNum,  int fans,  int focus,  bool isFollowed)?  loaded,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String nickName,  String avatar,  String sex,  String sign,  int level,  int archiveCount,  int likeNum,  int fans,  int focus)?  loaded,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case UserInfoCardLoaded() when loaded != null:
-return loaded(_that.nickName,_that.avatar,_that.sex,_that.sign,_that.level,_that.archiveCount,_that.likeNum,_that.fans,_that.focus,_that.isFollowed);case _:
+return loaded(_that.nickName,_that.avatar,_that.sex,_that.sign,_that.level,_that.archiveCount,_that.likeNum,_that.fans,_that.focus);case _:
   return orElse();
 
 }
@@ -516,10 +515,10 @@ return loaded(_that.nickName,_that.avatar,_that.sex,_that.sign,_that.level,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String nickName,  String avatar,  String sex,  String sign,  int level,  int archiveCount,  int likeNum,  int fans,  int focus,  bool isFollowed)  loaded,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String nickName,  String avatar,  String sex,  String sign,  int level,  int archiveCount,  int likeNum,  int fans,  int focus)  loaded,}) {final _that = this;
 switch (_that) {
 case UserInfoCardLoaded():
-return loaded(_that.nickName,_that.avatar,_that.sex,_that.sign,_that.level,_that.archiveCount,_that.likeNum,_that.fans,_that.focus,_that.isFollowed);}
+return loaded(_that.nickName,_that.avatar,_that.sex,_that.sign,_that.level,_that.archiveCount,_that.likeNum,_that.fans,_that.focus);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -533,10 +532,10 @@ return loaded(_that.nickName,_that.avatar,_that.sex,_that.sign,_that.level,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String nickName,  String avatar,  String sex,  String sign,  int level,  int archiveCount,  int likeNum,  int fans,  int focus,  bool isFollowed)?  loaded,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String nickName,  String avatar,  String sex,  String sign,  int level,  int archiveCount,  int likeNum,  int fans,  int focus)?  loaded,}) {final _that = this;
 switch (_that) {
 case UserInfoCardLoaded() when loaded != null:
-return loaded(_that.nickName,_that.avatar,_that.sex,_that.sign,_that.level,_that.archiveCount,_that.likeNum,_that.fans,_that.focus,_that.isFollowed);case _:
+return loaded(_that.nickName,_that.avatar,_that.sex,_that.sign,_that.level,_that.archiveCount,_that.likeNum,_that.fans,_that.focus);case _:
   return null;
 
 }
@@ -548,7 +547,7 @@ return loaded(_that.nickName,_that.avatar,_that.sex,_that.sign,_that.level,_that
 
 
 class UserInfoCardLoaded implements UserInfoCard {
-  const UserInfoCardLoaded({required this.nickName, required this.avatar, required this.sex, required this.sign, required this.level, required this.archiveCount, required this.likeNum, required this.fans, required this.focus, required this.isFollowed});
+  const UserInfoCardLoaded({required this.nickName, required this.avatar, required this.sex, required this.sign, required this.level, required this.archiveCount, required this.likeNum, required this.fans, required this.focus});
   
 
 @override final  String nickName;
@@ -560,7 +559,6 @@ class UserInfoCardLoaded implements UserInfoCard {
 @override final  int likeNum;
 @override final  int fans;
 @override final  int focus;
-@override final  bool isFollowed;
 
 /// Create a copy of UserInfoCard
 /// with the given fields replaced by the non-null parameter values.
@@ -572,16 +570,16 @@ $UserInfoCardLoadedCopyWith<UserInfoCardLoaded> get copyWith => _$UserInfoCardLo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserInfoCardLoaded&&(identical(other.nickName, nickName) || other.nickName == nickName)&&(identical(other.avatar, avatar) || other.avatar == avatar)&&(identical(other.sex, sex) || other.sex == sex)&&(identical(other.sign, sign) || other.sign == sign)&&(identical(other.level, level) || other.level == level)&&(identical(other.archiveCount, archiveCount) || other.archiveCount == archiveCount)&&(identical(other.likeNum, likeNum) || other.likeNum == likeNum)&&(identical(other.fans, fans) || other.fans == fans)&&(identical(other.focus, focus) || other.focus == focus)&&(identical(other.isFollowed, isFollowed) || other.isFollowed == isFollowed));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserInfoCardLoaded&&(identical(other.nickName, nickName) || other.nickName == nickName)&&(identical(other.avatar, avatar) || other.avatar == avatar)&&(identical(other.sex, sex) || other.sex == sex)&&(identical(other.sign, sign) || other.sign == sign)&&(identical(other.level, level) || other.level == level)&&(identical(other.archiveCount, archiveCount) || other.archiveCount == archiveCount)&&(identical(other.likeNum, likeNum) || other.likeNum == likeNum)&&(identical(other.fans, fans) || other.fans == fans)&&(identical(other.focus, focus) || other.focus == focus));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,nickName,avatar,sex,sign,level,archiveCount,likeNum,fans,focus,isFollowed);
+int get hashCode => Object.hash(runtimeType,nickName,avatar,sex,sign,level,archiveCount,likeNum,fans,focus);
 
 @override
 String toString() {
-  return 'UserInfoCard.loaded(nickName: $nickName, avatar: $avatar, sex: $sex, sign: $sign, level: $level, archiveCount: $archiveCount, likeNum: $likeNum, fans: $fans, focus: $focus, isFollowed: $isFollowed)';
+  return 'UserInfoCard.loaded(nickName: $nickName, avatar: $avatar, sex: $sex, sign: $sign, level: $level, archiveCount: $archiveCount, likeNum: $likeNum, fans: $fans, focus: $focus)';
 }
 
 
@@ -592,7 +590,7 @@ abstract mixin class $UserInfoCardLoadedCopyWith<$Res> implements $UserInfoCardC
   factory $UserInfoCardLoadedCopyWith(UserInfoCardLoaded value, $Res Function(UserInfoCardLoaded) _then) = _$UserInfoCardLoadedCopyWithImpl;
 @override @useResult
 $Res call({
- String nickName, String avatar, String sex, String sign, int level, int archiveCount, int likeNum, int fans, int focus, bool isFollowed
+ String nickName, String avatar, String sex, String sign, int level, int archiveCount, int likeNum, int fans, int focus
 });
 
 
@@ -609,7 +607,7 @@ class _$UserInfoCardLoadedCopyWithImpl<$Res>
 
 /// Create a copy of UserInfoCard
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? nickName = null,Object? avatar = null,Object? sex = null,Object? sign = null,Object? level = null,Object? archiveCount = null,Object? likeNum = null,Object? fans = null,Object? focus = null,Object? isFollowed = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? nickName = null,Object? avatar = null,Object? sex = null,Object? sign = null,Object? level = null,Object? archiveCount = null,Object? likeNum = null,Object? fans = null,Object? focus = null,}) {
   return _then(UserInfoCardLoaded(
 nickName: null == nickName ? _self.nickName : nickName // ignore: cast_nullable_to_non_nullable
 as String,avatar: null == avatar ? _self.avatar : avatar // ignore: cast_nullable_to_non_nullable
@@ -620,8 +618,7 @@ as int,archiveCount: null == archiveCount ? _self.archiveCount : archiveCount //
 as int,likeNum: null == likeNum ? _self.likeNum : likeNum // ignore: cast_nullable_to_non_nullable
 as int,fans: null == fans ? _self.fans : fans // ignore: cast_nullable_to_non_nullable
 as int,focus: null == focus ? _self.focus : focus // ignore: cast_nullable_to_non_nullable
-as int,isFollowed: null == isFollowed ? _self.isFollowed : isFollowed // ignore: cast_nullable_to_non_nullable
-as bool,
+as int,
   ));
 }
 

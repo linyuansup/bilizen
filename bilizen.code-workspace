@@ -49,6 +49,7 @@
 			"custom_lint.log": true,
 		},
 		"cSpell.words": [
+			"Backlink",
 			"bili",
 			"bilibili",
 			"bilizen",
@@ -66,6 +67,7 @@
 			"prefs",
 			"pubdate",
 			"pubspec",
+			"rcount",
 			"Rpid",
 			"rxdart",
 			"scaletempo",

@@ -64,10 +64,7 @@ class _VideoInfoAreaContent extends StatelessWidget {
   final String description;
 
   static const _itemSpacing = SizedBox(height: 16);
-  static const _contentPadding = EdgeInsets.symmetric(
-    horizontal: 16,
-    vertical: 8,
-  );
+  static const _contentPadding = EdgeInsets.fromLTRB(16, 8, 0, 8);
 
   @override
   Widget build(BuildContext context) {

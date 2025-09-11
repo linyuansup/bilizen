@@ -32,7 +32,6 @@ class SelfProvider extends _$SelfProvider {
         likeNum: await userInfo.likeNum,
         fans: await userInfo.fans,
         focus: await userInfo.focus,
-        isFollowed: await userInfo.isFollowed,
       ),
     );
   }
@@ -59,6 +58,5 @@ sealed class UserInfoCard with _$UserInfoCard {
     required int likeNum,
     required int fans,
     required int focus,
-    required bool isFollowed,
   }) = UserInfoCardLoaded;
 }

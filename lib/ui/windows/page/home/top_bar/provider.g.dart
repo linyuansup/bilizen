@@ -38,7 +38,7 @@ final class TopBarProviderProvider
   }
 }
 
-String _$topBarProviderHash() => r'f49569dd64a6a0ec1b348afa4f2e304977606804';
+String _$topBarProviderHash() => r'b090f3d804d6b8a371c951db4d62282c71e836e2';
 
 abstract class _$TopBarProvider extends $Notifier<TopBarState> {
   TopBarState build();

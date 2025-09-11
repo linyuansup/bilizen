@@ -1,10 +1,12 @@
 import 'package:bilizen/data/api/video/info.dart';
+import 'package:bilizen/inject/inject.dart';
+import 'package:bilizen/model/comment_bar_info.dart';
 import 'package:bilizen/model/staff.dart';
 import 'package:bilizen/model/user.dart';
 import 'package:bilizen/model/video_playlist.dart';
 import 'package:bilizen/package/future_class/annotations.dart';
 import 'package:bilizen/package/future_class/future_class_base.dart';
-import 'package:bilizen/inject/inject.dart';
+import 'package:bilizen/util/bilibili.dart';
 
 part 'video.future.dart';
 
@@ -12,6 +14,11 @@ part 'video.future.dart';
 class Video extends _$Video {
   final String bid;
   final _videoApi = getIt<VideoApi>();
+
+  late CommentBarInfo commentBarInfo = CommentBarInfo(
+    type: 1,
+    oid: toAv(bid),
+  );
 
   Video({required this.bid});
 
