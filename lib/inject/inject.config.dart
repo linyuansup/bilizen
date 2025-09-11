@@ -31,7 +31,7 @@ import 'package:bilizen/logic/video_recommend/video_recommend.dart' as _i847;
 import 'package:bilizen/logic/window_state.dart' as _i224;
 import 'package:bilizen/package/playback_manager/playback_manager.dart'
     as _i907;
-import 'package:bilizen/ui/windows/router.dart' as _i130;
+import 'package:bilizen/ui/windows/page/router.dart' as _i609;
 import 'package:bilizen/util/path_resolver.dart' as _i625;
 import 'package:cookie_jar/cookie_jar.dart' as _i557;
 import 'package:dio/dio.dart' as _i361;
@@ -62,11 +62,11 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.singleton<_i814.VideoOnlineManager>(() => _i814.VideoOnlineManager());
     gh.singleton<_i224.WindowStateManager>(() => _i224.WindowStateManager());
-    gh.singleton<_i130.WindowsAppRouter>(() => _i130.WindowsAppRouter());
     await gh.singletonAsync<_i625.PathResolver>(
       () => _i625.PathResolver.create(),
       preResolve: true,
     );
+    gh.singleton<_i609.WindowsRouter>(() => _i609.WindowsRouter());
     gh.singleton<_i361.Dio>(
       () => dioInjectable.dio(gh<_i557.PersistCookieJar>(), gh<_i993.Talker>()),
     );

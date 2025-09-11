@@ -1,4 +1,6 @@
+import 'package:bilizen/inject/inject.dart';
 import 'package:bilizen/ui/windows/page/home/left_bar/provider.dart';
+import 'package:bilizen/ui/windows/page/router.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -68,7 +70,9 @@ class LeftBar extends StatelessWidget {
                 ),
               ),
               onPressed: () async {
-                await context.pushNamed(item.name);
+                await GoRouter.of(
+                  getIt<WindowsRouter>().home.context,
+                ).pushNamed(item.name);
               },
               child: Icon(
                 icon,
