@@ -1,4 +1,5 @@
 import 'package:bilizen/inject/inject.dart';
+import 'package:bilizen/ui/windows/page/home/center/page.dart';
 import 'package:bilizen/ui/windows/page/home/left_bar/provider.dart';
 import 'package:bilizen/ui/windows/page/router.dart';
 import 'package:fluent_ui/fluent_ui.dart';

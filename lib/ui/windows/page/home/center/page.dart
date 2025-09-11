@@ -50,3 +50,24 @@ class CenterPage extends StatelessWidget {
     );
   }
 }
+
+enum HomePageKind { suggest, focus, self, setting, search, unknown }
+
+extension HomePageKindExtension on HomePageKind {
+  static HomePageKind fromName(String? name) {
+    switch (name) {
+      case "suggest":
+        return HomePageKind.suggest;
+      case "focus":
+        return HomePageKind.focus;
+      case "self":
+        return HomePageKind.self;
+      case "setting":
+        return HomePageKind.setting;
+      case "search":
+        return HomePageKind.search;
+      default:
+        return HomePageKind.unknown;
+    }
+  }
+}

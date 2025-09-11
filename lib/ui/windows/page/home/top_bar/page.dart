@@ -295,7 +295,10 @@ class _SearchBar extends StatelessWidget {
             ),
             Consumer(
               builder: (context, ref, child) {
-                final color = GoRouter.of(context).state.name == "search"
+                final color =
+                    ref.watch(
+                      topBarProvider.select((state) => state.isSearchPage),
+                    )
                     ? Colors.blue
                     : Colors.transparent;
                 return Container(
@@ -323,10 +326,7 @@ class __SearchInputAreaState extends ConsumerState<_SearchInputArea> {
   late final FocusNode _focusNode = FocusNode(
     onKeyEvent: (node, event) {
       if (event.logicalKey == LogicalKeyboardKey.enter) {
-        context.pushNamed(
-          "search",
-          pathParameters: {"keyword": _controller.text},
-        );
+        _goToSearch(_controller.text);
         key.currentState?.dismissOverlay();
         return KeyEventResult.handled;
       }
@@ -334,6 +334,14 @@ class __SearchInputAreaState extends ConsumerState<_SearchInputArea> {
     },
   );
   final key = GlobalKey<AutoSuggestBoxState>();
+
+  Future<void> _goToSearch(String keyword) async {
+    await GoRouter.of(getIt<WindowsRouter>().home.context).pushNamed(
+      "search",
+      extra: keyword,
+    );
+    key.currentState?.dismissOverlay();
+  }
 
   @override
   void initState() {
@@ -378,10 +386,7 @@ class __SearchInputAreaState extends ConsumerState<_SearchInputArea> {
         ),
       ),
       onSelected: (value) async {
-        await context.pushNamed(
-          "search",
-          pathParameters: {"keyword": _controller.text},
-        );
+        await _goToSearch(value.label);
       },
     );
   }

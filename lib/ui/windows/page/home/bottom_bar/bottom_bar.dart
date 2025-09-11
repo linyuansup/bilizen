@@ -1,5 +1,7 @@
+import 'package:bilizen/inject/inject.dart';
 import 'package:bilizen/package/playback_manager/playback_manager.dart';
 import 'package:bilizen/ui/windows/page/home/bottom_bar/provider.dart';
+import 'package:bilizen/ui/windows/page/router.dart';
 import 'package:bilizen/ui/windows/widget/video_card.dart';
 import 'package:bilizen/util/string.dart';
 import 'package:bilizen/util/toastification.dart';
@@ -91,20 +93,25 @@ class _CoverArea extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var state = ref.watch(bottomBarProvider);
+    final Widget child;
     if (state is BottomBarStateNotPlaying) {
-      return SizedBox(width: 96);
-    }
-    state = state as BottomBarStatePlaying;
-    return GestureDetector(
-      onTap: () async {
-        await context.pushNamed("video");
-      },
-      child: RepaintBoundary(
+      child = SizedBox(width: 96);
+    } else {
+      state = state as BottomBarStatePlaying;
+      child = RepaintBoundary(
         child: CachedNetworkImage(
           width: 96,
           imageUrl: state.video.cover,
         ),
-      ),
+      );
+    }
+    return GestureDetector(
+      onTap: () async {
+        await GoRouter.of(
+          getIt<WindowsRouter>().main.context,
+        ).pushNamed("video");
+      },
+      child: child,
     );
   }
 }

@@ -35,6 +35,7 @@ class WindowsApp extends StatelessWidget {
               ),
               GoRoute(
                 path: "/video",
+                name: "video",
                 builder: (context, state) {
                   return VideoPage();
                 },

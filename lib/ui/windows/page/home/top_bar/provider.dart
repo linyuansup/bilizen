@@ -3,6 +3,7 @@ import 'package:bilizen/logic/account_manager/account_manager.dart';
 import 'package:bilizen/logic/search/search_manager.dart';
 import 'package:bilizen/logic/window_state.dart';
 import 'package:bilizen/model/self.dart';
+import 'package:bilizen/ui/windows/page/home/center/page.dart';
 import 'package:bilizen/ui/windows/page/router.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -16,6 +17,7 @@ class TopBarProvider extends _$TopBarProvider {
   final _windowStateStream = getIt<WindowStateManager>().windowStateStream;
   final _account = getIt<AccountManager>().loginStatus;
   final _searchManager = getIt<SearchManager>();
+  final router = getIt<WindowsRouter>().home.currentPage;
 
   @override
   TopBarState build() {
@@ -25,18 +27,19 @@ class TopBarProvider extends _$TopBarProvider {
     _account.listen((self) async {
       state = state.copyWith(userInfo: await _getUserInfo(self));
     });
-    getIt<WindowsRouter>().home.currentPage
-        .map((value) => value.canPop())
-        .distinct()
-        .listen((value) {
-          state = state.copyWith(canPop: value);
-        });
+    router.distinct().listen((value) {
+      state = state.copyWith(
+        canPop: value.canPop(),
+        isSearchPage: value.state.name == HomePageKind.search.name,
+      );
+    });
 
     return TopBarState(
       windowState: _windowStateStream.value,
       userInfo: null,
       searchRecommends: [],
       canPop: false,
+      isSearchPage: false,
     );
   }
 
@@ -86,6 +89,7 @@ sealed class TopBarState with _$TopBarState {
     required UserInfo? userInfo,
     required List<String> searchRecommends,
     required bool canPop,
+    required bool isSearchPage,
   }) = _TopBarState;
 }
 
