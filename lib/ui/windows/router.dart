@@ -1,3 +1,5 @@
+import 'package:bilizen/package/router_observer/current_route_manager.dart';
+import 'package:bilizen/package/router_observer/router_observer.dart';
 import 'package:bilizen/ui/windows/page/home/center/focus/page.dart';
 import 'package:bilizen/ui/windows/page/home/center/search/page.dart';
 import 'package:bilizen/ui/windows/page/home/center/search/provider.dart';
@@ -6,15 +8,20 @@ import 'package:bilizen/ui/windows/page/home/center/setting/page.dart';
 import 'package:bilizen/ui/windows/page/home/center/suggest/page.dart';
 import 'package:bilizen/ui/windows/page/home/page.dart';
 import 'package:bilizen/ui/windows/page/video/page.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 
 @singleton
 class WindowsAppRouter {
-  final router = GoRouter(
+  final mainRouter = CurrentRouteManager();
+  final homepageRouter = CurrentRouteManager();
+
+  late final router = GoRouter(
     initialLocation: "/suggest",
+    observers: [
+      RouterObserver(mainRouter),
+    ],
     routes: [
       GoRoute(
         path: "/video",
@@ -23,84 +30,55 @@ class WindowsAppRouter {
           return VideoPage();
         },
       ),
-
-      StatefulShellRoute.indexedStack(
-        builder: (context, state, navigationShell) {
-          return HomePage(
-            center: navigationShell,
-            onNavigationChanged: (index) {
-              navigationShell.goBranch(index);
-            },
-          );
+      ShellRoute(
+        observers: [
+          RouterObserver(homepageRouter),
+        ],
+        builder: (context, state, child) {
+          return HomePage(center: child);
         },
-        branches: [
-          StatefulShellBranch(
-            routes: [
-              GoRoute(
-                path: "/suggest",
-                name: "suggest",
-                builder: (context, state) {
-                  return SuggestPage();
-                },
-              ),
-            ],
+        routes: [
+          GoRoute(
+            path: "/suggest",
+            name: "suggest",
+            builder: (context, state) {
+              return SuggestPage();
+            },
           ),
-
-          StatefulShellBranch(
-            routes: [
-              GoRoute(
-                path: "/focus",
-                name: "focus",
-                builder: (context, state) {
-                  return FocusPage();
-                },
-              ),
-            ],
+          GoRoute(
+            path: "/setting",
+            name: "setting",
+            builder: (context, state) {
+              return SettingPage();
+            },
           ),
-
-          StatefulShellBranch(
-            routes: [
-              GoRoute(
-                path: "/self",
-                name: "self",
-                builder: (context, state) {
-                  return SelfPage();
-                },
-              ),
-            ],
+          GoRoute(
+            path: "/focus",
+            name: "focus",
+            builder: (context, state) {
+              return FocusPage();
+            },
           ),
-
-          StatefulShellBranch(
-            routes: [
-              GoRoute(
-                path: "/setting",
-                name: "setting",
-                builder: (context, state) {
-                  return SettingPage();
-                },
-              ),
-            ],
+          GoRoute(
+            path: "/self",
+            name: "self",
+            builder: (context, state) {
+              return SelfPage();
+            },
           ),
-
-          StatefulShellBranch(
-            routes: [
-              GoRoute(
-                path: "/search/:keyword",
-                name: "search",
-                builder: (context, state) {
-                  return Consumer(
-                    builder: (context, ref, child) {
-                      Future.delayed(Duration.zero, () async {
-                        ref.read(searchPageProvider.notifier).clear();
-                      });
-                      return SearchPage(
-                        keyword: state.pathParameters['keyword']!,
-                      );
-                    },
-                  );
+          GoRoute(
+            path: "/search/:keyword",
+            name: "search",
+            builder: (context, state) {
+              return Consumer(
+                builder: (context, ref, child) {
+                  Future.delayed(Duration.zero, () async {
+                    ref.read(searchPageProvider.notifier).clear();
+                  });
+                  return SearchPage(keyword: state.pathParameters['keyword']!);
                 },
-              ),
-            ],
+              );
+            },
           ),
         ],
       ),
