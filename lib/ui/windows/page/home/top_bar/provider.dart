@@ -3,6 +3,7 @@ import 'package:bilizen/logic/account_manager/account_manager.dart';
 import 'package:bilizen/logic/search/search_manager.dart';
 import 'package:bilizen/logic/window_state.dart';
 import 'package:bilizen/model/self.dart';
+import 'package:bilizen/ui/windows/page/router.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:window_manager/window_manager.dart';
@@ -24,6 +25,12 @@ class TopBarProvider extends _$TopBarProvider {
     _account.listen((self) async {
       state = state.copyWith(userInfo: await _getUserInfo(self));
     });
+    getIt<WindowsRouter>().home.currentPage
+        .map((value) => value.canPop())
+        .distinct()
+        .listen((value) {
+          state = state.copyWith(canPop: value);
+        });
 
     return TopBarState(
       windowState: _windowStateStream.value,
