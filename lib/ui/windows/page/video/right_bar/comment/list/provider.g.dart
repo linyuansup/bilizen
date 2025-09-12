@@ -6,52 +6,54 @@ part of 'provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-@ProviderFor(RightBarProvider)
-const rightBarProvider = RightBarProviderProvider._();
+@ProviderFor(VideoCommentListProvider)
+const videoCommentListProvider = VideoCommentListProviderProvider._();
 
-final class RightBarProviderProvider
-    extends $NotifierProvider<RightBarProvider, RightBarState> {
-  const RightBarProviderProvider._()
+final class VideoCommentListProviderProvider
+    extends $NotifierProvider<VideoCommentListProvider, VideoCommentListState> {
+  const VideoCommentListProviderProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'rightBarProvider',
+        name: r'videoCommentListProvider',
         isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$rightBarProviderHash();
+  String debugGetCreateSourceHash() => _$videoCommentListProviderHash();
 
   @$internal
   @override
-  RightBarProvider create() => RightBarProvider();
+  VideoCommentListProvider create() => VideoCommentListProvider();
 
   /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(RightBarState value) {
+  Override overrideWithValue(VideoCommentListState value) {
     return $ProviderOverride(
       origin: this,
-      providerOverride: $SyncValueProvider<RightBarState>(value),
+      providerOverride: $SyncValueProvider<VideoCommentListState>(value),
     );
   }
 }
 
-String _$rightBarProviderHash() => r'1a1d90581a856fbbc3d35fea57d4d9186debfa77';
+String _$videoCommentListProviderHash() =>
+    r'a0badf91b9861176190d1c50636891a4a9856557';
 
-abstract class _$RightBarProvider extends $Notifier<RightBarState> {
-  RightBarState build();
+abstract class _$VideoCommentListProvider
+    extends $Notifier<VideoCommentListState> {
+  VideoCommentListState build();
   @$mustCallSuper
   @override
   void runBuild() {
     final created = build();
-    final ref = this.ref as $Ref<RightBarState, RightBarState>;
+    final ref = this.ref as $Ref<VideoCommentListState, VideoCommentListState>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<RightBarState, RightBarState>,
-              RightBarState,
+              AnyNotifier<VideoCommentListState, VideoCommentListState>,
+              VideoCommentListState,
               Object?,
               Object?
             >;

@@ -5,8 +5,8 @@ import 'package:bilizen/util/string.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class VideoInfoArea extends ConsumerWidget {
-  const VideoInfoArea({super.key});
+class VideoInfoPage extends ConsumerWidget {
+  const VideoInfoPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

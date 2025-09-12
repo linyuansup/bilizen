@@ -34,7 +34,7 @@ class Comment {
 
   factory Comment.fromApi(Map<String, dynamic> json) {
     final member = json["member"];
-    final sender = User(id: member["mid"]);
+    final sender = User(id: int.parse(member["mid"] as String));
     sender.setNickName(member["uname"]);
     sender.setSex(member["sex"]);
     sender.setSign(member["sign"]);
@@ -60,9 +60,11 @@ class Comment {
           ? LikeStatus.disliked
           : LikeStatus.none,
       content: CommentContent.fromApi(json["content"]),
-      repliesPreview: (json["replies"] as List).map((e) {
-        return Comment.fromApi(e);
-      }).toList(),
+      repliesPreview:
+          (json["replies"] as List?)?.map((e) {
+            return Comment.fromApi(e);
+          }).toList() ??
+          [],
       isUpLike: json["up_action"]["like"],
       isUpReply: json["up_action"]["reply"],
     );
@@ -119,18 +121,22 @@ class CommentContent {
   factory CommentContent.fromApi(Map<String, dynamic> json) {
     return CommentContent(
       message: json["message"],
-      mentionEmojis: (json["emote"] as Map<String, dynamic>).values.map((e) {
-        return Emoji(
-          id: e["id"],
-          packageId: e["package_id"],
-          text: e["text"],
-          url: e["url"],
-          type: EmojiType.values.firstWhere((type) => type.id == e["type"]),
-        );
-      }).toList(),
-      images: (json["pictures"] as List)
-          .map((e) => e["img_src"] as String)
-          .toList(),
+      mentionEmojis:
+          (json["emote"] as Map<String, dynamic>?)?.values.map((e) {
+            return Emoji(
+              id: e["id"],
+              packageId: e["package_id"],
+              text: e["text"],
+              url: e["url"],
+              type: EmojiType.values.firstWhere((type) => type.id == e["type"]),
+            );
+          }).toList() ??
+          [],
+      images:
+          (json["pictures"] as List?)
+              ?.map((e) => e["img_src"] as String)
+              .toList() ??
+          [],
     );
   }
 }

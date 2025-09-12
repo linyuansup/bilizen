@@ -20,7 +20,8 @@ class RouterInformation {
 
 @singleton
 class WindowsRouter {
-  final RouterInformation main = RouterInformation("main");
-
-  final RouterInformation home = RouterInformation("home");
+  final main = RouterInformation("main");
+  final video = RouterInformation("video");
+  final home = RouterInformation("home");
+  final videoComment = RouterInformation("video_comment");
 }

@@ -1,6 +1,8 @@
 import 'package:dyn_mouse_scroll/dyn_mouse_scroll.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 
+typedef OnBottom = Future<void> Function();
+
 class ScrollBarListView extends StatefulWidget {
   const ScrollBarListView({
     super.key,
@@ -8,12 +10,14 @@ class ScrollBarListView extends StatefulWidget {
     this.padding,
     required this.itemCount,
     this.scrollDirection = Axis.vertical,
+    this.onBottom,
   });
 
   final Widget? Function(BuildContext, int) itemBuilder;
   final EdgeInsetsGeometry? padding;
   final Axis scrollDirection;
   final int itemCount;
+  final OnBottom? onBottom;
 
   @override
   State<ScrollBarListView> createState() => _ScrollBarListViewState();
@@ -21,11 +25,32 @@ class ScrollBarListView extends StatefulWidget {
 
 class _ScrollBarListViewState extends State<ScrollBarListView> {
   late ScrollController _controller;
+  bool _isFetching = false;
+  late Function() _listener;
+
+  void _addListener() {
+    _listener = () async {
+      if (_isBottom && !_isFetching) {
+        _isFetching = true;
+        await widget.onBottom?.call();
+        _isFetching = false;
+      }
+    };
+    _controller.addListener(_listener);
+  }
 
   @override
   void dispose() {
+    _controller.removeListener(_listener);
     _controller.dispose();
     super.dispose();
+  }
+
+  bool get _isBottom {
+    if (!_controller.hasClients) return false;
+    final maxScroll = _controller.position.maxScrollExtent;
+    final currentScroll = _controller.offset;
+    return currentScroll >= maxScroll - 200; // 距离底部200像素时触发
   }
 
   @override
@@ -33,6 +58,7 @@ class _ScrollBarListViewState extends State<ScrollBarListView> {
     return DynMouseScroll(
       builder: (context, controller, physics) {
         _controller = controller;
+        _addListener();
         return Scrollbar(
           controller: _controller,
           child: ListView.builder(

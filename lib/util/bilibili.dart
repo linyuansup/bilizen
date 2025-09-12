@@ -1,90 +1,65 @@
-const String _table =
-    'fZodR9XQDSUm21yCkr6zBqiveYah8bt4xsWpHnJE7jL5VG3guMTKNPAwcF';
-
-const Map<int, int> _tr = {
-  11: 0,
-  10: 1,
-  3: 2,
-  8: 3,
-  4: 4,
-  6: 5,
-  2: 6,
-  9: 7,
-  5: 8,
-  7: 9,
-};
-
-const Map<int, int> _s = {
-  0: 11,
-  1: 10,
-  2: 3,
-  3: 8,
-  4: 4,
-  5: 6,
-  6: 2,
-  7: 9,
-  8: 5,
-  9: 7,
-};
-
-const int _xor = 177451812;
-const int _add = 8728348608;
-
-String toBv(int av) {
-  int x = (av + _add) ^ _xor;
-  List<String> r = List.filled(11, '');
-  r[0] = 'B';
-  r[1] = 'V';
-  r[4] = '1';
-  for (int i = 0; i < 6; i++) {
-    r[_s[i]!] = _table[x ~/ (58 ^ i) % 58];
+String toBv(int aid) {
+  const String codeTable =
+      'FcwAPNKTMug3GV5Lj7EJnHpWsx4tb8haYeviqBz6rkCy12mUSDQX9RdoZf';
+  const int xorCode = 23442827791579;
+  const int maxAvid = 1 << 51;
+  List<String> bytes = [
+    'B',
+    'V',
+    '1',
+    '0',
+    '0',
+    '0',
+    '0',
+    '0',
+    '0',
+    '0',
+    '0',
+    '0',
+  ];
+  int bvIdx = bytes.length - 1;
+  int tmp = (aid | maxAvid) ^ xorCode;
+  while (tmp > 0) {
+    bytes[bvIdx] = codeTable[tmp % 58];
+    tmp ~/= 58;
+    bvIdx--;
+  }
+  void swap(int i, int j) {
+    String temp = bytes[i];
+    bytes[i] = bytes[j];
+    bytes[j] = temp;
   }
 
-  return r.join('');
+  swap(3, 9);
+  swap(4, 7);
+  return bytes.join('');
 }
 
-int toAv(String bv) {
-  String bvCode = bv.toUpperCase();
-  if (bvCode.startsWith('BV')) {
-    bvCode = bvCode.substring(2);
+int toAv(String bvid) {
+  const String codeTable =
+      'FcwAPNKTMug3GV5Lj7EJnHpWsx4tb8haYeviqBz6rkCy12mUSDQX9RdoZf';
+  const int xorCode = 23442827791579;
+  const int maxAvid = (1 << 51) - 1;
+
+  String swap(String str, int i, int j) {
+    List<String> chars = str.split('');
+    String temp = chars[i];
+    chars[i] = chars[j];
+    chars[j] = temp;
+    return chars.join('');
   }
 
-  if (bvCode.length != 9) {
-    throw ArgumentError('Invalid BV format: $bv');
+  bvid = swap(bvid, 3, 9);
+  bvid = swap(bvid, 4, 7);
+
+  bvid = bvid.substring(3);
+  int tmp = 0;
+
+  for (int i = 0; i < bvid.length; i++) {
+    int idx = codeTable.indexOf(bvid[i]);
+    tmp = tmp * 58 + idx;
   }
 
-  int r = 0;
-  for (int i = 0; i < 6; i++) {
-    int charIndex = _table.indexOf(bvCode[_tr[i]!]);
-    if (charIndex == -1) {
-      throw ArgumentError('Invalid character in BV: ${bvCode[_tr[i]!]}');
-    }
-    r += charIndex * (58 ^ i);
-  }
-
-  return (r - _add) ^ _xor;
-}
-
-bool isValidBv(String bv) {
-  try {
-    String bvCode = bv.toUpperCase();
-    if (bvCode.startsWith('BV')) {
-      bvCode = bvCode.substring(2);
-    }
-
-    if (bvCode.length != 9) return false;
-    if (bvCode[2] != '1') return false;
-    for (int i = 0; i < bvCode.length; i++) {
-      if (i == 2) continue;
-      if (!_table.contains(bvCode[i])) return false;
-    }
-
-    return true;
-  } catch (e) {
-    return false;
-  }
-}
-
-bool isValidAv(int av) {
-  return av > 0 && av <= 2147483647;
+  int aid = (tmp & maxAvid) ^ xorCode;
+  return aid;
 }

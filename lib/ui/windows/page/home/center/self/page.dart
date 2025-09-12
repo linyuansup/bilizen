@@ -3,6 +3,7 @@ import 'package:bilizen/ui/windows/page/home/center/self/provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:nil/nil.dart';
 
 class SelfPage extends ConsumerWidget {
   const SelfPage({super.key});
@@ -145,7 +146,7 @@ class _UserInfoCard extends StatelessWidget {
   }
 
   Widget _buildSignature(BuildContext context) {
-    if (!card.sign.isNotEmpty) return const SizedBox.shrink();
+    if (!card.sign.isNotEmpty) return nil;
     return Text(
       card.sign,
       maxLines: 1,

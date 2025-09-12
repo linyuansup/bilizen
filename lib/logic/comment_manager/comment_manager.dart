@@ -12,14 +12,14 @@ class CommentManager {
   CommentManager(this._commentListApi);
 
   Future<GetCommentResult> getVideoComments({
-    required int oid,
+    required int avid,
     SortMode sort = SortMode.like,
     bool showHot = true,
     int pageSize = 10,
   }) async {
     return await _getComment(
       type: CommentToType.video,
-      oid: oid,
+      oid: avid,
       sort: sort,
       showHot: showHot,
       pageSize: pageSize,

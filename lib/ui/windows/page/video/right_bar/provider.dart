@@ -1,3 +1,5 @@
+import 'package:bilizen/inject/inject.dart';
+import 'package:bilizen/ui/windows/page/router.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -8,13 +10,15 @@ part 'provider.freezed.dart';
 class RightBarProvider extends _$RightBarProvider {
   @override
   RightBarState build() {
+    getIt<WindowsRouter>().video.currentPage.listen((page) {
+      state = state.copyWith(
+        page: VideoRightBarPage.values.byName(page.state.name!),
+      );
+    });
+
     return RightBarState.initial(
       page: VideoRightBarPage.info,
     );
-  }
-
-  set page(VideoRightBarPage page) {
-    state = state.copyWith(page: page);
   }
 }
 

@@ -9,6 +9,26 @@ import 'package:talker/talker.dart';
 import 'package:talker_riverpod_logger/talker_riverpod_logger.dart';
 import 'package:toastification/toastification.dart';
 
+final _router = GoRouter(
+  navigatorKey: getIt<WindowsRouter>().main.key,
+  observers: [getIt<WindowsRouter>().main.observer],
+  routes: [
+    GoRoute(
+      path: "/",
+      builder: (context, state) {
+        return HomePage();
+      },
+    ),
+    GoRoute(
+      path: "/video",
+      name: "video",
+      builder: (context, state) {
+        return VideoPage();
+      },
+    ),
+  ],
+);
+
 class WindowsApp extends StatelessWidget {
   const WindowsApp({super.key});
 
@@ -23,25 +43,7 @@ class WindowsApp extends StatelessWidget {
             accentColor: Colors.blue,
             fontFamily: 'Microsoft YaHei',
           ),
-          routerConfig: GoRouter(
-            navigatorKey: getIt<WindowsRouter>().main.key,
-            observers: [getIt<WindowsRouter>().main.observer],
-            routes: [
-              GoRoute(
-                path: "/",
-                builder: (context, state) {
-                  return HomePage();
-                },
-              ),
-              GoRoute(
-                path: "/video",
-                name: "video",
-                builder: (context, state) {
-                  return VideoPage();
-                },
-              ),
-            ],
-          ),
+          routerConfig: _router,
         ),
       ),
     );

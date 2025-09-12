@@ -2,6 +2,7 @@ import 'package:bilizen/logic/account_manager/qr_login_status.dart';
 import 'package:bilizen/ui/windows/page/home/center/self/login/qr/provider.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:nil/nil.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
 
 class QrLoginPage extends ConsumerWidget {
@@ -239,7 +240,7 @@ class _InstructionText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (status is QrLoginScanned) {
-      return const SizedBox.shrink();
+      return nil;
     }
 
     return Text(

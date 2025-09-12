@@ -1,5 +1,6 @@
 import 'package:dyn_mouse_scroll/dyn_mouse_scroll.dart';
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:nil/nil.dart';
 
 typedef OnBottom = Future<void> Function();
 
@@ -110,7 +111,7 @@ class _AutoScaleGridViewState extends State<AutoScaleGridView> {
     ScrollPhysics physics,
   ) {
     if (widget.children.isEmpty) {
-      return const SizedBox.shrink();
+      return nil;
     }
     final totalItemWidth =
         crossAxisCount * widget.itemSize.width +
