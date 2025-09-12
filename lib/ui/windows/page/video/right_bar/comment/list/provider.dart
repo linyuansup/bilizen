@@ -39,24 +39,83 @@ class VideoCommentListProvider extends _$VideoCommentListProvider {
         avid: toAv(currentPlaying.item.video.bid),
       );
       state = VideoCommentListState.loaded(
-        comments: currentComment!.comments,
+        comments: await fromModelComment(currentComment!.comments),
+        upUid:
+            (await getIt<PlaybackManager>()
+                    .currentPlaying
+                    .value!
+                    .item
+                    .video
+                    .uploader)
+                .id,
       );
       return;
     }
     currentComment = await currentComment!.next();
-    state = VideoCommentListState.loaded(
+    state = (state as VideoCommentListStateLoaded).copyWith(
       comments: [
         ...(state as VideoCommentListStateLoaded).comments,
-        ...currentComment!.comments,
+        ...await fromModelComment(currentComment!.comments),
       ],
     );
   }
+
+  Future<List<CommentData>> fromModelComment(
+    List<Comment> comments,
+  ) async {
+    return await Future.wait(
+      comments.map((e) async {
+        return CommentData(
+          id: e.commentId,
+          repliesPreview: await fromModelComment(e.repliesPreview),
+          totalReplyNum: e.totalReplyNum,
+          sender: UserData(
+            uid: e.sender.id,
+            avatar: await e.sender.avatar,
+            nickName: await e.sender.nickName,
+          ),
+          content: e.content,
+          sendTime: e.sendTime,
+          isUpReply: e.isUpReply,
+          isUpLike: e.isUpLike,
+          likeStatus: e.likeStatus,
+          like: e.like,
+        );
+      }).toList(),
+    );
+  }
+}
+
+@freezed
+sealed class CommentData with _$CommentData {
+  const factory CommentData({
+    required int id,
+    required List<CommentData> repliesPreview,
+    required int totalReplyNum,
+    required UserData sender,
+    required CommentContent content,
+    required int sendTime,
+    required bool isUpReply,
+    required bool isUpLike,
+    required LikeStatus likeStatus,
+    required int like,
+  }) = _CommentData;
+}
+
+@freezed
+sealed class UserData with _$UserData {
+  const factory UserData({
+    required int uid,
+    required String avatar,
+    required String nickName,
+  }) = _UserData;
 }
 
 @freezed
 sealed class VideoCommentListState with _$VideoCommentListState {
   const factory VideoCommentListState.loading() = VideoCommentListStateLoading;
   const factory VideoCommentListState.loaded({
-    required List<Comment> comments,
+    required int upUid,
+    required List<CommentData> comments,
   }) = VideoCommentListStateLoaded;
 }

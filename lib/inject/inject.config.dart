@@ -62,11 +62,11 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.singleton<_i814.VideoOnlineManager>(() => _i814.VideoOnlineManager());
     gh.singleton<_i224.WindowStateManager>(() => _i224.WindowStateManager());
+    gh.singleton<_i609.WindowsRouter>(() => _i609.WindowsRouter());
     await gh.singletonAsync<_i625.PathResolver>(
       () => _i625.PathResolver.create(),
       preResolve: true,
     );
-    gh.singleton<_i609.WindowsRouter>(() => _i609.WindowsRouter());
     gh.singleton<_i361.Dio>(
       () => dioInjectable.dio(gh<_i557.PersistCookieJar>(), gh<_i993.Talker>()),
     );

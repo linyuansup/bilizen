@@ -1,8 +1,11 @@
 import 'package:bilizen/inject/inject.dart';
 import 'package:bilizen/ui/windows/page/router.dart';
 import 'package:bilizen/ui/windows/page/video/right_bar/comment/detail/page.dart';
+import 'package:bilizen/ui/windows/page/video/right_bar/comment/detail/provider.dart';
 import 'package:bilizen/ui/windows/page/video/right_bar/comment/list/page.dart';
+import 'package:bilizen/ui/windows/page/video/right_bar/comment/list/provider.dart';
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 final _router = GoRouter(
@@ -21,7 +24,14 @@ final _router = GoRouter(
       path: "/detail",
       name: "detail",
       builder: (context, state) {
-        return VideoCommentDetailPage();
+        return Consumer(
+          builder: (_, WidgetRef ref, __) {
+            Future.delayed(Duration.zero, () {
+              ref.read(videoCommentDetailProvider.notifier).reload();
+            });
+            return VideoCommentDetailPage(root: state.extra as CommentData);
+          },
+        );
       },
     ),
   ],

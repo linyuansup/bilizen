@@ -1,11 +1,13 @@
 import 'package:bilizen/inject/inject.dart';
 import 'package:bilizen/ui/windows/page/home/center/focus/page.dart';
 import 'package:bilizen/ui/windows/page/home/center/search/page.dart';
+import 'package:bilizen/ui/windows/page/home/center/search/provider.dart';
 import 'package:bilizen/ui/windows/page/home/center/self/page.dart';
 import 'package:bilizen/ui/windows/page/home/center/setting/page.dart';
 import 'package:bilizen/ui/windows/page/home/center/suggest/page.dart';
 import 'package:bilizen/ui/windows/page/router.dart';
-import 'package:flutter/material.dart';
+import 'package:fluent_ui/fluent_ui.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 final _router = GoRouter(
@@ -36,7 +38,14 @@ final _router = GoRouter(
     GoRoute(
       path: '/search',
       name: "search",
-      builder: (context, state) => SearchPage(keyword: state.extra as String),
+      builder: (context, state) => Consumer(
+        builder: (_, WidgetRef ref, __) {
+          Future.delayed(Duration.zero, () {
+            ref.read(searchPageProvider.notifier).clear();
+          });
+          return SearchPage(keyword: state.extra as String);
+        },
+      ),
     ),
   ],
 );

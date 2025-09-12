@@ -27,13 +27,13 @@ class CommentManager {
   }
 
   Future<GetReplyResult> getVideoReplies({
-    required int oid,
+    required int avid,
     required int root,
-    int pageSize = 10,
+    int pageSize = 20,
   }) async {
     return await _getReply(
       type: CommentToType.video,
-      oid: oid,
+      oid: avid,
       root: root,
       pageSize: pageSize,
     );
@@ -78,6 +78,7 @@ class CommentManager {
 
     return GetCommentResult(
       type: type,
+      finished: false,
       oid: oid,
       sort: sort,
       showHot: showHot,

@@ -5,10 +5,10 @@ import 'package:bilizen/model/comment.dart';
 
 extension CommentExtension on Comment {
   Future<GetReplyResult> getReplies({
-    int pageSize = 10,
+    int pageSize = 20,
   }) async {
     return await getIt<CommentManager>().getVideoReplies(
-      oid: to.id,
+      avid: to.id,
       root: rootId,
       pageSize: pageSize,
     );

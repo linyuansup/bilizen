@@ -11,7 +11,8 @@ class GetCommentResult {
   final bool showHot;
   final int page;
   final int pageSize;
-  final List<Comment> comments;
+  List<Comment> comments;
+  final bool finished;
 
   GetCommentResult({
     required this.type,
@@ -21,9 +22,14 @@ class GetCommentResult {
     required this.page,
     required this.pageSize,
     required this.comments,
+    required this.finished,
   });
 
   Future<GetCommentResult> next() async {
+    if (finished) {
+      comments = [];
+      return this;
+    }
     final result = await getIt<CommentListApi>().getComment(
       type: type.id,
       oid: oid,
@@ -38,6 +44,7 @@ class GetCommentResult {
       page: page + 1,
       pageSize: pageSize,
       comments: getListCommentApiResult(result),
+      finished: result.isEmpty,
     );
   }
 }
