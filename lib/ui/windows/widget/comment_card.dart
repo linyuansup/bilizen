@@ -252,40 +252,35 @@ class CommentCard extends StatelessWidget {
         Stack(
           clipBehavior: Clip.none,
           children: [
-            GestureDetector(
-              onTap: () {
-                // TODO: 实现点赞功能
-              },
-              child: Container(
-                padding: const EdgeInsets.all(6),
-                decoration: BoxDecoration(
-                  color: comment.likeStatus == LikeStatus.liked
-                      ? Colors.blue
-                      : Colors.transparent,
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      FluentIcons.like,
-                      size: 16,
+            Container(
+              padding: const EdgeInsets.all(6),
+              decoration: BoxDecoration(
+                color: comment.likeStatus == LikeStatus.liked
+                    ? Colors.blue
+                    : Colors.transparent,
+                borderRadius: BorderRadius.circular(4),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    FluentIcons.like,
+                    size: 16,
+                    color: comment.likeStatus == LikeStatus.liked
+                        ? Colors.blue
+                        : Colors.black.withValues(alpha: 0.5),
+                  ),
+                  const SizedBox(width: 4),
+                  Text(
+                    comment.like.toString(),
+                    style: TextStyle(
+                      fontSize: 12,
                       color: comment.likeStatus == LikeStatus.liked
                           ? Colors.blue
                           : Colors.black.withValues(alpha: 0.5),
                     ),
-                    const SizedBox(width: 4),
-                    Text(
-                      comment.like.toString(),
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: comment.likeStatus == LikeStatus.liked
-                            ? Colors.blue
-                            : Colors.black.withValues(alpha: 0.5),
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
             if (comment.isUpLike)
@@ -315,25 +310,20 @@ class CommentCard extends StatelessWidget {
           ],
         ),
         const SizedBox(width: 8),
-        GestureDetector(
-          onTap: () {
-            // TODO: 实现点踩功能
-          },
-          child: Container(
-            padding: const EdgeInsets.all(6),
-            decoration: BoxDecoration(
-              color: comment.likeStatus == LikeStatus.disliked
-                  ? Colors.red
-                  : Colors.transparent,
-              borderRadius: BorderRadius.circular(4),
-            ),
-            child: Icon(
-              FluentIcons.dislike,
-              size: 16,
-              color: comment.likeStatus == LikeStatus.disliked
-                  ? Colors.red
-                  : Colors.black.withValues(alpha: 0.5),
-            ),
+        Container(
+          padding: const EdgeInsets.all(6),
+          decoration: BoxDecoration(
+            color: comment.likeStatus == LikeStatus.disliked
+                ? Colors.red
+                : Colors.transparent,
+            borderRadius: BorderRadius.circular(4),
+          ),
+          child: Icon(
+            FluentIcons.dislike,
+            size: 16,
+            color: comment.likeStatus == LikeStatus.disliked
+                ? Colors.red
+                : Colors.black.withValues(alpha: 0.5),
           ),
         ),
       ],

@@ -7,6 +7,7 @@ import 'package:bilizen/ui/windows/page/home/center/page.dart';
 import 'package:bilizen/ui/windows/page/router.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:talker/talker.dart';
 import 'package:window_manager/window_manager.dart';
 
 part 'provider.freezed.dart';
@@ -27,7 +28,8 @@ class TopBarProvider extends _$TopBarProvider {
     _account.listen((self) async {
       state = state.copyWith(userInfo: await _getUserInfo(self));
     });
-    router.distinct().listen((value) {
+    router.listen((value) {
+      getIt<Talker>().debug("canPop: ${value.canPop()}");
       state = state.copyWith(
         canPop: value.canPop(),
         isSearchPage: value.state.name == HomePageKind.search.name,

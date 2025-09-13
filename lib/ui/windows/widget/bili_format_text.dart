@@ -30,6 +30,7 @@ class BiliFormatText extends StatefulWidget {
     this.onUsernameTap,
     this.emojis = const [],
     this.maxLines = 5,
+    this.showMoreButton = true,
   });
 
   final String text;
@@ -37,6 +38,7 @@ class BiliFormatText extends StatefulWidget {
   final TextStyle? style;
   final void Function(String username)? onUsernameTap;
   final int maxLines;
+  final bool showMoreButton;
 
   @override
   State<BiliFormatText> createState() => _BiliFormatTextState();
@@ -50,38 +52,52 @@ class _BiliFormatTextState extends State<BiliFormatText> {
   @override
   void initState() {
     super.initState();
-    _checkTextOverflow();
+    if (widget.showMoreButton) {
+      _checkTextOverflow();
+    }
   }
 
   @override
   void didUpdateWidget(BiliFormatText oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.text != widget.text) {
+    if (oldWidget.text != widget.text ||
+        oldWidget.showMoreButton != widget.showMoreButton) {
       _isExpanded = false;
-      _checkTextOverflow();
+      if (widget.showMoreButton) {
+        _checkTextOverflow();
+      } else {
+        setState(() {
+          _hasMoreContent = false;
+        });
+      }
     }
   }
 
   void _checkTextOverflow() {
+    // 只有在启用更多按钮时才检测溢出
+    if (!widget.showMoreButton) return;
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted && _textKey.currentContext != null) {
         final renderObject = _textKey.currentContext!.findRenderObject();
         if (renderObject is RenderParagraph) {
+          final box = renderObject as RenderBox;
+          if (!box.hasSize) return;
+
+          // 使用实际的格式化文本（包含emoji）来检测溢出
+          final parts = _BiliTextParser.splitFormattedText(
+            widget.text,
+            widget.emojis,
+          );
+          final spans = parts.map(_createInlineSpanForMeasurement).toList();
+
           final textPainter = TextPainter(
-            text: TextSpan(
-              text: widget.text,
-              style: widget.style?.merge(
-                TextStyle(fontFamily: "Microsoft YaHei"),
-              ),
-            ),
+            text: TextSpan(children: spans),
             maxLines: widget.maxLines,
             textDirection: TextDirection.ltr,
           );
 
-          final box = renderObject as RenderBox;
-          final maxWidth = box.hasSize ? box.size.width : double.infinity;
-
-          textPainter.layout(maxWidth: maxWidth);
+          textPainter.layout(maxWidth: box.size.width);
 
           if (mounted) {
             setState(() {
@@ -93,6 +109,40 @@ class _BiliFormatTextState extends State<BiliFormatText> {
     });
   }
 
+  // 用于测量的InlineSpan创建方法，避免复杂的Widget
+  InlineSpan _createInlineSpanForMeasurement(String part) {
+    final textType = _BiliTextParser.getTextType(part, widget.emojis);
+
+    switch (textType) {
+      case BiliTextType.username:
+        return TextSpan(
+          text: part,
+          style: widget.style?.merge(
+            TextStyle(color: Colors.blue, fontFamily: "Microsoft YaHei"),
+          ),
+        );
+      case BiliTextType.bvNumber:
+      case BiliTextType.avNumber:
+        return TextSpan(
+          text: part,
+          style: widget.style?.merge(
+            TextStyle(color: Colors.blue, fontFamily: "Microsoft YaHei"),
+          ),
+        );
+      case BiliTextType.emoji:
+        // 用占位符文本来模拟emoji的空间占用
+        return TextSpan(
+          text: '🙂', // 使用固定的emoji字符作为占位符
+          style: widget.style?.merge(TextStyle(fontFamily: "Microsoft YaHei")),
+        );
+      case BiliTextType.normal:
+        return TextSpan(
+          text: part,
+          style: widget.style?.merge(TextStyle(fontFamily: "Microsoft YaHei")),
+        );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final parts = _BiliTextParser.splitFormattedText(
@@ -101,19 +151,26 @@ class _BiliFormatTextState extends State<BiliFormatText> {
     );
     final spans = parts.map(_createInlineSpan).toList();
 
+    // 如果不显示更多按钮，则直接显示全部内容
+    final shouldShowExpandButton = widget.showMoreButton && _hasMoreContent;
+    final maxLines = (!widget.showMoreButton || _isExpanded)
+        ? null
+        : widget.maxLines;
+    final overflow = (!widget.showMoreButton || _isExpanded)
+        ? TextOverflow.visible
+        : TextOverflow.ellipsis;
+
     return RepaintBoundary(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           RichText(
             key: _textKey,
-            maxLines: _isExpanded ? null : widget.maxLines,
-            overflow: _isExpanded
-                ? TextOverflow.visible
-                : TextOverflow.ellipsis,
+            maxLines: maxLines,
+            overflow: overflow,
             text: TextSpan(children: spans),
           ),
-          if (_hasMoreContent) ...[
+          if (shouldShowExpandButton) ...[
             const SizedBox(height: 4),
             MouseRegion(
               cursor: SystemMouseCursors.click,

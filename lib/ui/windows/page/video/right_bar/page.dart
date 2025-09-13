@@ -3,7 +3,6 @@ import 'package:bilizen/ui/windows/page/router.dart';
 import 'package:bilizen/ui/windows/page/video/right_bar/comment/page.dart';
 import 'package:bilizen/ui/windows/page/video/right_bar/info/page.dart';
 import 'package:bilizen/ui/windows/page/video/right_bar/provider.dart';
-import 'package:bilizen/ui/windows/page/video/right_bar/recommend/page.dart';
 import 'package:bilizen/ui/windows/widget/tab_bar.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -23,11 +22,6 @@ final _router = GoRouter(
       path: "/comment",
       name: "comment",
       builder: (context, state) => VideoCommentPage(),
-    ),
-    GoRoute(
-      path: "/recommend",
-      name: "recommend",
-      builder: (context, state) => VideoInnerRecommendPage(),
     ),
   ],
 );
@@ -51,10 +45,6 @@ class RightArea extends ConsumerWidget {
               FluentTabBarItem(
                 label: "评论",
                 icon: FluentIcons.comment,
-              ),
-              FluentTabBarItem(
-                label: "推荐",
-                icon: FluentIcons.like,
               ),
             ],
             onTap: (value) {

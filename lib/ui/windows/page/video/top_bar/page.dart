@@ -3,7 +3,6 @@ import 'package:bilizen/ui/windows/page/video/top_bar/provider.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:nil/nil.dart';
 import 'package:window_manager/window_manager.dart';
 
 class TopBar extends StatelessWidget {
@@ -42,7 +41,7 @@ class _VideoInfo extends ConsumerWidget {
       topBarProvider.select((state) => state.videoInfo),
     );
     if (video == null) {
-      return nil;
+      return SizedBox.shrink();
     }
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),

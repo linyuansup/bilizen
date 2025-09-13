@@ -297,6 +297,7 @@ class _DescriptionCard extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           BiliFormatText(
+            showMoreButton: false,
             text: description,
             style: theme.typography.body?.copyWith(
               color: theme.resources.textFillColorPrimary,
