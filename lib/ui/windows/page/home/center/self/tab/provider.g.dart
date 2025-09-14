@@ -6,52 +6,53 @@ part of 'provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-@ProviderFor(TopBarProvider)
-const topBarProvider = TopBarProviderProvider._();
+@ProviderFor(UserInfoTabProvider)
+const userInfoTabProvider = UserInfoTabProviderProvider._();
 
-final class TopBarProviderProvider
-    extends $NotifierProvider<TopBarProvider, TopBarState> {
-  const TopBarProviderProvider._()
+final class UserInfoTabProviderProvider
+    extends $NotifierProvider<UserInfoTabProvider, UserInfoTabState> {
+  const UserInfoTabProviderProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'topBarProvider',
+        name: r'userInfoTabProvider',
         isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$topBarProviderHash();
+  String debugGetCreateSourceHash() => _$userInfoTabProviderHash();
 
   @$internal
   @override
-  TopBarProvider create() => TopBarProvider();
+  UserInfoTabProvider create() => UserInfoTabProvider();
 
   /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(TopBarState value) {
+  Override overrideWithValue(UserInfoTabState value) {
     return $ProviderOverride(
       origin: this,
-      providerOverride: $SyncValueProvider<TopBarState>(value),
+      providerOverride: $SyncValueProvider<UserInfoTabState>(value),
     );
   }
 }
 
-String _$topBarProviderHash() => r'aafab7b08fea9eb90c4ba469983a5d62ff0e2728';
+String _$userInfoTabProviderHash() =>
+    r'e88fe51100fa8de801a0b1446e8a25e5444dc55c';
 
-abstract class _$TopBarProvider extends $Notifier<TopBarState> {
-  TopBarState build();
+abstract class _$UserInfoTabProvider extends $Notifier<UserInfoTabState> {
+  UserInfoTabState build();
   @$mustCallSuper
   @override
   void runBuild() {
     final created = build();
-    final ref = this.ref as $Ref<TopBarState, TopBarState>;
+    final ref = this.ref as $Ref<UserInfoTabState, UserInfoTabState>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<TopBarState, TopBarState>,
-              TopBarState,
+              AnyNotifier<UserInfoTabState, UserInfoTabState>,
+              UserInfoTabState,
               Object?,
               Object?
             >;

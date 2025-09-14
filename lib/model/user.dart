@@ -1,7 +1,9 @@
+import 'package:bilizen/data/api/fav/info.dart';
 import 'package:bilizen/data/api/user/info.dart';
+import 'package:bilizen/inject/inject.dart';
+import 'package:bilizen/model/fav_list.dart';
 import 'package:bilizen/package/future_class/annotations.dart';
 import 'package:bilizen/package/future_class/future_class_base.dart';
-import 'package:bilizen/inject/inject.dart';
 
 part 'user.future.dart';
 
@@ -10,6 +12,7 @@ class User extends _$User {
   final int id;
 
   final _userInfoApi = getIt<UserInfoApi>();
+  final _favInfoApi = getIt<FavInfoApi>();
 
   User({required this.id});
 
@@ -43,6 +46,9 @@ class User extends _$User {
   @FutureData(loader: "cardInfo")
   Future<String> get sign => $sign;
 
+  @FutureData(loader: "fav")
+  Future<List<FavList>> get favLists => $favLists;
+
   @override
   Future<void> basicInfo() async {
     final user = await _userInfoApi.getUserDetail(id);
@@ -61,5 +67,21 @@ class User extends _$User {
     setFans(user["data"]["card"]["fans"]);
     setFocus(user["data"]["card"]["friend"]);
     setSign(user["data"]["card"]["sign"]);
+  }
+
+  @override
+  Future<void> fav() async {
+    final favList = await _favInfoApi.getUserFavList(uid: id);
+    final list = (favList["data"]["list"] as List)
+        .map<FavList>(
+          (e) => FavList(
+            mlid: e["id"],
+            user: this,
+            title: e["title"],
+            count: e["media_count"],
+          ),
+        )
+        .toList();
+    setFavLists(list);
   }
 }

@@ -10,6 +10,8 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:bilizen/data/api/comment/list.dart' as _i937;
+import 'package:bilizen/data/api/fav/info.dart' as _i78;
+import 'package:bilizen/data/api/fav/list.dart' as _i158;
 import 'package:bilizen/data/api/login/login_action/qr.dart' as _i348;
 import 'package:bilizen/data/api/login/login_info.dart' as _i1038;
 import 'package:bilizen/data/api/search/request.dart' as _i61;
@@ -25,6 +27,7 @@ import 'package:bilizen/inject/logger.dart' as _i489;
 import 'package:bilizen/inject/shared_preferences.dart' as _i383;
 import 'package:bilizen/logic/account_manager/account_manager.dart' as _i72;
 import 'package:bilizen/logic/comment_manager/comment_manager.dart' as _i644;
+import 'package:bilizen/logic/fav_manager/fav_manager.dart' as _i398;
 import 'package:bilizen/logic/search/search_manager.dart' as _i786;
 import 'package:bilizen/logic/video_online_manager.dart' as _i814;
 import 'package:bilizen/logic/video_recommend/video_recommend.dart' as _i847;
@@ -97,6 +100,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i1029.VideoStreamUrlApi>(
       () => _i1029.VideoStreamUrlApi(gh<_i361.Dio>()),
     );
+    gh.singleton<_i158.FavListApi>(() => _i158.FavListApi(gh<_i361.Dio>()));
+    gh.singleton<_i78.FavInfoApi>(() => _i78.FavInfoApi(gh<_i361.Dio>()));
     gh.singleton<_i907.PlaybackManager>(
       () => _i907.PlaybackManager(
         talker: gh<_i207.Talker>(),
@@ -120,6 +125,9 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i348.QrLoginApi>(),
         gh<_i1038.LoginInfoApi>(),
       ),
+    );
+    gh.singleton<_i398.FavManager>(
+      () => _i398.FavManager(gh<_i158.FavListApi>()),
     );
     return this;
   }

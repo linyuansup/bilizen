@@ -1,57 +1,57 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'provider.dart';
+part of 'fav_data_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-@ProviderFor(TopBarProvider)
-const topBarProvider = TopBarProviderProvider._();
+@ProviderFor(FavDataProvider)
+const favDataProvider = FavDataProviderProvider._();
 
-final class TopBarProviderProvider
-    extends $NotifierProvider<TopBarProvider, TopBarState> {
-  const TopBarProviderProvider._()
+final class FavDataProviderProvider
+    extends $NotifierProvider<FavDataProvider, FavDataState> {
+  const FavDataProviderProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'topBarProvider',
+        name: r'favDataProvider',
         isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$topBarProviderHash();
+  String debugGetCreateSourceHash() => _$favDataProviderHash();
 
   @$internal
   @override
-  TopBarProvider create() => TopBarProvider();
+  FavDataProvider create() => FavDataProvider();
 
   /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(TopBarState value) {
+  Override overrideWithValue(FavDataState value) {
     return $ProviderOverride(
       origin: this,
-      providerOverride: $SyncValueProvider<TopBarState>(value),
+      providerOverride: $SyncValueProvider<FavDataState>(value),
     );
   }
 }
 
-String _$topBarProviderHash() => r'aafab7b08fea9eb90c4ba469983a5d62ff0e2728';
+String _$favDataProviderHash() => r'babf02006fceaa3d2c0a2e5727016cafe8dcfc8c';
 
-abstract class _$TopBarProvider extends $Notifier<TopBarState> {
-  TopBarState build();
+abstract class _$FavDataProvider extends $Notifier<FavDataState> {
+  FavDataState build();
   @$mustCallSuper
   @override
   void runBuild() {
     final created = build();
-    final ref = this.ref as $Ref<TopBarState, TopBarState>;
+    final ref = this.ref as $Ref<FavDataState, FavDataState>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<TopBarState, TopBarState>,
-              TopBarState,
+              AnyNotifier<FavDataState, FavDataState>,
+              FavDataState,
               Object?,
               Object?
             >;

@@ -1,43 +1,61 @@
 import 'package:bilizen/inject/inject.dart';
+import 'package:bilizen/ui/windows/page/home/center/setting/provider.dart';
+import 'package:bilizen/ui/windows/page/home/center/setting/talker/page.dart';
+import 'package:bilizen/ui/windows/page/router.dart';
+import 'package:bilizen/ui/windows/widget/tab_bar.dart';
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:flutter/material.dart' as material;
-import 'package:talker_flutter/talker_flutter.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
-class SettingPage extends StatefulWidget {
+final _router = GoRouter(
+  initialLocation: "/talker",
+  observers: [getIt<WindowsRouter>().setting.observer],
+  navigatorKey: getIt<WindowsRouter>().setting.key,
+  routes: [
+    GoRoute(
+      path: "/talker",
+      name: "talker",
+      builder: (context, state) => SettingTalkerPage(),
+    ),
+  ],
+);
+
+class SettingPage extends StatelessWidget {
   const SettingPage({super.key});
 
   @override
-  State<SettingPage> createState() => _SettingPageState();
-}
-
-class _SettingPageState extends State<SettingPage> {
-  int currentIndex = 0;
-
-  @override
   Widget build(BuildContext context) {
-    return TabView(
-      currentIndex: currentIndex,
-      onChanged: (index) => setState(() => currentIndex = index),
-      tabs: [
-        Tab(
-          text: const Text('Talker'),
-          body: TalkerScreen(
-            talker: getIt<Talker>(),
-            theme: TalkerScreenTheme.fromTheme(
-              material.Theme.of(context),
-            ),
+    return Column(
+      children: [
+        RepaintBoundary(
+          child: Consumer(
+            builder: (_, WidgetRef ref, __) {
+              final selectedIndex = ref.watch(
+                settingProvider.select((state) => state.selectedIndex),
+              );
+              return FluentTabBar(
+                selectedIndex: selectedIndex,
+                items: [
+                  FluentTabBarItem(
+                    label: "Talker",
+                    icon: FluentIcons.data_flow,
+                  ),
+                ],
+                onTap: (value) {
+                  GoRouter.of(
+                    getIt<WindowsRouter>().setting.context,
+                  ).goNamed(SettingTab.values[value].name);
+                },
+              );
+            },
           ),
         ),
-        Tab(
-          text: const Text('关于'),
-          body: const Center(
-            child: Text('关于页面内容'),
+        Expanded(
+          child: RepaintBoundary(
+            child: Router.withConfig(config: _router),
           ),
         ),
       ],
-      maxTabWidth: 150,
-      minTabWidth: 150,
-      tabWidthBehavior: TabWidthBehavior.equal,
     );
   }
 }

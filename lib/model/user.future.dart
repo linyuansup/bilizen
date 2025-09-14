@@ -202,4 +202,25 @@ abstract class _$User extends FutureClassBase {
   void clearSign() {
     clearCached(_signKey);
   }
+
+  static const String _favListsKey = 'favLists';
+
+  Future<List<FavList>> get $favLists async {
+    if (isCached(_favListsKey)) {
+      return getCached<List<FavList>>(_favListsKey)!;
+    }
+
+    await fav();
+    return getCached<List<FavList>>(_favListsKey)!;
+  }
+
+  void setFavLists(List<FavList> value) {
+    setCached(_favListsKey, value);
+  }
+
+  void clearFavLists() {
+    clearCached(_favListsKey);
+  }
+
+  Future<void> fav();
 }

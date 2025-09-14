@@ -1,57 +1,57 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'provider.dart';
+part of 'list_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-@ProviderFor(TopBarProvider)
-const topBarProvider = TopBarProviderProvider._();
+@ProviderFor(LikeListProvider)
+const likeListProviderProvider = LikeListProviderProvider._();
 
-final class TopBarProviderProvider
-    extends $NotifierProvider<TopBarProvider, TopBarState> {
-  const TopBarProviderProvider._()
+final class LikeListProviderProvider
+    extends $NotifierProvider<LikeListProvider, LikeListState> {
+  const LikeListProviderProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'topBarProvider',
+        name: r'likeListProviderProvider',
         isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$topBarProviderHash();
+  String debugGetCreateSourceHash() => _$likeListProviderHash();
 
   @$internal
   @override
-  TopBarProvider create() => TopBarProvider();
+  LikeListProvider create() => LikeListProvider();
 
   /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(TopBarState value) {
+  Override overrideWithValue(LikeListState value) {
     return $ProviderOverride(
       origin: this,
-      providerOverride: $SyncValueProvider<TopBarState>(value),
+      providerOverride: $SyncValueProvider<LikeListState>(value),
     );
   }
 }
 
-String _$topBarProviderHash() => r'aafab7b08fea9eb90c4ba469983a5d62ff0e2728';
+String _$likeListProviderHash() => r'1f7b232dca6fac0029ab24f85004038c58f8b39c';
 
-abstract class _$TopBarProvider extends $Notifier<TopBarState> {
-  TopBarState build();
+abstract class _$LikeListProvider extends $Notifier<LikeListState> {
+  LikeListState build();
   @$mustCallSuper
   @override
   void runBuild() {
     final created = build();
-    final ref = this.ref as $Ref<TopBarState, TopBarState>;
+    final ref = this.ref as $Ref<LikeListState, LikeListState>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<TopBarState, TopBarState>,
-              TopBarState,
+              AnyNotifier<LikeListState, LikeListState>,
+              LikeListState,
               Object?,
               Object?
             >;

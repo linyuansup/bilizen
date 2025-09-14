@@ -1,4 +1,4 @@
-import 'package:fluent_ui/fluent_ui.dart' as fluent;
+import 'package:bilizen/ui/windows/widget/scroll_bar_single_child.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:nil/nil.dart';
 
@@ -14,6 +14,8 @@ class FluentTabBar extends StatelessWidget {
     this.backgroundColor,
     this.tabBarHeight = _defaultTabBarHeight,
     this.minTabWidth = _defaultMinTabWidth,
+    this.axis = Axis.horizontal,
+    this.padding,
   });
 
   final int selectedIndex;
@@ -22,25 +24,21 @@ class FluentTabBar extends StatelessWidget {
   final Color? backgroundColor;
   final double tabBarHeight;
   final double minTabWidth;
+  final Axis axis;
+  final EdgeInsets? padding;
 
   @override
   Widget build(BuildContext context) {
     if (items.isEmpty) return nil;
 
-    final theme = fluent.FluentTheme.of(context);
+    final theme = FluentTheme.of(context);
 
-    return Container(
+    if (axis == Axis.vertical) {
+      return _buildVerticalTabBar(context, theme);
+    }
+
+    return SizedBox(
       height: tabBarHeight,
-      decoration: BoxDecoration(
-        color:
-            backgroundColor ?? theme.micaBackgroundColor.withValues(alpha: 0.8),
-        border: Border(
-          bottom: BorderSide(
-            color: theme.resources.dividerStrokeColorDefault,
-            width: 1.0,
-          ),
-        ),
-      ),
       child: LayoutBuilder(
         builder: (context, constraints) => _buildTabBar(context, constraints),
       ),
@@ -57,6 +55,32 @@ class FluentTabBar extends StatelessWidget {
         : _buildScrollableTabBar(context);
   }
 
+  Widget _buildVerticalTabBar(
+    BuildContext context,
+    FluentThemeData theme,
+  ) {
+    return IntrinsicWidth(
+      child: Container(
+        constraints: BoxConstraints(
+          minWidth: minTabWidth,
+        ),
+        child: ScrollBarSingleChild(
+          child: Column(
+            children: items.asMap().entries.map((entry) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 4.0,
+                  vertical: 2.0,
+                ),
+                child: _buildVerticalTabItem(context, entry.value, entry.key),
+              );
+            }).toList(),
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _buildFixedTabBar(double availableWidth, BuildContext context) {
     final tabWidth = availableWidth / items.length;
 
@@ -71,20 +95,17 @@ class FluentTabBar extends StatelessWidget {
   }
 
   Widget _buildScrollableTabBar(BuildContext context) {
-    return ScrollConfiguration(
-      behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          children: items.asMap().entries.map((entry) {
-            return _buildTabItem(
-              context,
-              entry.value,
-              entry.key,
-              minTabWidth,
-            );
-          }).toList(),
-        ),
+    return ScrollBarSingleChild(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: items.asMap().entries.map((entry) {
+          return _buildTabItem(
+            context,
+            entry.value,
+            entry.key,
+            minTabWidth,
+          );
+        }).toList(),
       ),
     );
   }
@@ -95,7 +116,7 @@ class FluentTabBar extends StatelessWidget {
     int index,
     double tabWidth,
   ) {
-    final theme = fluent.FluentTheme.of(context);
+    final theme = FluentTheme.of(context);
     final isSelected = index == selectedIndex;
 
     return RepaintBoundary(
@@ -103,7 +124,7 @@ class FluentTabBar extends StatelessWidget {
         padding: const EdgeInsets.all(2),
         child: SizedBox(
           width: tabWidth,
-          child: fluent.Button(
+          child: Button(
             onPressed: () => onTap?.call(index),
             style: _buildTabButtonStyle(theme, isSelected),
             child: _buildTabContent(theme, item, isSelected),
@@ -113,16 +134,37 @@ class FluentTabBar extends StatelessWidget {
     );
   }
 
-  fluent.ButtonStyle _buildTabButtonStyle(
-    fluent.FluentThemeData theme,
+  Widget _buildVerticalTabItem(
+    BuildContext context,
+    FluentTabBarItem item,
+    int index,
+  ) {
+    final theme = FluentTheme.of(context);
+    final isSelected = index == selectedIndex;
+
+    return RepaintBoundary(
+      child: SizedBox(
+        width: double.infinity,
+        height: tabBarHeight,
+        child: Button(
+          onPressed: () => onTap?.call(index),
+          style: _buildTabButtonStyle(theme, isSelected),
+          child: _buildVerticalTabContent(theme, item, isSelected),
+        ),
+      ),
+    );
+  }
+
+  ButtonStyle _buildTabButtonStyle(
+    FluentThemeData theme,
     bool isSelected,
   ) {
-    return fluent.ButtonStyle(
-      backgroundColor: fluent.WidgetStateProperty.resolveWith((states) {
-        if (states.contains(fluent.WidgetState.pressed)) {
+    return ButtonStyle(
+      backgroundColor: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.pressed)) {
           return theme.accentColor.withValues(alpha: 0.2);
         }
-        if (states.contains(fluent.WidgetState.hovered)) {
+        if (states.contains(WidgetState.hovered)) {
           return theme.resources.subtleFillColorSecondary;
         }
         if (isSelected) {
@@ -130,14 +172,14 @@ class FluentTabBar extends StatelessWidget {
         }
         return Colors.transparent;
       }),
-      foregroundColor: fluent.WidgetStateProperty.all(Colors.transparent),
-      padding: fluent.WidgetStateProperty.all(EdgeInsets.zero),
-      shape: fluent.WidgetStateProperty.all(_buildTabShape(theme, isSelected)),
+      foregroundColor: WidgetStateProperty.all(Colors.transparent),
+      padding: WidgetStateProperty.all(EdgeInsets.zero),
+      shape: WidgetStateProperty.all(_buildTabShape(theme, isSelected)),
     );
   }
 
   RoundedRectangleBorder _buildTabShape(
-    fluent.FluentThemeData theme,
+    FluentThemeData theme,
     bool isSelected,
   ) {
     return RoundedRectangleBorder(
@@ -152,7 +194,7 @@ class FluentTabBar extends StatelessWidget {
   }
 
   Widget _buildTabContent(
-    fluent.FluentThemeData theme,
+    FluentThemeData theme,
     FluentTabBarItem item,
     bool isSelected,
   ) {
@@ -163,12 +205,14 @@ class FluentTabBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
-            item.icon,
-            size: 16.0,
-            color: _getTabColor(theme, isSelected),
-          ),
-          const SizedBox(width: 8.0),
+          if (item.icon != null) ...[
+            Icon(
+              item.icon!,
+              size: 16.0,
+              color: _getTabColor(theme, isSelected),
+            ),
+            const SizedBox(width: 8.0),
+          ],
           Flexible(
             child: Text(
               item.label,
@@ -188,7 +232,42 @@ class FluentTabBar extends StatelessWidget {
     );
   }
 
-  Color _getTabColor(fluent.FluentThemeData theme, bool isSelected) {
+  Widget _buildVerticalTabContent(
+    FluentThemeData theme,
+    FluentTabBarItem item,
+    bool isSelected,
+  ) {
+    return Container(
+      margin: const EdgeInsets.all(4.0),
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (item.icon != null) ...[
+            Icon(
+              item.icon!,
+              size: 18.0,
+              color: _getTabColor(theme, isSelected),
+            ),
+            const SizedBox(height: 4.0),
+          ],
+          Text(
+            item.label,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+            style: TextStyle(
+              fontSize: 12.0,
+              fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+              color: _getTabColor(theme, isSelected),
+              fontFamily: "Microsoft YaHei",
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Color _getTabColor(FluentThemeData theme, bool isSelected) {
     if (isSelected) return theme.accentColor;
     return theme.resources.textFillColorPrimary;
   }
@@ -196,10 +275,10 @@ class FluentTabBar extends StatelessWidget {
 
 class FluentTabBarItem {
   final String label;
-  final IconData icon;
+  final IconData? icon;
 
   FluentTabBarItem({
     required this.label,
-    required this.icon,
+    this.icon,
   });
 }

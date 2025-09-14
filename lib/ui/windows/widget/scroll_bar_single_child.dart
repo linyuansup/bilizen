@@ -3,27 +3,25 @@ import 'package:fluent_ui/fluent_ui.dart';
 
 typedef OnBottom = Future<void> Function();
 
-class ScrollBarListView extends StatefulWidget {
-  const ScrollBarListView({
+class ScrollBarSingleChild extends StatefulWidget {
+  const ScrollBarSingleChild({
     super.key,
-    required this.itemBuilder,
+    required this.child,
     this.padding,
-    required this.itemCount,
     this.scrollDirection = Axis.vertical,
     this.onBottom,
   });
 
-  final Widget? Function(BuildContext, int) itemBuilder;
+  final Widget child;
   final EdgeInsetsGeometry? padding;
   final Axis scrollDirection;
-  final int itemCount;
   final OnBottom? onBottom;
 
   @override
-  State<ScrollBarListView> createState() => _ScrollBarListViewState();
+  State<ScrollBarSingleChild> createState() => _ScrollBarSingleChildState();
 }
 
-class _ScrollBarListViewState extends State<ScrollBarListView> {
+class _ScrollBarSingleChildState extends State<ScrollBarSingleChild> {
   late ScrollController _controller;
   bool _isFetching = false;
   late Function() _listener;
@@ -61,13 +59,12 @@ class _ScrollBarListViewState extends State<ScrollBarListView> {
         _addListener();
         return Scrollbar(
           controller: _controller,
-          child: ListView.builder(
+          child: SingleChildScrollView(
             physics: physics,
             scrollDirection: widget.scrollDirection,
             controller: _controller,
-            itemCount: widget.itemCount,
             padding: _calculatePadding(),
-            itemBuilder: widget.itemBuilder,
+            child: widget.child,
           ),
         );
       },

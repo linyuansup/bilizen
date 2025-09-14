@@ -6,52 +6,52 @@ part of 'provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-@ProviderFor(TopBarProvider)
-const topBarProvider = TopBarProviderProvider._();
+@ProviderFor(SettingProvider)
+const settingProvider = SettingProviderProvider._();
 
-final class TopBarProviderProvider
-    extends $NotifierProvider<TopBarProvider, TopBarState> {
-  const TopBarProviderProvider._()
+final class SettingProviderProvider
+    extends $NotifierProvider<SettingProvider, SettingState> {
+  const SettingProviderProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'topBarProvider',
+        name: r'settingProvider',
         isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$topBarProviderHash();
+  String debugGetCreateSourceHash() => _$settingProviderHash();
 
   @$internal
   @override
-  TopBarProvider create() => TopBarProvider();
+  SettingProvider create() => SettingProvider();
 
   /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(TopBarState value) {
+  Override overrideWithValue(SettingState value) {
     return $ProviderOverride(
       origin: this,
-      providerOverride: $SyncValueProvider<TopBarState>(value),
+      providerOverride: $SyncValueProvider<SettingState>(value),
     );
   }
 }
 
-String _$topBarProviderHash() => r'aafab7b08fea9eb90c4ba469983a5d62ff0e2728';
+String _$settingProviderHash() => r'2d76a7457797e5dfdb7274ebd2e957b241b6cf01';
 
-abstract class _$TopBarProvider extends $Notifier<TopBarState> {
-  TopBarState build();
+abstract class _$SettingProvider extends $Notifier<SettingState> {
+  SettingState build();
   @$mustCallSuper
   @override
   void runBuild() {
     final created = build();
-    final ref = this.ref as $Ref<TopBarState, TopBarState>;
+    final ref = this.ref as $Ref<SettingState, SettingState>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<TopBarState, TopBarState>,
-              TopBarState,
+              AnyNotifier<SettingState, SettingState>,
+              SettingState,
               Object?,
               Object?
             >;

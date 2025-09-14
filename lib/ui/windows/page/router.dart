@@ -24,4 +24,6 @@ class WindowsRouter {
   final video = RouterInformation("video");
   final home = RouterInformation("home");
   final videoComment = RouterInformation("video_comment");
+  final setting = RouterInformation("setting");
+  final userInfo = RouterInformation("userInfo");
 }

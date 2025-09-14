@@ -1,5 +1,6 @@
 import 'package:bilizen/ui/windows/page/home/center/self/login/page.dart';
 import 'package:bilizen/ui/windows/page/home/center/self/provider.dart';
+import 'package:bilizen/ui/windows/page/home/center/self/tab/page.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -38,18 +39,9 @@ class _UserInfo extends StatelessWidget {
     return Column(
       children: [
         _UserInfoCard(card: card),
-        _UserUploadCard(),
+        Expanded(child: UserInfoTabPage()),
       ],
     );
-  }
-}
-
-class _UserUploadCard extends StatelessWidget {
-  const _UserUploadCard();
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(child: Text('Logged In'));
   }
 }
 

@@ -5,6 +5,7 @@ import 'package:bilizen/package/playback_manager/playback_manager.dart';
 import 'package:bilizen/util/string.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:talker/talker.dart';
 
 const _kAspectRatio = 16 / 10;
 const _kBorderRadius = 8.0;
@@ -36,6 +37,12 @@ class VideoCardData {
 
   static Future<VideoCardData> fromVideo(Video video) async {
     final uploader = await video.uploader;
+    getIt<Talker>().warning(
+      "VideoCardData.fromVideo: ${video.bid}",
+    );
+    getIt<Talker>().warning(
+      "VideoCardData.fromVideo: ${video.bid}, ${await video.view}",
+    );
     return VideoCardData(
       title: await video.title,
       bvid: video.bid,
