@@ -1,6 +1,6 @@
 import 'package:bilizen/inject/inject.dart';
-import 'package:bilizen/logic/comment_manager/comment_manager.dart';
-import 'package:bilizen/logic/comment_manager/get_comment_result.dart';
+import 'package:bilizen/package/comment_manager/comment_manager.dart';
+import 'package:bilizen/package/comment_manager/get_comment_result.dart';
 import 'package:bilizen/model/comment.dart';
 import 'package:bilizen/package/playback_manager/playback_manager.dart';
 import 'package:bilizen/util/bilibili.dart';
@@ -14,7 +14,7 @@ part 'provider.g.dart';
 class VideoCommentListProvider extends _$VideoCommentListProvider {
   final _commentManager = getIt<CommentManager>();
   final _playbackManager = getIt<PlaybackManager>();
-  GetCommentResult? currentComment;
+  GetCommentResult? _currentComment;
 
   @override
   VideoCommentListState build() {
@@ -23,7 +23,7 @@ class VideoCommentListProvider extends _$VideoCommentListProvider {
           return a?.item.video.bid == b?.item.video.bid;
         })
         .listen((_) {
-          currentComment = null;
+          _currentComment = null;
           state = VideoCommentListState.loading();
         });
     return VideoCommentListState.loading();
@@ -34,12 +34,12 @@ class VideoCommentListProvider extends _$VideoCommentListProvider {
     if (currentPlaying == null) {
       return;
     }
-    if (currentComment == null) {
-      currentComment = await _commentManager.getVideoComments(
+    if (_currentComment == null) {
+      _currentComment = await _commentManager.getVideoComments(
         avid: toAv(currentPlaying.item.video.bid),
       );
       state = VideoCommentListState.loaded(
-        comments: await fromModelComment(currentComment!.comments),
+        comments: await fromModelComment(_currentComment!.comments),
         upUid:
             (await getIt<PlaybackManager>()
                     .currentPlaying
@@ -51,11 +51,11 @@ class VideoCommentListProvider extends _$VideoCommentListProvider {
       );
       return;
     }
-    currentComment = await currentComment!.next();
-    state = (state as VideoCommentListStateLoaded).copyWith(
+    _currentComment = await _currentComment!.next();
+    state = (state as _Loaded).copyWith(
       comments: [
-        ...(state as VideoCommentListStateLoaded).comments,
-        ...await fromModelComment(currentComment!.comments),
+        ...(state as _Loaded).comments,
+        ...await fromModelComment(_currentComment!.comments),
       ],
     );
   }
@@ -113,9 +113,9 @@ sealed class UserData with _$UserData {
 
 @freezed
 sealed class VideoCommentListState with _$VideoCommentListState {
-  const factory VideoCommentListState.loading() = VideoCommentListStateLoading;
+  const factory VideoCommentListState.loading() = _Loading;
   const factory VideoCommentListState.loaded({
     required int upUid,
     required List<CommentData> comments,
-  }) = VideoCommentListStateLoaded;
+  }) = _Loaded;
 }

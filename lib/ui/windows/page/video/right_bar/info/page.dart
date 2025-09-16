@@ -11,25 +11,18 @@ class VideoInfoPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final provider = ref.watch(videoInfoProvider);
-    return switch (provider) {
-      VideoInfoStateLoading() => const _LoadingWidget(),
-      VideoInfoStateLoaded(
-        :final staffs,
-        :final view,
-        :final danmaku,
-        :final uploadTime,
-        :final onlineUser,
-        :final description,
-      ) =>
-        _VideoInfoAreaContent(
-          staffs: staffs,
-          view: view,
-          danmaku: danmaku,
-          uploadTime: uploadTime,
-          onlineUser: onlineUser,
-          description: description,
-        ),
-    };
+    return provider.when(
+      loading: () => const _LoadingWidget(),
+      loaded: (staffs, view, danmaku, uploadTime, onlineUser, description) =>
+          _VideoInfoAreaContent(
+            staffs: staffs,
+            view: view,
+            danmaku: danmaku,
+            uploadTime: uploadTime,
+            onlineUser: onlineUser,
+            description: description,
+          ),
+    );
   }
 }
 

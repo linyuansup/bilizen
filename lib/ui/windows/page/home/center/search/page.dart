@@ -12,20 +12,20 @@ class SearchPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final provider = ref.watch(searchPageProvider);
-    return switch (provider) {
-      SearchPageStateLoading() => Builder(
-        builder: (context) {
-          ref.read(searchPageProvider.notifier).load(keyword);
-          return const Center(
-            child: RepaintBoundary(child: ProgressRing()),
-          );
-        },
-      ),
-      SearchPageStateLoaded(:final results) => _SearchResultArea(
-        keyword,
-        results,
-      ),
-    };
+    return provider.when(
+      loading: () {
+        ref.read(searchPageProvider.notifier).load(keyword);
+        return const Center(
+          child: RepaintBoundary(child: ProgressRing()),
+        );
+      },
+      loaded: (results) {
+        return _SearchResultArea(
+          keyword,
+          results,
+        );
+      },
+    );
   }
 }
 

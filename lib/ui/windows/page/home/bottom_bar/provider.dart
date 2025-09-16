@@ -2,6 +2,7 @@ import 'package:bilizen/model/play_item.dart';
 import 'package:bilizen/model/video.dart';
 import 'package:bilizen/inject/inject.dart';
 import 'package:bilizen/package/playback_manager/playback_manager.dart';
+import 'package:bilizen/package/talker_extension/playback.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -21,11 +22,11 @@ class BottomBarProvider extends _$BottomBarProvider {
         _setNotPlaying();
         return;
       }
-      if (state is BottomBarStateNotPlaying) {
+      if (state is _NotPlaying) {
         await _fullSet();
         return;
       }
-      state = (state as BottomBarStatePlaying).copyWith(
+      state = (state as _Playing).copyWith(
         videos: await Future.wait(
           _playbackManager.playlist.value
               .map(
@@ -42,11 +43,11 @@ class BottomBarProvider extends _$BottomBarProvider {
         _setNotPlaying();
         return;
       }
-      if (state is BottomBarStateNotPlaying) {
+      if (state is _NotPlaying) {
         await _fullSet();
         return;
       }
-      state = (state as BottomBarStatePlaying).copyWith(
+      state = (state as _Playing).copyWith(
         video: await VideoState.fromVideo(
           playing.item.video,
           playing.item.pIndex,
@@ -57,7 +58,7 @@ class BottomBarProvider extends _$BottomBarProvider {
     });
 
     _playbackManager.switchMode.listen((switchMode) async {
-      if (state is BottomBarStateNotPlaying) {
+      if (state is _NotPlaying) {
         await _fullSet();
         return;
       }
@@ -65,7 +66,7 @@ class BottomBarProvider extends _$BottomBarProvider {
     });
 
     _playbackManager.volume.listen((volume) async {
-      if (state is BottomBarStateNotPlaying) {
+      if (state is _Playing) {
         await _fullSet();
         return;
       }
@@ -152,7 +153,7 @@ class BottomBarProvider extends _$BottomBarProvider {
   Future<void> copyLink() async {
     final bvid = _playbackManager.currentPlaying.value?.item.video.bid;
     if (bvid == null) {
-      getIt<Talker>().warning("fail on copy link, bvid is null");
+      getIt<Talker>().playback("fail on copy link, bvid is null");
       return;
     }
     await FlutterClipboard.copy("https://www.bilibili.com/video/$bvid");
@@ -189,7 +190,7 @@ sealed class BottomBarState with _$BottomBarState {
     required double volume,
     required SwitchMode switchMode,
     required List<VideoState> videos,
-  }) = BottomBarStateNotPlaying;
+  }) = _NotPlaying;
   const factory BottomBarState.playing({
     required VideoState video,
     required int process,
@@ -199,7 +200,7 @@ sealed class BottomBarState with _$BottomBarState {
     required AudioFormat audioFormat,
     required VideoFormat videoFormat,
     required List<VideoState> videos,
-  }) = BottomBarStatePlaying;
+  }) = _Playing;
 }
 
 @freezed

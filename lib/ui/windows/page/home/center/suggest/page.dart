@@ -10,16 +10,14 @@ class SuggestPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final video = ref.watch(homePageProvider);
-    return switch (video) {
-      HomePageStateLoading() => Builder(
-        builder: (context) {
-          ref.read(homePageProvider.notifier).fetch();
-          return const Center(
-            child: RepaintBoundary(child: ProgressRing()),
-          );
-        },
-      ),
-      HomePageStateLoaded(videoInfo: final videoInfo) => AutoScaleGridView(
+    return video.when(
+      loading: () {
+        ref.read(homePageProvider.notifier).fetch();
+        return const Center(
+          child: RepaintBoundary(child: ProgressRing()),
+        );
+      },
+      loaded: (videoInfo) => AutoScaleGridView(
         itemSize: const Size(300, 266),
         onBottom: () async {
           await ref.read(homePageProvider.notifier).fetch();
@@ -30,6 +28,6 @@ class SuggestPage extends ConsumerWidget {
           );
         }).toList(),
       ),
-    };
+    );
   }
 }

@@ -55,11 +55,11 @@ extension SearchPageStatePatterns on SearchPageState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( SearchPageStateLoading value)?  loading,TResult Function( SearchPageStateLoaded value)?  loaded,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Loading value)?  loading,TResult Function( _Loaded value)?  loaded,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case SearchPageStateLoading() when loading != null:
-return loading(_that);case SearchPageStateLoaded() when loaded != null:
+case _Loading() when loading != null:
+return loading(_that);case _Loaded() when loaded != null:
 return loaded(_that);case _:
   return orElse();
 
@@ -78,11 +78,11 @@ return loaded(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( SearchPageStateLoading value)  loading,required TResult Function( SearchPageStateLoaded value)  loaded,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Loading value)  loading,required TResult Function( _Loaded value)  loaded,}){
 final _that = this;
 switch (_that) {
-case SearchPageStateLoading():
-return loading(_that);case SearchPageStateLoaded():
+case _Loading():
+return loading(_that);case _Loaded():
 return loaded(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
@@ -97,11 +97,11 @@ return loaded(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( SearchPageStateLoading value)?  loading,TResult? Function( SearchPageStateLoaded value)?  loaded,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Loading value)?  loading,TResult? Function( _Loaded value)?  loaded,}){
 final _that = this;
 switch (_that) {
-case SearchPageStateLoading() when loading != null:
-return loading(_that);case SearchPageStateLoaded() when loaded != null:
+case _Loading() when loading != null:
+return loading(_that);case _Loaded() when loaded != null:
 return loaded(_that);case _:
   return null;
 
@@ -121,8 +121,8 @@ return loaded(_that);case _:
 
 @optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  loading,TResult Function( List<VideoCardData> results)?  loaded,required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case SearchPageStateLoading() when loading != null:
-return loading();case SearchPageStateLoaded() when loaded != null:
+case _Loading() when loading != null:
+return loading();case _Loaded() when loaded != null:
 return loaded(_that.results);case _:
   return orElse();
 
@@ -143,8 +143,8 @@ return loaded(_that.results);case _:
 
 @optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  loading,required TResult Function( List<VideoCardData> results)  loaded,}) {final _that = this;
 switch (_that) {
-case SearchPageStateLoading():
-return loading();case SearchPageStateLoaded():
+case _Loading():
+return loading();case _Loaded():
 return loaded(_that.results);}
 }
 /// A variant of `when` that fallback to returning `null`
@@ -161,8 +161,8 @@ return loaded(_that.results);}
 
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  loading,TResult? Function( List<VideoCardData> results)?  loaded,}) {final _that = this;
 switch (_that) {
-case SearchPageStateLoading() when loading != null:
-return loading();case SearchPageStateLoaded() when loaded != null:
+case _Loading() when loading != null:
+return loading();case _Loaded() when loaded != null:
 return loaded(_that.results);case _:
   return null;
 
@@ -174,8 +174,8 @@ return loaded(_that.results);case _:
 /// @nodoc
 
 
-class SearchPageStateLoading implements SearchPageState {
-  const SearchPageStateLoading();
+class _Loading implements SearchPageState {
+  const _Loading();
   
 
 
@@ -185,7 +185,7 @@ class SearchPageStateLoading implements SearchPageState {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SearchPageStateLoading);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Loading);
 }
 
 
@@ -206,8 +206,8 @@ String toString() {
 /// @nodoc
 
 
-class SearchPageStateLoaded implements SearchPageState {
-  const SearchPageStateLoaded(final  List<VideoCardData> results): _results = results;
+class _Loaded implements SearchPageState {
+  const _Loaded(final  List<VideoCardData> results): _results = results;
   
 
  final  List<VideoCardData> _results;
@@ -222,13 +222,13 @@ class SearchPageStateLoaded implements SearchPageState {
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$SearchPageStateLoadedCopyWith<SearchPageStateLoaded> get copyWith => _$SearchPageStateLoadedCopyWithImpl<SearchPageStateLoaded>(this, _$identity);
+_$LoadedCopyWith<_Loaded> get copyWith => __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SearchPageStateLoaded&&const DeepCollectionEquality().equals(other._results, _results));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Loaded&&const DeepCollectionEquality().equals(other._results, _results));
 }
 
 
@@ -244,8 +244,8 @@ String toString() {
 }
 
 /// @nodoc
-abstract mixin class $SearchPageStateLoadedCopyWith<$Res> implements $SearchPageStateCopyWith<$Res> {
-  factory $SearchPageStateLoadedCopyWith(SearchPageStateLoaded value, $Res Function(SearchPageStateLoaded) _then) = _$SearchPageStateLoadedCopyWithImpl;
+abstract mixin class _$LoadedCopyWith<$Res> implements $SearchPageStateCopyWith<$Res> {
+  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) = __$LoadedCopyWithImpl;
 @useResult
 $Res call({
  List<VideoCardData> results
@@ -256,17 +256,17 @@ $Res call({
 
 }
 /// @nodoc
-class _$SearchPageStateLoadedCopyWithImpl<$Res>
-    implements $SearchPageStateLoadedCopyWith<$Res> {
-  _$SearchPageStateLoadedCopyWithImpl(this._self, this._then);
+class __$LoadedCopyWithImpl<$Res>
+    implements _$LoadedCopyWith<$Res> {
+  __$LoadedCopyWithImpl(this._self, this._then);
 
-  final SearchPageStateLoaded _self;
-  final $Res Function(SearchPageStateLoaded) _then;
+  final _Loaded _self;
+  final $Res Function(_Loaded) _then;
 
 /// Create a copy of SearchPageState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? results = null,}) {
-  return _then(SearchPageStateLoaded(
+  return _then(_Loaded(
 null == results ? _self._results : results // ignore: cast_nullable_to_non_nullable
 as List<VideoCardData>,
   ));

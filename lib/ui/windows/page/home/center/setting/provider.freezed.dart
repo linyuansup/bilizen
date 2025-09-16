@@ -86,10 +86,10 @@ extension SettingStatePatterns on SettingState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( SettingStateDefault value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _SettingState value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case SettingStateDefault() when $default != null:
+case _SettingState() when $default != null:
 return $default(_that);case _:
   return orElse();
 
@@ -108,10 +108,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( SettingStateDefault value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _SettingState value)  $default,){
 final _that = this;
 switch (_that) {
-case SettingStateDefault():
+case _SettingState():
 return $default(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
@@ -126,10 +126,10 @@ return $default(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( SettingStateDefault value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _SettingState value)?  $default,){
 final _that = this;
 switch (_that) {
-case SettingStateDefault() when $default != null:
+case _SettingState() when $default != null:
 return $default(_that);case _:
   return null;
 
@@ -149,7 +149,7 @@ return $default(_that);case _:
 
 @optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int selectedIndex)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case SettingStateDefault() when $default != null:
+case _SettingState() when $default != null:
 return $default(_that.selectedIndex);case _:
   return orElse();
 
@@ -170,7 +170,7 @@ return $default(_that.selectedIndex);case _:
 
 @optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int selectedIndex)  $default,) {final _that = this;
 switch (_that) {
-case SettingStateDefault():
+case _SettingState():
 return $default(_that.selectedIndex);}
 }
 /// A variant of `when` that fallback to returning `null`
@@ -187,7 +187,7 @@ return $default(_that.selectedIndex);}
 
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int selectedIndex)?  $default,) {final _that = this;
 switch (_that) {
-case SettingStateDefault() when $default != null:
+case _SettingState() when $default != null:
 return $default(_that.selectedIndex);case _:
   return null;
 
@@ -199,8 +199,8 @@ return $default(_that.selectedIndex);case _:
 /// @nodoc
 
 
-class SettingStateDefault implements SettingState {
-  const SettingStateDefault({required this.selectedIndex});
+class _SettingState implements SettingState {
+  const _SettingState({required this.selectedIndex});
   
 
 @override final  int selectedIndex;
@@ -209,13 +209,13 @@ class SettingStateDefault implements SettingState {
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$SettingStateDefaultCopyWith<SettingStateDefault> get copyWith => _$SettingStateDefaultCopyWithImpl<SettingStateDefault>(this, _$identity);
+_$SettingStateCopyWith<_SettingState> get copyWith => __$SettingStateCopyWithImpl<_SettingState>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SettingStateDefault&&(identical(other.selectedIndex, selectedIndex) || other.selectedIndex == selectedIndex));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SettingState&&(identical(other.selectedIndex, selectedIndex) || other.selectedIndex == selectedIndex));
 }
 
 
@@ -231,8 +231,8 @@ String toString() {
 }
 
 /// @nodoc
-abstract mixin class $SettingStateDefaultCopyWith<$Res> implements $SettingStateCopyWith<$Res> {
-  factory $SettingStateDefaultCopyWith(SettingStateDefault value, $Res Function(SettingStateDefault) _then) = _$SettingStateDefaultCopyWithImpl;
+abstract mixin class _$SettingStateCopyWith<$Res> implements $SettingStateCopyWith<$Res> {
+  factory _$SettingStateCopyWith(_SettingState value, $Res Function(_SettingState) _then) = __$SettingStateCopyWithImpl;
 @override @useResult
 $Res call({
  int selectedIndex
@@ -243,17 +243,17 @@ $Res call({
 
 }
 /// @nodoc
-class _$SettingStateDefaultCopyWithImpl<$Res>
-    implements $SettingStateDefaultCopyWith<$Res> {
-  _$SettingStateDefaultCopyWithImpl(this._self, this._then);
+class __$SettingStateCopyWithImpl<$Res>
+    implements _$SettingStateCopyWith<$Res> {
+  __$SettingStateCopyWithImpl(this._self, this._then);
 
-  final SettingStateDefault _self;
-  final $Res Function(SettingStateDefault) _then;
+  final _SettingState _self;
+  final $Res Function(_SettingState) _then;
 
 /// Create a copy of SettingState
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? selectedIndex = null,}) {
-  return _then(SettingStateDefault(
+  return _then(_SettingState(
 selectedIndex: null == selectedIndex ? _self.selectedIndex : selectedIndex // ignore: cast_nullable_to_non_nullable
 as int,
   ));

@@ -86,10 +86,10 @@ extension LoginStatePatterns on LoginState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( LoginStateInitial value)?  initial,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Initial value)?  initial,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case LoginStateInitial() when initial != null:
+case _Initial() when initial != null:
 return initial(_that);case _:
   return orElse();
 
@@ -108,10 +108,10 @@ return initial(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( LoginStateInitial value)  initial,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Initial value)  initial,}){
 final _that = this;
 switch (_that) {
-case LoginStateInitial():
+case _Initial():
 return initial(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
@@ -126,10 +126,10 @@ return initial(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( LoginStateInitial value)?  initial,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Initial value)?  initial,}){
 final _that = this;
 switch (_that) {
-case LoginStateInitial() when initial != null:
+case _Initial() when initial != null:
 return initial(_that);case _:
   return null;
 
@@ -149,7 +149,7 @@ return initial(_that);case _:
 
 @optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( LoginMethod method)?  initial,required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case LoginStateInitial() when initial != null:
+case _Initial() when initial != null:
 return initial(_that.method);case _:
   return orElse();
 
@@ -170,7 +170,7 @@ return initial(_that.method);case _:
 
 @optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( LoginMethod method)  initial,}) {final _that = this;
 switch (_that) {
-case LoginStateInitial():
+case _Initial():
 return initial(_that.method);}
 }
 /// A variant of `when` that fallback to returning `null`
@@ -187,7 +187,7 @@ return initial(_that.method);}
 
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( LoginMethod method)?  initial,}) {final _that = this;
 switch (_that) {
-case LoginStateInitial() when initial != null:
+case _Initial() when initial != null:
 return initial(_that.method);case _:
   return null;
 
@@ -199,8 +199,8 @@ return initial(_that.method);case _:
 /// @nodoc
 
 
-class LoginStateInitial implements LoginState {
-  const LoginStateInitial({required this.method});
+class _Initial implements LoginState {
+  const _Initial({required this.method});
   
 
 @override final  LoginMethod method;
@@ -209,13 +209,13 @@ class LoginStateInitial implements LoginState {
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$LoginStateInitialCopyWith<LoginStateInitial> get copyWith => _$LoginStateInitialCopyWithImpl<LoginStateInitial>(this, _$identity);
+_$InitialCopyWith<_Initial> get copyWith => __$InitialCopyWithImpl<_Initial>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoginStateInitial&&(identical(other.method, method) || other.method == method));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Initial&&(identical(other.method, method) || other.method == method));
 }
 
 
@@ -231,8 +231,8 @@ String toString() {
 }
 
 /// @nodoc
-abstract mixin class $LoginStateInitialCopyWith<$Res> implements $LoginStateCopyWith<$Res> {
-  factory $LoginStateInitialCopyWith(LoginStateInitial value, $Res Function(LoginStateInitial) _then) = _$LoginStateInitialCopyWithImpl;
+abstract mixin class _$InitialCopyWith<$Res> implements $LoginStateCopyWith<$Res> {
+  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) _then) = __$InitialCopyWithImpl;
 @override @useResult
 $Res call({
  LoginMethod method
@@ -243,17 +243,17 @@ $Res call({
 
 }
 /// @nodoc
-class _$LoginStateInitialCopyWithImpl<$Res>
-    implements $LoginStateInitialCopyWith<$Res> {
-  _$LoginStateInitialCopyWithImpl(this._self, this._then);
+class __$InitialCopyWithImpl<$Res>
+    implements _$InitialCopyWith<$Res> {
+  __$InitialCopyWithImpl(this._self, this._then);
 
-  final LoginStateInitial _self;
-  final $Res Function(LoginStateInitial) _then;
+  final _Initial _self;
+  final $Res Function(_Initial) _then;
 
 /// Create a copy of LoginState
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? method = null,}) {
-  return _then(LoginStateInitial(
+  return _then(_Initial(
 method: null == method ? _self.method : method // ignore: cast_nullable_to_non_nullable
 as LoginMethod,
   ));

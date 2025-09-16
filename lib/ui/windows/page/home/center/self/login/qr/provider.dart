@@ -1,5 +1,5 @@
-import 'package:bilizen/logic/account_manager/account_manager.dart';
-import 'package:bilizen/logic/account_manager/qr_login_status.dart';
+import 'package:bilizen/package/account_manager/account_manager.dart';
+import 'package:bilizen/package/account_manager/qr_login_status.dart';
 import 'package:bilizen/inject/inject.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -23,8 +23,8 @@ class QrCodeLoginProvider extends _$QrCodeLoginProvider {
 
 @freezed
 sealed class QrCodeLoginState with _$QrCodeLoginState {
-  const factory QrCodeLoginState.loading() = QrCodeLoginStateLoading;
+  const factory QrCodeLoginState.loading() = _Loading;
   const factory QrCodeLoginState.initial({
     required QrLoginStatus status,
-  }) = QrCodeLoginStateInitial;
+  }) = _Initial;
 }

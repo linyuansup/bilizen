@@ -41,7 +41,7 @@ class VideoInfoProvider extends _$VideoInfoProvider {
 
 @freezed
 sealed class VideoInfoState with _$VideoInfoState {
-  const factory VideoInfoState.loading() = VideoInfoStateLoading;
+  const factory VideoInfoState.loading() = _Loading;
 
   const factory VideoInfoState.loaded({
     required List<Staff> staffs,
@@ -50,7 +50,7 @@ sealed class VideoInfoState with _$VideoInfoState {
     required int uploadTime,
     required String onlineUser,
     required String description,
-  }) = VideoInfoStateLoaded;
+  }) = _Loaded;
 }
 
 @freezed

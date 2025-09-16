@@ -86,10 +86,10 @@ extension RightBarStatePatterns on RightBarState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( RightBarStateInitial value)?  initial,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Initial value)?  initial,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case RightBarStateInitial() when initial != null:
+case _Initial() when initial != null:
 return initial(_that);case _:
   return orElse();
 
@@ -108,10 +108,10 @@ return initial(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( RightBarStateInitial value)  initial,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Initial value)  initial,}){
 final _that = this;
 switch (_that) {
-case RightBarStateInitial():
+case _Initial():
 return initial(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
@@ -126,10 +126,10 @@ return initial(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( RightBarStateInitial value)?  initial,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Initial value)?  initial,}){
 final _that = this;
 switch (_that) {
-case RightBarStateInitial() when initial != null:
+case _Initial() when initial != null:
 return initial(_that);case _:
   return null;
 
@@ -149,7 +149,7 @@ return initial(_that);case _:
 
 @optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( VideoRightBarPage page)?  initial,required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case RightBarStateInitial() when initial != null:
+case _Initial() when initial != null:
 return initial(_that.page);case _:
   return orElse();
 
@@ -170,7 +170,7 @@ return initial(_that.page);case _:
 
 @optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( VideoRightBarPage page)  initial,}) {final _that = this;
 switch (_that) {
-case RightBarStateInitial():
+case _Initial():
 return initial(_that.page);}
 }
 /// A variant of `when` that fallback to returning `null`
@@ -187,7 +187,7 @@ return initial(_that.page);}
 
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( VideoRightBarPage page)?  initial,}) {final _that = this;
 switch (_that) {
-case RightBarStateInitial() when initial != null:
+case _Initial() when initial != null:
 return initial(_that.page);case _:
   return null;
 
@@ -199,8 +199,8 @@ return initial(_that.page);case _:
 /// @nodoc
 
 
-class RightBarStateInitial implements RightBarState {
-  const RightBarStateInitial({required this.page});
+class _Initial implements RightBarState {
+  const _Initial({required this.page});
   
 
 @override final  VideoRightBarPage page;
@@ -209,13 +209,13 @@ class RightBarStateInitial implements RightBarState {
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$RightBarStateInitialCopyWith<RightBarStateInitial> get copyWith => _$RightBarStateInitialCopyWithImpl<RightBarStateInitial>(this, _$identity);
+_$InitialCopyWith<_Initial> get copyWith => __$InitialCopyWithImpl<_Initial>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is RightBarStateInitial&&(identical(other.page, page) || other.page == page));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Initial&&(identical(other.page, page) || other.page == page));
 }
 
 
@@ -231,8 +231,8 @@ String toString() {
 }
 
 /// @nodoc
-abstract mixin class $RightBarStateInitialCopyWith<$Res> implements $RightBarStateCopyWith<$Res> {
-  factory $RightBarStateInitialCopyWith(RightBarStateInitial value, $Res Function(RightBarStateInitial) _then) = _$RightBarStateInitialCopyWithImpl;
+abstract mixin class _$InitialCopyWith<$Res> implements $RightBarStateCopyWith<$Res> {
+  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) _then) = __$InitialCopyWithImpl;
 @override @useResult
 $Res call({
  VideoRightBarPage page
@@ -243,17 +243,17 @@ $Res call({
 
 }
 /// @nodoc
-class _$RightBarStateInitialCopyWithImpl<$Res>
-    implements $RightBarStateInitialCopyWith<$Res> {
-  _$RightBarStateInitialCopyWithImpl(this._self, this._then);
+class __$InitialCopyWithImpl<$Res>
+    implements _$InitialCopyWith<$Res> {
+  __$InitialCopyWithImpl(this._self, this._then);
 
-  final RightBarStateInitial _self;
-  final $Res Function(RightBarStateInitial) _then;
+  final _Initial _self;
+  final $Res Function(_Initial) _then;
 
 /// Create a copy of RightBarState
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? page = null,}) {
-  return _then(RightBarStateInitial(
+  return _then(_Initial(
 page: null == page ? _self.page : page // ignore: cast_nullable_to_non_nullable
 as VideoRightBarPage,
   ));

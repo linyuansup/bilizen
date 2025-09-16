@@ -1,4 +1,4 @@
-import 'package:bilizen/logic/account_manager/qr_login_status.dart';
+import 'package:bilizen/package/account_manager/qr_login_status.dart';
 import 'package:bilizen/ui/windows/page/home/center/self/login/qr/provider.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,10 +11,10 @@ class QrLoginPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(qrCodeLoginProvider);
-    return switch (state) {
-      QrCodeLoginStateLoading() => const _LoadingPage(),
-      QrCodeLoginStateInitial(:final status) => _QrCodePage(status),
-    };
+    return state.when(
+      loading: () => const _LoadingPage(),
+      initial: (status) => _QrCodePage(status),
+    );
   }
 }
 

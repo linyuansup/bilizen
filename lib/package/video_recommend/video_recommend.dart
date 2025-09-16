@@ -1,5 +1,5 @@
 import 'package:bilizen/data/api/video/recommend.dart';
-import 'package:bilizen/logic/video_recommend/homepage.dart';
+import 'package:bilizen/package/video_recommend/homepage.dart';
 import 'package:bilizen/model/video.dart';
 import 'package:injectable/injectable.dart';
 

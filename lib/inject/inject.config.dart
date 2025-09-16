@@ -25,15 +25,15 @@ import 'package:bilizen/data/storage/pref/wbi.dart' as _i408;
 import 'package:bilizen/inject/dio.dart' as _i550;
 import 'package:bilizen/inject/logger.dart' as _i489;
 import 'package:bilizen/inject/shared_preferences.dart' as _i383;
-import 'package:bilizen/logic/account_manager/account_manager.dart' as _i72;
-import 'package:bilizen/logic/comment_manager/comment_manager.dart' as _i644;
-import 'package:bilizen/logic/fav_manager/fav_manager.dart' as _i398;
-import 'package:bilizen/logic/search/search_manager.dart' as _i786;
-import 'package:bilizen/logic/video_online_manager.dart' as _i814;
-import 'package:bilizen/logic/video_recommend/video_recommend.dart' as _i847;
-import 'package:bilizen/logic/window_state.dart' as _i224;
+import 'package:bilizen/package/account_manager/account_manager.dart' as _i309;
+import 'package:bilizen/package/comment_manager/comment_manager.dart' as _i867;
+import 'package:bilizen/package/fav_manager/fav_manager.dart' as _i578;
 import 'package:bilizen/package/playback_manager/playback_manager.dart'
     as _i907;
+import 'package:bilizen/package/search/search_manager.dart' as _i136;
+import 'package:bilizen/package/video_online_manager.dart' as _i135;
+import 'package:bilizen/package/video_recommend/video_recommend.dart' as _i16;
+import 'package:bilizen/package/window_state.dart' as _i592;
 import 'package:bilizen/ui/windows/page/router.dart' as _i609;
 import 'package:bilizen/util/path_resolver.dart' as _i625;
 import 'package:cookie_jar/cookie_jar.dart' as _i557;
@@ -63,13 +63,13 @@ extension GetItInjectableX on _i174.GetIt {
       () => sharedPreferencesInjectable.prefs,
       preResolve: true,
     );
-    gh.singleton<_i814.VideoOnlineManager>(() => _i814.VideoOnlineManager());
-    gh.singleton<_i224.WindowStateManager>(() => _i224.WindowStateManager());
     gh.singleton<_i609.WindowsRouter>(() => _i609.WindowsRouter());
     await gh.singletonAsync<_i625.PathResolver>(
       () => _i625.PathResolver.create(),
       preResolve: true,
     );
+    gh.singleton<_i135.VideoOnlineManager>(() => _i135.VideoOnlineManager());
+    gh.singleton<_i592.WindowStateManager>(() => _i592.WindowStateManager());
     gh.singleton<_i361.Dio>(
       () => dioInjectable.dio(gh<_i557.PersistCookieJar>(), gh<_i993.Talker>()),
     );
@@ -102,32 +102,32 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.singleton<_i158.FavListApi>(() => _i158.FavListApi(gh<_i361.Dio>()));
     gh.singleton<_i78.FavInfoApi>(() => _i78.FavInfoApi(gh<_i361.Dio>()));
+    gh.singleton<_i867.CommentManager>(
+      () => _i867.CommentManager(gh<_i937.CommentListApi>()),
+    );
     gh.singleton<_i907.PlaybackManager>(
       () => _i907.PlaybackManager(
         talker: gh<_i207.Talker>(),
-        videoOnlineManager: gh<_i814.VideoOnlineManager>(),
+        videoOnlineManager: gh<_i135.VideoOnlineManager>(),
       ),
     );
-    gh.singleton<_i644.CommentManager>(
-      () => _i644.CommentManager(gh<_i937.CommentListApi>()),
-    );
-    gh.singleton<_i786.SearchManager>(
-      () => _i786.SearchManager(
+    gh.singleton<_i136.SearchManager>(
+      () => _i136.SearchManager(
         gh<_i692.SearchSuggestApi>(),
         gh<_i61.SearchRequestApi>(),
       ),
     );
-    gh.singleton<_i847.VideoRecommend>(
-      () => _i847.VideoRecommend(gh<_i174.VideoRecommendApi>()),
+    gh.singleton<_i16.VideoRecommend>(
+      () => _i16.VideoRecommend(gh<_i174.VideoRecommendApi>()),
     );
-    gh.singleton<_i72.AccountManager>(
-      () => _i72.AccountManager(
+    gh.singleton<_i309.AccountManager>(
+      () => _i309.AccountManager(
         gh<_i348.QrLoginApi>(),
         gh<_i1038.LoginInfoApi>(),
       ),
     );
-    gh.singleton<_i398.FavManager>(
-      () => _i398.FavManager(gh<_i158.FavListApi>()),
+    gh.singleton<_i578.FavManager>(
+      () => _i578.FavManager(gh<_i158.FavListApi>()),
     );
     return this;
   }

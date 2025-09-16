@@ -1,7 +1,7 @@
 import 'package:bilizen/data/api/comment/list.dart';
-import 'package:bilizen/logic/comment_manager/get_comment.dart';
-import 'package:bilizen/logic/comment_manager/get_comment_result.dart';
-import 'package:bilizen/logic/comment_manager/get_reply_result.dart';
+import 'package:bilizen/package/comment_manager/get_comment.dart';
+import 'package:bilizen/package/comment_manager/get_comment_result.dart';
+import 'package:bilizen/package/comment_manager/get_reply_result.dart';
 import 'package:bilizen/model/comment.dart';
 import 'package:injectable/injectable.dart';
 

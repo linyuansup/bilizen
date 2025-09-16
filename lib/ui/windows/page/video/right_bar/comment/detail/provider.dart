@@ -1,6 +1,6 @@
 import 'package:bilizen/inject/inject.dart';
-import 'package:bilizen/logic/comment_manager/comment_manager.dart';
-import 'package:bilizen/logic/comment_manager/get_reply_result.dart';
+import 'package:bilizen/package/comment_manager/comment_manager.dart';
+import 'package:bilizen/package/comment_manager/get_reply_result.dart';
 import 'package:bilizen/model/comment.dart';
 import 'package:bilizen/package/playback_manager/playback_manager.dart';
 import 'package:bilizen/ui/windows/page/router.dart';
@@ -35,10 +35,6 @@ class VideoCommentDetailProvider extends _$VideoCommentDetailProvider {
     return VideoCommentDetailState.loading();
   }
 
-  void reload() {
-    state = const VideoCommentDetailState.loading();
-  }
-
   Future<void> fetchComments(CommentData comment) async {
     final currentPlaying = _playbackManager.currentPlaying.value;
     if (currentPlaying == null) {
@@ -67,9 +63,9 @@ class VideoCommentDetailProvider extends _$VideoCommentDetailProvider {
       return;
     }
     _currentComment = await _currentComment!.next();
-    state = (state as VideoCommentDetailStateLoaded).copyWith(
+    state = (state as _Loaded).copyWith(
       comments: [
-        ...(state as VideoCommentDetailStateLoaded).comments,
+        ...(state as _Loaded).comments,
         ...await fromModelComment(_currentComment!.comments),
       ],
     );
@@ -104,10 +100,9 @@ class VideoCommentDetailProvider extends _$VideoCommentDetailProvider {
 
 @freezed
 sealed class VideoCommentDetailState with _$VideoCommentDetailState {
-  const factory VideoCommentDetailState.loading() =
-      VideoCommentDetailStateLoading;
+  const factory VideoCommentDetailState.loading() = _Loading;
   const factory VideoCommentDetailState.loaded({
     required int upUid,
     required List<CommentData> comments,
-  }) = VideoCommentDetailStateLoaded;
+  }) = _Loaded;
 }

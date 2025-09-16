@@ -25,7 +25,7 @@ class UserInfoTabProvider extends _$UserInfoTabProvider {
 sealed class UserInfoTabState with _$UserInfoTabState {
   const factory UserInfoTabState({
     required int selectedIndex,
-  }) = UserInfoTabStateDefault;
+  }) = _UserInfoTabState;
 }
 
 enum UserInfoTab {

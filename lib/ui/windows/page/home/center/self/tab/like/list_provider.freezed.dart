@@ -55,11 +55,11 @@ extension LikeListStatePatterns on LikeListState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( LikeListLoading value)?  loading,TResult Function( LikeListSuccess value)?  success,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Loading value)?  loading,TResult Function( _Success value)?  success,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case LikeListLoading() when loading != null:
-return loading(_that);case LikeListSuccess() when success != null:
+case _Loading() when loading != null:
+return loading(_that);case _Success() when success != null:
 return success(_that);case _:
   return orElse();
 
@@ -78,11 +78,11 @@ return success(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( LikeListLoading value)  loading,required TResult Function( LikeListSuccess value)  success,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Loading value)  loading,required TResult Function( _Success value)  success,}){
 final _that = this;
 switch (_that) {
-case LikeListLoading():
-return loading(_that);case LikeListSuccess():
+case _Loading():
+return loading(_that);case _Success():
 return success(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
@@ -97,11 +97,11 @@ return success(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( LikeListLoading value)?  loading,TResult? Function( LikeListSuccess value)?  success,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Loading value)?  loading,TResult? Function( _Success value)?  success,}){
 final _that = this;
 switch (_that) {
-case LikeListLoading() when loading != null:
-return loading(_that);case LikeListSuccess() when success != null:
+case _Loading() when loading != null:
+return loading(_that);case _Success() when success != null:
 return success(_that);case _:
   return null;
 
@@ -121,8 +121,8 @@ return success(_that);case _:
 
 @optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  loading,TResult Function( List<LikeListItem> items,  int selectedIndex)?  success,required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case LikeListLoading() when loading != null:
-return loading();case LikeListSuccess() when success != null:
+case _Loading() when loading != null:
+return loading();case _Success() when success != null:
 return success(_that.items,_that.selectedIndex);case _:
   return orElse();
 
@@ -143,8 +143,8 @@ return success(_that.items,_that.selectedIndex);case _:
 
 @optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  loading,required TResult Function( List<LikeListItem> items,  int selectedIndex)  success,}) {final _that = this;
 switch (_that) {
-case LikeListLoading():
-return loading();case LikeListSuccess():
+case _Loading():
+return loading();case _Success():
 return success(_that.items,_that.selectedIndex);}
 }
 /// A variant of `when` that fallback to returning `null`
@@ -161,8 +161,8 @@ return success(_that.items,_that.selectedIndex);}
 
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  loading,TResult? Function( List<LikeListItem> items,  int selectedIndex)?  success,}) {final _that = this;
 switch (_that) {
-case LikeListLoading() when loading != null:
-return loading();case LikeListSuccess() when success != null:
+case _Loading() when loading != null:
+return loading();case _Success() when success != null:
 return success(_that.items,_that.selectedIndex);case _:
   return null;
 
@@ -174,8 +174,8 @@ return success(_that.items,_that.selectedIndex);case _:
 /// @nodoc
 
 
-class LikeListLoading implements LikeListState {
-  const LikeListLoading();
+class _Loading implements LikeListState {
+  const _Loading();
   
 
 
@@ -185,7 +185,7 @@ class LikeListLoading implements LikeListState {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LikeListLoading);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Loading);
 }
 
 
@@ -206,8 +206,8 @@ String toString() {
 /// @nodoc
 
 
-class LikeListSuccess implements LikeListState {
-  const LikeListSuccess({required final  List<LikeListItem> items, required this.selectedIndex}): _items = items;
+class _Success implements LikeListState {
+  const _Success({required final  List<LikeListItem> items, required this.selectedIndex}): _items = items;
   
 
  final  List<LikeListItem> _items;
@@ -223,13 +223,13 @@ class LikeListSuccess implements LikeListState {
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$LikeListSuccessCopyWith<LikeListSuccess> get copyWith => _$LikeListSuccessCopyWithImpl<LikeListSuccess>(this, _$identity);
+_$SuccessCopyWith<_Success> get copyWith => __$SuccessCopyWithImpl<_Success>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LikeListSuccess&&const DeepCollectionEquality().equals(other._items, _items)&&(identical(other.selectedIndex, selectedIndex) || other.selectedIndex == selectedIndex));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Success&&const DeepCollectionEquality().equals(other._items, _items)&&(identical(other.selectedIndex, selectedIndex) || other.selectedIndex == selectedIndex));
 }
 
 
@@ -245,8 +245,8 @@ String toString() {
 }
 
 /// @nodoc
-abstract mixin class $LikeListSuccessCopyWith<$Res> implements $LikeListStateCopyWith<$Res> {
-  factory $LikeListSuccessCopyWith(LikeListSuccess value, $Res Function(LikeListSuccess) _then) = _$LikeListSuccessCopyWithImpl;
+abstract mixin class _$SuccessCopyWith<$Res> implements $LikeListStateCopyWith<$Res> {
+  factory _$SuccessCopyWith(_Success value, $Res Function(_Success) _then) = __$SuccessCopyWithImpl;
 @useResult
 $Res call({
  List<LikeListItem> items, int selectedIndex
@@ -257,17 +257,17 @@ $Res call({
 
 }
 /// @nodoc
-class _$LikeListSuccessCopyWithImpl<$Res>
-    implements $LikeListSuccessCopyWith<$Res> {
-  _$LikeListSuccessCopyWithImpl(this._self, this._then);
+class __$SuccessCopyWithImpl<$Res>
+    implements _$SuccessCopyWith<$Res> {
+  __$SuccessCopyWithImpl(this._self, this._then);
 
-  final LikeListSuccess _self;
-  final $Res Function(LikeListSuccess) _then;
+  final _Success _self;
+  final $Res Function(_Success) _then;
 
 /// Create a copy of LikeListState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? items = null,Object? selectedIndex = null,}) {
-  return _then(LikeListSuccess(
+  return _then(_Success(
 items: null == items ? _self._items : items // ignore: cast_nullable_to_non_nullable
 as List<LikeListItem>,selectedIndex: null == selectedIndex ? _self.selectedIndex : selectedIndex // ignore: cast_nullable_to_non_nullable
 as int,

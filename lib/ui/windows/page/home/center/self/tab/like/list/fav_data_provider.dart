@@ -1,6 +1,6 @@
 import 'package:bilizen/inject/inject.dart';
-import 'package:bilizen/logic/fav_manager/fav_list_result.dart';
-import 'package:bilizen/logic/fav_manager/fav_manager.dart';
+import 'package:bilizen/package/fav_manager/fav_list_result.dart';
+import 'package:bilizen/package/fav_manager/fav_manager.dart';
 import 'package:bilizen/ui/windows/widget/video_card.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -29,18 +29,13 @@ class FavDataProvider extends _$FavDataProvider {
     );
   }
 
-  void reset() {
-    _currentFavListResult = null;
-    state = const FavDataState.loading();
-  }
-
   Future<void> next() async {
     if (_currentFavListResult == null) {
       return;
     }
     _currentFavListResult = await _currentFavListResult!.next();
     final currentState = state;
-    if (currentState is FavDataSuccess) {
+    if (currentState is _Success) {
       state = FavDataState.success(
         items: [
           ...currentState.items,
@@ -57,8 +52,8 @@ class FavDataProvider extends _$FavDataProvider {
 
 @freezed
 sealed class FavDataState with _$FavDataState {
-  const factory FavDataState.loading() = FavDataLoading;
+  const factory FavDataState.loading() = _Loading;
   const factory FavDataState.success({
     required List<VideoCardData> items,
-  }) = FavDataSuccess;
+  }) = _Success;
 }

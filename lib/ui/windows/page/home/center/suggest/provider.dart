@@ -1,5 +1,5 @@
-import 'package:bilizen/logic/video_recommend/homepage.dart';
-import 'package:bilizen/logic/video_recommend/video_recommend.dart';
+import 'package:bilizen/package/video_recommend/homepage.dart';
+import 'package:bilizen/package/video_recommend/video_recommend.dart';
 import 'package:bilizen/inject/inject.dart';
 import 'package:bilizen/ui/windows/widget/video_card.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -29,7 +29,7 @@ class HomePageProvider extends _$HomePageProvider {
   }
 
   Future<void> _loadCurrentHomepageVideos() async {
-    if (state is HomePageStateLoading) {
+    if (state is _Loading) {
       state = HomePageState.loaded(
         await Future.wait(
           _homepageVideoRecommender!.current.map((video) async {
@@ -37,8 +37,8 @@ class HomePageProvider extends _$HomePageProvider {
           }).toList(),
         ),
       );
-    } else if (state is HomePageStateLoaded) {
-      final currentVideos = (state as HomePageStateLoaded).videoInfo;
+    } else if (state is _Loaded) {
+      final currentVideos = (state as _Loaded).videoInfo;
       final newVideos = await Future.wait(
         _homepageVideoRecommender!.current.map((video) async {
           return await VideoCardData.fromVideo(video);
@@ -51,7 +51,6 @@ class HomePageProvider extends _$HomePageProvider {
 
 @freezed
 sealed class HomePageState with _$HomePageState {
-  const factory HomePageState.loading() = HomePageStateLoading;
-  const factory HomePageState.loaded(List<VideoCardData> videoInfo) =
-      HomePageStateLoaded;
+  const factory HomePageState.loading() = _Loading;
+  const factory HomePageState.loaded(List<VideoCardData> videoInfo) = _Loaded;
 }

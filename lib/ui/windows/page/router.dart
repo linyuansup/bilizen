@@ -7,7 +7,7 @@ import 'package:rxdart/rxdart.dart';
 
 class RouterInformation {
   final GlobalKey<NavigatorState> key;
-  late final RouterObserver observer = RouterObserver(_manager);
+  late final observer = RouterObserver(_manager);
   final _manager = CurrentRouteManager();
 
   RouterInformation(String name)

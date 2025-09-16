@@ -1,6 +1,6 @@
 import 'package:bilizen/data/api/fav/list.dart';
 import 'package:bilizen/inject/inject.dart';
-import 'package:bilizen/logic/fav_manager/fav_manager.dart';
+import 'package:bilizen/package/fav_manager/fav_manager.dart';
 import 'package:bilizen/model/video.dart';
 
 class FavListResult {

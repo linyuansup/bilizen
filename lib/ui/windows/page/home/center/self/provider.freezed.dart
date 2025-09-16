@@ -55,12 +55,12 @@ extension SelfStatePatterns on SelfState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( SelfStateNoLogin value)?  noLogin,TResult Function( SelfStateLoading value)?  loading,TResult Function( SelfStateLoggedIn value)?  loggedIn,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _NoLogin value)?  noLogin,TResult Function( _Loading value)?  loading,TResult Function( _LoggedIn value)?  loggedIn,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case SelfStateNoLogin() when noLogin != null:
-return noLogin(_that);case SelfStateLoading() when loading != null:
-return loading(_that);case SelfStateLoggedIn() when loggedIn != null:
+case _NoLogin() when noLogin != null:
+return noLogin(_that);case _Loading() when loading != null:
+return loading(_that);case _LoggedIn() when loggedIn != null:
 return loggedIn(_that);case _:
   return orElse();
 
@@ -79,12 +79,12 @@ return loggedIn(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( SelfStateNoLogin value)  noLogin,required TResult Function( SelfStateLoading value)  loading,required TResult Function( SelfStateLoggedIn value)  loggedIn,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _NoLogin value)  noLogin,required TResult Function( _Loading value)  loading,required TResult Function( _LoggedIn value)  loggedIn,}){
 final _that = this;
 switch (_that) {
-case SelfStateNoLogin():
-return noLogin(_that);case SelfStateLoading():
-return loading(_that);case SelfStateLoggedIn():
+case _NoLogin():
+return noLogin(_that);case _Loading():
+return loading(_that);case _LoggedIn():
 return loggedIn(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
@@ -99,12 +99,12 @@ return loggedIn(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( SelfStateNoLogin value)?  noLogin,TResult? Function( SelfStateLoading value)?  loading,TResult? Function( SelfStateLoggedIn value)?  loggedIn,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _NoLogin value)?  noLogin,TResult? Function( _Loading value)?  loading,TResult? Function( _LoggedIn value)?  loggedIn,}){
 final _that = this;
 switch (_that) {
-case SelfStateNoLogin() when noLogin != null:
-return noLogin(_that);case SelfStateLoading() when loading != null:
-return loading(_that);case SelfStateLoggedIn() when loggedIn != null:
+case _NoLogin() when noLogin != null:
+return noLogin(_that);case _Loading() when loading != null:
+return loading(_that);case _LoggedIn() when loggedIn != null:
 return loggedIn(_that);case _:
   return null;
 
@@ -124,9 +124,9 @@ return loggedIn(_that);case _:
 
 @optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  noLogin,TResult Function( Self self)?  loading,TResult Function( UserInfoCard userInfoCard)?  loggedIn,required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case SelfStateNoLogin() when noLogin != null:
-return noLogin();case SelfStateLoading() when loading != null:
-return loading(_that.self);case SelfStateLoggedIn() when loggedIn != null:
+case _NoLogin() when noLogin != null:
+return noLogin();case _Loading() when loading != null:
+return loading(_that.self);case _LoggedIn() when loggedIn != null:
 return loggedIn(_that.userInfoCard);case _:
   return orElse();
 
@@ -147,9 +147,9 @@ return loggedIn(_that.userInfoCard);case _:
 
 @optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  noLogin,required TResult Function( Self self)  loading,required TResult Function( UserInfoCard userInfoCard)  loggedIn,}) {final _that = this;
 switch (_that) {
-case SelfStateNoLogin():
-return noLogin();case SelfStateLoading():
-return loading(_that.self);case SelfStateLoggedIn():
+case _NoLogin():
+return noLogin();case _Loading():
+return loading(_that.self);case _LoggedIn():
 return loggedIn(_that.userInfoCard);}
 }
 /// A variant of `when` that fallback to returning `null`
@@ -166,9 +166,9 @@ return loggedIn(_that.userInfoCard);}
 
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  noLogin,TResult? Function( Self self)?  loading,TResult? Function( UserInfoCard userInfoCard)?  loggedIn,}) {final _that = this;
 switch (_that) {
-case SelfStateNoLogin() when noLogin != null:
-return noLogin();case SelfStateLoading() when loading != null:
-return loading(_that.self);case SelfStateLoggedIn() when loggedIn != null:
+case _NoLogin() when noLogin != null:
+return noLogin();case _Loading() when loading != null:
+return loading(_that.self);case _LoggedIn() when loggedIn != null:
 return loggedIn(_that.userInfoCard);case _:
   return null;
 
@@ -180,8 +180,8 @@ return loggedIn(_that.userInfoCard);case _:
 /// @nodoc
 
 
-class SelfStateNoLogin implements SelfState {
-  const SelfStateNoLogin();
+class _NoLogin implements SelfState {
+  const _NoLogin();
   
 
 
@@ -191,7 +191,7 @@ class SelfStateNoLogin implements SelfState {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SelfStateNoLogin);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _NoLogin);
 }
 
 
@@ -212,8 +212,8 @@ String toString() {
 /// @nodoc
 
 
-class SelfStateLoading implements SelfState {
-  const SelfStateLoading(this.self);
+class _Loading implements SelfState {
+  const _Loading(this.self);
   
 
  final  Self self;
@@ -222,13 +222,13 @@ class SelfStateLoading implements SelfState {
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$SelfStateLoadingCopyWith<SelfStateLoading> get copyWith => _$SelfStateLoadingCopyWithImpl<SelfStateLoading>(this, _$identity);
+_$LoadingCopyWith<_Loading> get copyWith => __$LoadingCopyWithImpl<_Loading>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SelfStateLoading&&(identical(other.self, self) || other.self == self));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Loading&&(identical(other.self, self) || other.self == self));
 }
 
 
@@ -244,8 +244,8 @@ String toString() {
 }
 
 /// @nodoc
-abstract mixin class $SelfStateLoadingCopyWith<$Res> implements $SelfStateCopyWith<$Res> {
-  factory $SelfStateLoadingCopyWith(SelfStateLoading value, $Res Function(SelfStateLoading) _then) = _$SelfStateLoadingCopyWithImpl;
+abstract mixin class _$LoadingCopyWith<$Res> implements $SelfStateCopyWith<$Res> {
+  factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) _then) = __$LoadingCopyWithImpl;
 @useResult
 $Res call({
  Self self
@@ -256,17 +256,17 @@ $Res call({
 
 }
 /// @nodoc
-class _$SelfStateLoadingCopyWithImpl<$Res>
-    implements $SelfStateLoadingCopyWith<$Res> {
-  _$SelfStateLoadingCopyWithImpl(this._self, this._then);
+class __$LoadingCopyWithImpl<$Res>
+    implements _$LoadingCopyWith<$Res> {
+  __$LoadingCopyWithImpl(this._self, this._then);
 
-  final SelfStateLoading _self;
-  final $Res Function(SelfStateLoading) _then;
+  final _Loading _self;
+  final $Res Function(_Loading) _then;
 
 /// Create a copy of SelfState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? self = null,}) {
-  return _then(SelfStateLoading(
+  return _then(_Loading(
 null == self ? _self.self : self // ignore: cast_nullable_to_non_nullable
 as Self,
   ));
@@ -278,8 +278,8 @@ as Self,
 /// @nodoc
 
 
-class SelfStateLoggedIn implements SelfState {
-  const SelfStateLoggedIn({required this.userInfoCard});
+class _LoggedIn implements SelfState {
+  const _LoggedIn({required this.userInfoCard});
   
 
  final  UserInfoCard userInfoCard;
@@ -288,13 +288,13 @@ class SelfStateLoggedIn implements SelfState {
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$SelfStateLoggedInCopyWith<SelfStateLoggedIn> get copyWith => _$SelfStateLoggedInCopyWithImpl<SelfStateLoggedIn>(this, _$identity);
+_$LoggedInCopyWith<_LoggedIn> get copyWith => __$LoggedInCopyWithImpl<_LoggedIn>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SelfStateLoggedIn&&(identical(other.userInfoCard, userInfoCard) || other.userInfoCard == userInfoCard));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoggedIn&&(identical(other.userInfoCard, userInfoCard) || other.userInfoCard == userInfoCard));
 }
 
 
@@ -310,8 +310,8 @@ String toString() {
 }
 
 /// @nodoc
-abstract mixin class $SelfStateLoggedInCopyWith<$Res> implements $SelfStateCopyWith<$Res> {
-  factory $SelfStateLoggedInCopyWith(SelfStateLoggedIn value, $Res Function(SelfStateLoggedIn) _then) = _$SelfStateLoggedInCopyWithImpl;
+abstract mixin class _$LoggedInCopyWith<$Res> implements $SelfStateCopyWith<$Res> {
+  factory _$LoggedInCopyWith(_LoggedIn value, $Res Function(_LoggedIn) _then) = __$LoggedInCopyWithImpl;
 @useResult
 $Res call({
  UserInfoCard userInfoCard
@@ -322,17 +322,17 @@ $UserInfoCardCopyWith<$Res> get userInfoCard;
 
 }
 /// @nodoc
-class _$SelfStateLoggedInCopyWithImpl<$Res>
-    implements $SelfStateLoggedInCopyWith<$Res> {
-  _$SelfStateLoggedInCopyWithImpl(this._self, this._then);
+class __$LoggedInCopyWithImpl<$Res>
+    implements _$LoggedInCopyWith<$Res> {
+  __$LoggedInCopyWithImpl(this._self, this._then);
 
-  final SelfStateLoggedIn _self;
-  final $Res Function(SelfStateLoggedIn) _then;
+  final _LoggedIn _self;
+  final $Res Function(_LoggedIn) _then;
 
 /// Create a copy of SelfState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? userInfoCard = null,}) {
-  return _then(SelfStateLoggedIn(
+  return _then(_LoggedIn(
 userInfoCard: null == userInfoCard ? _self.userInfoCard : userInfoCard // ignore: cast_nullable_to_non_nullable
 as UserInfoCard,
   ));
@@ -433,10 +433,10 @@ extension UserInfoCardPatterns on UserInfoCard {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( UserInfoCardLoaded value)?  loaded,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Loaded value)?  loaded,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case UserInfoCardLoaded() when loaded != null:
+case _Loaded() when loaded != null:
 return loaded(_that);case _:
   return orElse();
 
@@ -455,10 +455,10 @@ return loaded(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( UserInfoCardLoaded value)  loaded,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Loaded value)  loaded,}){
 final _that = this;
 switch (_that) {
-case UserInfoCardLoaded():
+case _Loaded():
 return loaded(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
@@ -473,10 +473,10 @@ return loaded(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( UserInfoCardLoaded value)?  loaded,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Loaded value)?  loaded,}){
 final _that = this;
 switch (_that) {
-case UserInfoCardLoaded() when loaded != null:
+case _Loaded() when loaded != null:
 return loaded(_that);case _:
   return null;
 
@@ -496,7 +496,7 @@ return loaded(_that);case _:
 
 @optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String nickName,  String avatar,  String sex,  String sign,  int level,  int archiveCount,  int likeNum,  int fans,  int focus)?  loaded,required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case UserInfoCardLoaded() when loaded != null:
+case _Loaded() when loaded != null:
 return loaded(_that.nickName,_that.avatar,_that.sex,_that.sign,_that.level,_that.archiveCount,_that.likeNum,_that.fans,_that.focus);case _:
   return orElse();
 
@@ -517,7 +517,7 @@ return loaded(_that.nickName,_that.avatar,_that.sex,_that.sign,_that.level,_that
 
 @optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String nickName,  String avatar,  String sex,  String sign,  int level,  int archiveCount,  int likeNum,  int fans,  int focus)  loaded,}) {final _that = this;
 switch (_that) {
-case UserInfoCardLoaded():
+case _Loaded():
 return loaded(_that.nickName,_that.avatar,_that.sex,_that.sign,_that.level,_that.archiveCount,_that.likeNum,_that.fans,_that.focus);}
 }
 /// A variant of `when` that fallback to returning `null`
@@ -534,7 +534,7 @@ return loaded(_that.nickName,_that.avatar,_that.sex,_that.sign,_that.level,_that
 
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String nickName,  String avatar,  String sex,  String sign,  int level,  int archiveCount,  int likeNum,  int fans,  int focus)?  loaded,}) {final _that = this;
 switch (_that) {
-case UserInfoCardLoaded() when loaded != null:
+case _Loaded() when loaded != null:
 return loaded(_that.nickName,_that.avatar,_that.sex,_that.sign,_that.level,_that.archiveCount,_that.likeNum,_that.fans,_that.focus);case _:
   return null;
 
@@ -546,8 +546,8 @@ return loaded(_that.nickName,_that.avatar,_that.sex,_that.sign,_that.level,_that
 /// @nodoc
 
 
-class UserInfoCardLoaded implements UserInfoCard {
-  const UserInfoCardLoaded({required this.nickName, required this.avatar, required this.sex, required this.sign, required this.level, required this.archiveCount, required this.likeNum, required this.fans, required this.focus});
+class _Loaded implements UserInfoCard {
+  const _Loaded({required this.nickName, required this.avatar, required this.sex, required this.sign, required this.level, required this.archiveCount, required this.likeNum, required this.fans, required this.focus});
   
 
 @override final  String nickName;
@@ -564,13 +564,13 @@ class UserInfoCardLoaded implements UserInfoCard {
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$UserInfoCardLoadedCopyWith<UserInfoCardLoaded> get copyWith => _$UserInfoCardLoadedCopyWithImpl<UserInfoCardLoaded>(this, _$identity);
+_$LoadedCopyWith<_Loaded> get copyWith => __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserInfoCardLoaded&&(identical(other.nickName, nickName) || other.nickName == nickName)&&(identical(other.avatar, avatar) || other.avatar == avatar)&&(identical(other.sex, sex) || other.sex == sex)&&(identical(other.sign, sign) || other.sign == sign)&&(identical(other.level, level) || other.level == level)&&(identical(other.archiveCount, archiveCount) || other.archiveCount == archiveCount)&&(identical(other.likeNum, likeNum) || other.likeNum == likeNum)&&(identical(other.fans, fans) || other.fans == fans)&&(identical(other.focus, focus) || other.focus == focus));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Loaded&&(identical(other.nickName, nickName) || other.nickName == nickName)&&(identical(other.avatar, avatar) || other.avatar == avatar)&&(identical(other.sex, sex) || other.sex == sex)&&(identical(other.sign, sign) || other.sign == sign)&&(identical(other.level, level) || other.level == level)&&(identical(other.archiveCount, archiveCount) || other.archiveCount == archiveCount)&&(identical(other.likeNum, likeNum) || other.likeNum == likeNum)&&(identical(other.fans, fans) || other.fans == fans)&&(identical(other.focus, focus) || other.focus == focus));
 }
 
 
@@ -586,8 +586,8 @@ String toString() {
 }
 
 /// @nodoc
-abstract mixin class $UserInfoCardLoadedCopyWith<$Res> implements $UserInfoCardCopyWith<$Res> {
-  factory $UserInfoCardLoadedCopyWith(UserInfoCardLoaded value, $Res Function(UserInfoCardLoaded) _then) = _$UserInfoCardLoadedCopyWithImpl;
+abstract mixin class _$LoadedCopyWith<$Res> implements $UserInfoCardCopyWith<$Res> {
+  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) = __$LoadedCopyWithImpl;
 @override @useResult
 $Res call({
  String nickName, String avatar, String sex, String sign, int level, int archiveCount, int likeNum, int fans, int focus
@@ -598,17 +598,17 @@ $Res call({
 
 }
 /// @nodoc
-class _$UserInfoCardLoadedCopyWithImpl<$Res>
-    implements $UserInfoCardLoadedCopyWith<$Res> {
-  _$UserInfoCardLoadedCopyWithImpl(this._self, this._then);
+class __$LoadedCopyWithImpl<$Res>
+    implements _$LoadedCopyWith<$Res> {
+  __$LoadedCopyWithImpl(this._self, this._then);
 
-  final UserInfoCardLoaded _self;
-  final $Res Function(UserInfoCardLoaded) _then;
+  final _Loaded _self;
+  final $Res Function(_Loaded) _then;
 
 /// Create a copy of UserInfoCard
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? nickName = null,Object? avatar = null,Object? sex = null,Object? sign = null,Object? level = null,Object? archiveCount = null,Object? likeNum = null,Object? fans = null,Object? focus = null,}) {
-  return _then(UserInfoCardLoaded(
+  return _then(_Loaded(
 nickName: null == nickName ? _self.nickName : nickName // ignore: cast_nullable_to_non_nullable
 as String,avatar: null == avatar ? _self.avatar : avatar // ignore: cast_nullable_to_non_nullable
 as String,sex: null == sex ? _self.sex : sex // ignore: cast_nullable_to_non_nullable

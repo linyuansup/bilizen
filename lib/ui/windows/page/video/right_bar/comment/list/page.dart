@@ -1,8 +1,12 @@
+import 'package:bilizen/inject/inject.dart';
+import 'package:bilizen/ui/windows/page/router.dart';
+import 'package:bilizen/ui/windows/page/video/right_bar/comment/detail/provider.dart';
 import 'package:bilizen/ui/windows/page/video/right_bar/comment/list/provider.dart';
 import 'package:bilizen/ui/windows/widget/comment_card.dart';
 import 'package:bilizen/ui/windows/widget/scroll_bar_list_view.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class VideoCommentListPage extends ConsumerWidget {
   const VideoCommentListPage({super.key});
@@ -48,6 +52,12 @@ class _CommentListView extends ConsumerWidget {
       itemCount: comments.length,
       itemBuilder: (context, index) {
         return CommentCard(
+          onCommentTap: (comment) {
+            ref.invalidate(videoCommentDetailProvider);
+            GoRouter.of(
+              getIt<WindowsRouter>().videoComment.context,
+            ).pushNamed("detail", extra: comment);
+          },
           comment: comments[index],
           upUid: upUid,
         );

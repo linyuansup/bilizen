@@ -55,11 +55,11 @@ extension FavDataStatePatterns on FavDataState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( FavDataLoading value)?  loading,TResult Function( FavDataSuccess value)?  success,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Loading value)?  loading,TResult Function( _Success value)?  success,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case FavDataLoading() when loading != null:
-return loading(_that);case FavDataSuccess() when success != null:
+case _Loading() when loading != null:
+return loading(_that);case _Success() when success != null:
 return success(_that);case _:
   return orElse();
 
@@ -78,11 +78,11 @@ return success(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( FavDataLoading value)  loading,required TResult Function( FavDataSuccess value)  success,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Loading value)  loading,required TResult Function( _Success value)  success,}){
 final _that = this;
 switch (_that) {
-case FavDataLoading():
-return loading(_that);case FavDataSuccess():
+case _Loading():
+return loading(_that);case _Success():
 return success(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
@@ -97,11 +97,11 @@ return success(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( FavDataLoading value)?  loading,TResult? Function( FavDataSuccess value)?  success,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Loading value)?  loading,TResult? Function( _Success value)?  success,}){
 final _that = this;
 switch (_that) {
-case FavDataLoading() when loading != null:
-return loading(_that);case FavDataSuccess() when success != null:
+case _Loading() when loading != null:
+return loading(_that);case _Success() when success != null:
 return success(_that);case _:
   return null;
 
@@ -121,8 +121,8 @@ return success(_that);case _:
 
 @optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  loading,TResult Function( List<VideoCardData> items)?  success,required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case FavDataLoading() when loading != null:
-return loading();case FavDataSuccess() when success != null:
+case _Loading() when loading != null:
+return loading();case _Success() when success != null:
 return success(_that.items);case _:
   return orElse();
 
@@ -143,8 +143,8 @@ return success(_that.items);case _:
 
 @optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  loading,required TResult Function( List<VideoCardData> items)  success,}) {final _that = this;
 switch (_that) {
-case FavDataLoading():
-return loading();case FavDataSuccess():
+case _Loading():
+return loading();case _Success():
 return success(_that.items);}
 }
 /// A variant of `when` that fallback to returning `null`
@@ -161,8 +161,8 @@ return success(_that.items);}
 
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  loading,TResult? Function( List<VideoCardData> items)?  success,}) {final _that = this;
 switch (_that) {
-case FavDataLoading() when loading != null:
-return loading();case FavDataSuccess() when success != null:
+case _Loading() when loading != null:
+return loading();case _Success() when success != null:
 return success(_that.items);case _:
   return null;
 
@@ -174,8 +174,8 @@ return success(_that.items);case _:
 /// @nodoc
 
 
-class FavDataLoading implements FavDataState {
-  const FavDataLoading();
+class _Loading implements FavDataState {
+  const _Loading();
   
 
 
@@ -185,7 +185,7 @@ class FavDataLoading implements FavDataState {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is FavDataLoading);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Loading);
 }
 
 
@@ -206,8 +206,8 @@ String toString() {
 /// @nodoc
 
 
-class FavDataSuccess implements FavDataState {
-  const FavDataSuccess({required final  List<VideoCardData> items}): _items = items;
+class _Success implements FavDataState {
+  const _Success({required final  List<VideoCardData> items}): _items = items;
   
 
  final  List<VideoCardData> _items;
@@ -222,13 +222,13 @@ class FavDataSuccess implements FavDataState {
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$FavDataSuccessCopyWith<FavDataSuccess> get copyWith => _$FavDataSuccessCopyWithImpl<FavDataSuccess>(this, _$identity);
+_$SuccessCopyWith<_Success> get copyWith => __$SuccessCopyWithImpl<_Success>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is FavDataSuccess&&const DeepCollectionEquality().equals(other._items, _items));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Success&&const DeepCollectionEquality().equals(other._items, _items));
 }
 
 
@@ -244,8 +244,8 @@ String toString() {
 }
 
 /// @nodoc
-abstract mixin class $FavDataSuccessCopyWith<$Res> implements $FavDataStateCopyWith<$Res> {
-  factory $FavDataSuccessCopyWith(FavDataSuccess value, $Res Function(FavDataSuccess) _then) = _$FavDataSuccessCopyWithImpl;
+abstract mixin class _$SuccessCopyWith<$Res> implements $FavDataStateCopyWith<$Res> {
+  factory _$SuccessCopyWith(_Success value, $Res Function(_Success) _then) = __$SuccessCopyWithImpl;
 @useResult
 $Res call({
  List<VideoCardData> items
@@ -256,17 +256,17 @@ $Res call({
 
 }
 /// @nodoc
-class _$FavDataSuccessCopyWithImpl<$Res>
-    implements $FavDataSuccessCopyWith<$Res> {
-  _$FavDataSuccessCopyWithImpl(this._self, this._then);
+class __$SuccessCopyWithImpl<$Res>
+    implements _$SuccessCopyWith<$Res> {
+  __$SuccessCopyWithImpl(this._self, this._then);
 
-  final FavDataSuccess _self;
-  final $Res Function(FavDataSuccess) _then;
+  final _Success _self;
+  final $Res Function(_Success) _then;
 
 /// Create a copy of FavDataState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? items = null,}) {
-  return _then(FavDataSuccess(
+  return _then(_Success(
 items: null == items ? _self._items : items // ignore: cast_nullable_to_non_nullable
 as List<VideoCardData>,
   ));

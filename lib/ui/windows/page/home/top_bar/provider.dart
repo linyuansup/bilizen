@@ -1,7 +1,7 @@
 import 'package:bilizen/inject/inject.dart';
-import 'package:bilizen/logic/account_manager/account_manager.dart';
-import 'package:bilizen/logic/search/search_manager.dart';
-import 'package:bilizen/logic/window_state.dart';
+import 'package:bilizen/package/account_manager/account_manager.dart';
+import 'package:bilizen/package/search/search_manager.dart';
+import 'package:bilizen/package/window_state.dart';
 import 'package:bilizen/model/self.dart';
 import 'package:bilizen/ui/windows/page/home/center/page.dart';
 import 'package:bilizen/ui/windows/page/router.dart';
@@ -31,7 +31,6 @@ class TopBarProvider extends _$TopBarProvider {
     router.listen((value) {
       getIt<Talker>().debug("canPop: ${value.canPop()}");
       state = state.copyWith(
-        canPop: value.canPop(),
         isSearchPage: value.state.name == HomePageKind.search.name,
       );
     });
@@ -40,7 +39,6 @@ class TopBarProvider extends _$TopBarProvider {
       windowState: _windowStateStream.value,
       userInfo: null,
       searchRecommends: [],
-      canPop: false,
       isSearchPage: false,
     );
   }
@@ -90,7 +88,6 @@ sealed class TopBarState with _$TopBarState {
     required WindowState windowState,
     required UserInfo? userInfo,
     required List<String> searchRecommends,
-    required bool canPop,
     required bool isSearchPage,
   }) = _TopBarState;
 }

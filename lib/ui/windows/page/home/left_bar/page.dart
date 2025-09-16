@@ -70,10 +70,10 @@ class LeftBar extends StatelessWidget {
                   ),
                 ),
               ),
-              onPressed: () async {
-                await GoRouter.of(
+              onPressed: () {
+                GoRouter.of(
                   getIt<WindowsRouter>().home.context,
-                ).pushNamed(item.name);
+                ).goNamed(item.name);
               },
               child: Icon(
                 icon,

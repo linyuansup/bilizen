@@ -40,7 +40,7 @@ final class VideoCommentDetailProviderProvider
 }
 
 String _$videoCommentDetailProviderHash() =>
-    r'54eb23db2ad3528bc87fb7fc11a8cfc9b22d2b49';
+    r'6a5d9380810994710a0a15bd4dc60d65c51eea20';
 
 abstract class _$VideoCommentDetailProvider
     extends $Notifier<VideoCommentDetailState> {

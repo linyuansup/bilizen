@@ -26,7 +26,7 @@ class RightBarProvider extends _$RightBarProvider {
 sealed class RightBarState with _$RightBarState {
   const factory RightBarState.initial({
     required VideoRightBarPage page,
-  }) = RightBarStateInitial;
+  }) = _Initial;
 }
 
 enum VideoRightBarPage {

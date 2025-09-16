@@ -20,7 +20,7 @@ class LoginProvider extends _$LoginProvider {
 sealed class LoginState with _$LoginState {
   const factory LoginState.initial({
     required LoginMethod method,
-  }) = LoginStateInitial;
+  }) = _Initial;
 }
 
 enum LoginMethod {

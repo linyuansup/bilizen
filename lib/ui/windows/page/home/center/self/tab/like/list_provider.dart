@@ -1,5 +1,5 @@
 import 'package:bilizen/inject/inject.dart';
-import 'package:bilizen/logic/account_manager/account_manager.dart';
+import 'package:bilizen/package/account_manager/account_manager.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -15,7 +15,7 @@ class LikeListProvider extends _$LikeListProvider {
 
   set selectedIndex(int index) {
     final currentState = state;
-    if (currentState is LikeListSuccess) {
+    if (currentState is _Success) {
       state = LikeListState.success(
         items: currentState.items,
         selectedIndex: index,
@@ -30,18 +30,18 @@ class LikeListProvider extends _$LikeListProvider {
       items: favList
           .map((fav) => LikeListItem(id: fav.mlid, name: fav.title))
           .toList(),
-      selectedIndex: 0,
+      selectedIndex: -1,
     );
   }
 }
 
 @freezed
 sealed class LikeListState with _$LikeListState {
-  const factory LikeListState.loading() = LikeListLoading;
+  const factory LikeListState.loading() = _Loading;
   const factory LikeListState.success({
     required List<LikeListItem> items,
     required int selectedIndex,
-  }) = LikeListSuccess;
+  }) = _Success;
 }
 
 @freezed

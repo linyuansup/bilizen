@@ -1,23 +1,24 @@
-import 'package:bilizen/inject/inject.dart';
 import 'package:bilizen/model/comment.dart';
-import 'package:bilizen/ui/windows/page/router.dart';
 import 'package:bilizen/ui/windows/page/video/right_bar/comment/list/provider.dart';
 import 'package:bilizen/ui/windows/widget/bili_format_text.dart';
 import 'package:bilizen/util/string.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:go_router/go_router.dart';
+
+typedef OnCommentTap = void Function(CommentData comment);
 
 class CommentCard extends StatelessWidget {
   const CommentCard({
     super.key,
     required this.comment,
     required this.upUid,
+    this.onCommentTap,
     this.showPreview = true,
   });
 
   final CommentData comment;
   final int upUid;
+  final OnCommentTap? onCommentTap;
   final bool showPreview;
 
   @override
@@ -207,10 +208,8 @@ class CommentCard extends StatelessWidget {
         MouseRegion(
           cursor: SystemMouseCursors.click,
           child: GestureDetector(
-            onTap: () async {
-              GoRouter.of(
-                getIt<WindowsRouter>().videoComment.context,
-              ).pushNamed("detail", extra: comment);
+            onTap: () {
+              onCommentTap?.call(comment);
             },
             child: Text(
               "共有 ${comment.totalReplyNum} 条回复",

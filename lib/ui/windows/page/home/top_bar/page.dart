@@ -1,5 +1,6 @@
 import 'package:bilizen/inject/inject.dart';
-import 'package:bilizen/logic/window_state.dart' as manager;
+import 'package:bilizen/package/window_state.dart' as manager;
+import 'package:bilizen/ui/windows/page/home/center/search/provider.dart';
 import 'package:bilizen/ui/windows/page/home/top_bar/provider.dart';
 import 'package:bilizen/ui/windows/page/router.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -26,7 +27,6 @@ class TopBar extends StatelessWidget {
       ),
       child: Row(
         children: [
-          _BackButton(),
           _Logo(),
           _SearchBar(),
           _UserIcon(),
@@ -47,32 +47,6 @@ class _TestButton extends StatelessWidget {
     return Button(
       child: Text("data"),
       onPressed: () async {},
-    );
-  }
-}
-
-class _BackButton extends StatelessWidget {
-  const _BackButton();
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 10),
-      child: RepaintBoundary(
-        child: Consumer(
-          builder: (context, ref, child) {
-            return IconButton(
-              icon: Icon(FluentIcons.back),
-              onPressed:
-                  ref.watch(topBarProvider.select((value) => value.canPop))
-                  ? () {
-                      getIt<WindowsRouter>().home.currentPage.value.pop();
-                    }
-                  : null,
-            );
-          },
-        ),
-      ),
     );
   }
 }
@@ -280,7 +254,7 @@ class _SearchBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Padding(
-        padding: const EdgeInsets.only(left: 20, right: 20),
+        padding: const EdgeInsets.only(left: 10, right: 20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -335,8 +309,9 @@ class __SearchInputAreaState extends ConsumerState<_SearchInputArea> {
   );
   final key = GlobalKey<AutoSuggestBoxState>();
 
-  Future<void> _goToSearch(String keyword) async {
-    await GoRouter.of(getIt<WindowsRouter>().home.context).pushNamed(
+  void _goToSearch(String keyword) {
+    ref.invalidate(searchPageProvider);
+    GoRouter.of(getIt<WindowsRouter>().home.context).goNamed(
       "search",
       extra: keyword,
     );
@@ -385,8 +360,8 @@ class __SearchInputAreaState extends ConsumerState<_SearchInputArea> {
           ).typography.caption?.color,
         ),
       ),
-      onSelected: (value) async {
-        await _goToSearch(value.label);
+      onSelected: (value) {
+        _goToSearch(value.label);
       },
     );
   }

@@ -55,11 +55,11 @@ extension VideoInfoStatePatterns on VideoInfoState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( VideoInfoStateLoading value)?  loading,TResult Function( VideoInfoStateLoaded value)?  loaded,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Loading value)?  loading,TResult Function( _Loaded value)?  loaded,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case VideoInfoStateLoading() when loading != null:
-return loading(_that);case VideoInfoStateLoaded() when loaded != null:
+case _Loading() when loading != null:
+return loading(_that);case _Loaded() when loaded != null:
 return loaded(_that);case _:
   return orElse();
 
@@ -78,11 +78,11 @@ return loaded(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( VideoInfoStateLoading value)  loading,required TResult Function( VideoInfoStateLoaded value)  loaded,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Loading value)  loading,required TResult Function( _Loaded value)  loaded,}){
 final _that = this;
 switch (_that) {
-case VideoInfoStateLoading():
-return loading(_that);case VideoInfoStateLoaded():
+case _Loading():
+return loading(_that);case _Loaded():
 return loaded(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
@@ -97,11 +97,11 @@ return loaded(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( VideoInfoStateLoading value)?  loading,TResult? Function( VideoInfoStateLoaded value)?  loaded,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Loading value)?  loading,TResult? Function( _Loaded value)?  loaded,}){
 final _that = this;
 switch (_that) {
-case VideoInfoStateLoading() when loading != null:
-return loading(_that);case VideoInfoStateLoaded() when loaded != null:
+case _Loading() when loading != null:
+return loading(_that);case _Loaded() when loaded != null:
 return loaded(_that);case _:
   return null;
 
@@ -121,8 +121,8 @@ return loaded(_that);case _:
 
 @optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  loading,TResult Function( List<Staff> staffs,  int view,  int danmaku,  int uploadTime,  String onlineUser,  String description)?  loaded,required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case VideoInfoStateLoading() when loading != null:
-return loading();case VideoInfoStateLoaded() when loaded != null:
+case _Loading() when loading != null:
+return loading();case _Loaded() when loaded != null:
 return loaded(_that.staffs,_that.view,_that.danmaku,_that.uploadTime,_that.onlineUser,_that.description);case _:
   return orElse();
 
@@ -143,8 +143,8 @@ return loaded(_that.staffs,_that.view,_that.danmaku,_that.uploadTime,_that.onlin
 
 @optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  loading,required TResult Function( List<Staff> staffs,  int view,  int danmaku,  int uploadTime,  String onlineUser,  String description)  loaded,}) {final _that = this;
 switch (_that) {
-case VideoInfoStateLoading():
-return loading();case VideoInfoStateLoaded():
+case _Loading():
+return loading();case _Loaded():
 return loaded(_that.staffs,_that.view,_that.danmaku,_that.uploadTime,_that.onlineUser,_that.description);}
 }
 /// A variant of `when` that fallback to returning `null`
@@ -161,8 +161,8 @@ return loaded(_that.staffs,_that.view,_that.danmaku,_that.uploadTime,_that.onlin
 
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  loading,TResult? Function( List<Staff> staffs,  int view,  int danmaku,  int uploadTime,  String onlineUser,  String description)?  loaded,}) {final _that = this;
 switch (_that) {
-case VideoInfoStateLoading() when loading != null:
-return loading();case VideoInfoStateLoaded() when loaded != null:
+case _Loading() when loading != null:
+return loading();case _Loaded() when loaded != null:
 return loaded(_that.staffs,_that.view,_that.danmaku,_that.uploadTime,_that.onlineUser,_that.description);case _:
   return null;
 
@@ -174,8 +174,8 @@ return loaded(_that.staffs,_that.view,_that.danmaku,_that.uploadTime,_that.onlin
 /// @nodoc
 
 
-class VideoInfoStateLoading implements VideoInfoState {
-  const VideoInfoStateLoading();
+class _Loading implements VideoInfoState {
+  const _Loading();
   
 
 
@@ -185,7 +185,7 @@ class VideoInfoStateLoading implements VideoInfoState {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is VideoInfoStateLoading);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Loading);
 }
 
 
@@ -206,8 +206,8 @@ String toString() {
 /// @nodoc
 
 
-class VideoInfoStateLoaded implements VideoInfoState {
-  const VideoInfoStateLoaded({required final  List<Staff> staffs, required this.view, required this.danmaku, required this.uploadTime, required this.onlineUser, required this.description}): _staffs = staffs;
+class _Loaded implements VideoInfoState {
+  const _Loaded({required final  List<Staff> staffs, required this.view, required this.danmaku, required this.uploadTime, required this.onlineUser, required this.description}): _staffs = staffs;
   
 
  final  List<Staff> _staffs;
@@ -227,13 +227,13 @@ class VideoInfoStateLoaded implements VideoInfoState {
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$VideoInfoStateLoadedCopyWith<VideoInfoStateLoaded> get copyWith => _$VideoInfoStateLoadedCopyWithImpl<VideoInfoStateLoaded>(this, _$identity);
+_$LoadedCopyWith<_Loaded> get copyWith => __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is VideoInfoStateLoaded&&const DeepCollectionEquality().equals(other._staffs, _staffs)&&(identical(other.view, view) || other.view == view)&&(identical(other.danmaku, danmaku) || other.danmaku == danmaku)&&(identical(other.uploadTime, uploadTime) || other.uploadTime == uploadTime)&&(identical(other.onlineUser, onlineUser) || other.onlineUser == onlineUser)&&(identical(other.description, description) || other.description == description));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Loaded&&const DeepCollectionEquality().equals(other._staffs, _staffs)&&(identical(other.view, view) || other.view == view)&&(identical(other.danmaku, danmaku) || other.danmaku == danmaku)&&(identical(other.uploadTime, uploadTime) || other.uploadTime == uploadTime)&&(identical(other.onlineUser, onlineUser) || other.onlineUser == onlineUser)&&(identical(other.description, description) || other.description == description));
 }
 
 
@@ -249,8 +249,8 @@ String toString() {
 }
 
 /// @nodoc
-abstract mixin class $VideoInfoStateLoadedCopyWith<$Res> implements $VideoInfoStateCopyWith<$Res> {
-  factory $VideoInfoStateLoadedCopyWith(VideoInfoStateLoaded value, $Res Function(VideoInfoStateLoaded) _then) = _$VideoInfoStateLoadedCopyWithImpl;
+abstract mixin class _$LoadedCopyWith<$Res> implements $VideoInfoStateCopyWith<$Res> {
+  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) = __$LoadedCopyWithImpl;
 @useResult
 $Res call({
  List<Staff> staffs, int view, int danmaku, int uploadTime, String onlineUser, String description
@@ -261,17 +261,17 @@ $Res call({
 
 }
 /// @nodoc
-class _$VideoInfoStateLoadedCopyWithImpl<$Res>
-    implements $VideoInfoStateLoadedCopyWith<$Res> {
-  _$VideoInfoStateLoadedCopyWithImpl(this._self, this._then);
+class __$LoadedCopyWithImpl<$Res>
+    implements _$LoadedCopyWith<$Res> {
+  __$LoadedCopyWithImpl(this._self, this._then);
 
-  final VideoInfoStateLoaded _self;
-  final $Res Function(VideoInfoStateLoaded) _then;
+  final _Loaded _self;
+  final $Res Function(_Loaded) _then;
 
 /// Create a copy of VideoInfoState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? staffs = null,Object? view = null,Object? danmaku = null,Object? uploadTime = null,Object? onlineUser = null,Object? description = null,}) {
-  return _then(VideoInfoStateLoaded(
+  return _then(_Loaded(
 staffs: null == staffs ? _self._staffs : staffs // ignore: cast_nullable_to_non_nullable
 as List<Staff>,view: null == view ? _self.view : view // ignore: cast_nullable_to_non_nullable
 as int,danmaku: null == danmaku ? _self.danmaku : danmaku // ignore: cast_nullable_to_non_nullable

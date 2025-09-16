@@ -12,20 +12,22 @@ class SelfPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(selfProvider);
-    return switch (state) {
-      SelfStateNoLogin() => const LoginPage(),
-      SelfStateLoading(self: final self) => Builder(
-        builder: (context) {
-          ref.read(selfProvider.notifier).getSelfInfo(self);
-          return const Center(
-            child: RepaintBoundary(child: ProgressRing()),
-          );
-        },
-      ),
-      SelfStateLoggedIn(userInfoCard: final card) => Center(
-        child: _UserInfo(card: card),
-      ),
-    };
+    return state.when(
+      noLogin: () {
+        return const LoginPage();
+      },
+      loading: (self) {
+        ref.read(selfProvider.notifier).getSelfInfo(self);
+        return const Center(
+          child: RepaintBoundary(child: ProgressRing()),
+        );
+      },
+      loggedIn: (userInfoCard) {
+        return Center(
+          child: _UserInfo(card: userInfoCard),
+        );
+      },
+    );
   }
 }
 

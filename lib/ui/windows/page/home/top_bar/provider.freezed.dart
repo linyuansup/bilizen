@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$TopBarState {
 
- WindowState get windowState; UserInfo? get userInfo; List<String> get searchRecommends; bool get canPop; bool get isSearchPage;
+ WindowState get windowState; UserInfo? get userInfo; List<String> get searchRecommends; bool get isSearchPage;
 /// Create a copy of TopBarState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $TopBarStateCopyWith<TopBarState> get copyWith => _$TopBarStateCopyWithImpl<TopB
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is TopBarState&&(identical(other.windowState, windowState) || other.windowState == windowState)&&(identical(other.userInfo, userInfo) || other.userInfo == userInfo)&&const DeepCollectionEquality().equals(other.searchRecommends, searchRecommends)&&(identical(other.canPop, canPop) || other.canPop == canPop)&&(identical(other.isSearchPage, isSearchPage) || other.isSearchPage == isSearchPage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TopBarState&&(identical(other.windowState, windowState) || other.windowState == windowState)&&(identical(other.userInfo, userInfo) || other.userInfo == userInfo)&&const DeepCollectionEquality().equals(other.searchRecommends, searchRecommends)&&(identical(other.isSearchPage, isSearchPage) || other.isSearchPage == isSearchPage));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,windowState,userInfo,const DeepCollectionEquality().hash(searchRecommends),canPop,isSearchPage);
+int get hashCode => Object.hash(runtimeType,windowState,userInfo,const DeepCollectionEquality().hash(searchRecommends),isSearchPage);
 
 @override
 String toString() {
-  return 'TopBarState(windowState: $windowState, userInfo: $userInfo, searchRecommends: $searchRecommends, canPop: $canPop, isSearchPage: $isSearchPage)';
+  return 'TopBarState(windowState: $windowState, userInfo: $userInfo, searchRecommends: $searchRecommends, isSearchPage: $isSearchPage)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $TopBarStateCopyWith<$Res>  {
   factory $TopBarStateCopyWith(TopBarState value, $Res Function(TopBarState) _then) = _$TopBarStateCopyWithImpl;
 @useResult
 $Res call({
- WindowState windowState, UserInfo? userInfo, List<String> searchRecommends, bool canPop, bool isSearchPage
+ WindowState windowState, UserInfo? userInfo, List<String> searchRecommends, bool isSearchPage
 });
 
 
@@ -62,13 +62,12 @@ class _$TopBarStateCopyWithImpl<$Res>
 
 /// Create a copy of TopBarState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? windowState = null,Object? userInfo = freezed,Object? searchRecommends = null,Object? canPop = null,Object? isSearchPage = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? windowState = null,Object? userInfo = freezed,Object? searchRecommends = null,Object? isSearchPage = null,}) {
   return _then(_self.copyWith(
 windowState: null == windowState ? _self.windowState : windowState // ignore: cast_nullable_to_non_nullable
 as WindowState,userInfo: freezed == userInfo ? _self.userInfo : userInfo // ignore: cast_nullable_to_non_nullable
 as UserInfo?,searchRecommends: null == searchRecommends ? _self.searchRecommends : searchRecommends // ignore: cast_nullable_to_non_nullable
-as List<String>,canPop: null == canPop ? _self.canPop : canPop // ignore: cast_nullable_to_non_nullable
-as bool,isSearchPage: null == isSearchPage ? _self.isSearchPage : isSearchPage // ignore: cast_nullable_to_non_nullable
+as List<String>,isSearchPage: null == isSearchPage ? _self.isSearchPage : isSearchPage // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }
@@ -163,10 +162,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( WindowState windowState,  UserInfo? userInfo,  List<String> searchRecommends,  bool canPop,  bool isSearchPage)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( WindowState windowState,  UserInfo? userInfo,  List<String> searchRecommends,  bool isSearchPage)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _TopBarState() when $default != null:
-return $default(_that.windowState,_that.userInfo,_that.searchRecommends,_that.canPop,_that.isSearchPage);case _:
+return $default(_that.windowState,_that.userInfo,_that.searchRecommends,_that.isSearchPage);case _:
   return orElse();
 
 }
@@ -184,10 +183,10 @@ return $default(_that.windowState,_that.userInfo,_that.searchRecommends,_that.ca
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( WindowState windowState,  UserInfo? userInfo,  List<String> searchRecommends,  bool canPop,  bool isSearchPage)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( WindowState windowState,  UserInfo? userInfo,  List<String> searchRecommends,  bool isSearchPage)  $default,) {final _that = this;
 switch (_that) {
 case _TopBarState():
-return $default(_that.windowState,_that.userInfo,_that.searchRecommends,_that.canPop,_that.isSearchPage);}
+return $default(_that.windowState,_that.userInfo,_that.searchRecommends,_that.isSearchPage);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -201,10 +200,10 @@ return $default(_that.windowState,_that.userInfo,_that.searchRecommends,_that.ca
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( WindowState windowState,  UserInfo? userInfo,  List<String> searchRecommends,  bool canPop,  bool isSearchPage)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( WindowState windowState,  UserInfo? userInfo,  List<String> searchRecommends,  bool isSearchPage)?  $default,) {final _that = this;
 switch (_that) {
 case _TopBarState() when $default != null:
-return $default(_that.windowState,_that.userInfo,_that.searchRecommends,_that.canPop,_that.isSearchPage);case _:
+return $default(_that.windowState,_that.userInfo,_that.searchRecommends,_that.isSearchPage);case _:
   return null;
 
 }
@@ -216,7 +215,7 @@ return $default(_that.windowState,_that.userInfo,_that.searchRecommends,_that.ca
 
 
 class _TopBarState implements TopBarState {
-  const _TopBarState({required this.windowState, required this.userInfo, required final  List<String> searchRecommends, required this.canPop, required this.isSearchPage}): _searchRecommends = searchRecommends;
+  const _TopBarState({required this.windowState, required this.userInfo, required final  List<String> searchRecommends, required this.isSearchPage}): _searchRecommends = searchRecommends;
   
 
 @override final  WindowState windowState;
@@ -228,7 +227,6 @@ class _TopBarState implements TopBarState {
   return EqualUnmodifiableListView(_searchRecommends);
 }
 
-@override final  bool canPop;
 @override final  bool isSearchPage;
 
 /// Create a copy of TopBarState
@@ -241,16 +239,16 @@ _$TopBarStateCopyWith<_TopBarState> get copyWith => __$TopBarStateCopyWithImpl<_
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TopBarState&&(identical(other.windowState, windowState) || other.windowState == windowState)&&(identical(other.userInfo, userInfo) || other.userInfo == userInfo)&&const DeepCollectionEquality().equals(other._searchRecommends, _searchRecommends)&&(identical(other.canPop, canPop) || other.canPop == canPop)&&(identical(other.isSearchPage, isSearchPage) || other.isSearchPage == isSearchPage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TopBarState&&(identical(other.windowState, windowState) || other.windowState == windowState)&&(identical(other.userInfo, userInfo) || other.userInfo == userInfo)&&const DeepCollectionEquality().equals(other._searchRecommends, _searchRecommends)&&(identical(other.isSearchPage, isSearchPage) || other.isSearchPage == isSearchPage));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,windowState,userInfo,const DeepCollectionEquality().hash(_searchRecommends),canPop,isSearchPage);
+int get hashCode => Object.hash(runtimeType,windowState,userInfo,const DeepCollectionEquality().hash(_searchRecommends),isSearchPage);
 
 @override
 String toString() {
-  return 'TopBarState(windowState: $windowState, userInfo: $userInfo, searchRecommends: $searchRecommends, canPop: $canPop, isSearchPage: $isSearchPage)';
+  return 'TopBarState(windowState: $windowState, userInfo: $userInfo, searchRecommends: $searchRecommends, isSearchPage: $isSearchPage)';
 }
 
 
@@ -261,7 +259,7 @@ abstract mixin class _$TopBarStateCopyWith<$Res> implements $TopBarStateCopyWith
   factory _$TopBarStateCopyWith(_TopBarState value, $Res Function(_TopBarState) _then) = __$TopBarStateCopyWithImpl;
 @override @useResult
 $Res call({
- WindowState windowState, UserInfo? userInfo, List<String> searchRecommends, bool canPop, bool isSearchPage
+ WindowState windowState, UserInfo? userInfo, List<String> searchRecommends, bool isSearchPage
 });
 
 
@@ -278,13 +276,12 @@ class __$TopBarStateCopyWithImpl<$Res>
 
 /// Create a copy of TopBarState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? windowState = null,Object? userInfo = freezed,Object? searchRecommends = null,Object? canPop = null,Object? isSearchPage = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? windowState = null,Object? userInfo = freezed,Object? searchRecommends = null,Object? isSearchPage = null,}) {
   return _then(_TopBarState(
 windowState: null == windowState ? _self.windowState : windowState // ignore: cast_nullable_to_non_nullable
 as WindowState,userInfo: freezed == userInfo ? _self.userInfo : userInfo // ignore: cast_nullable_to_non_nullable
 as UserInfo?,searchRecommends: null == searchRecommends ? _self._searchRecommends : searchRecommends // ignore: cast_nullable_to_non_nullable
-as List<String>,canPop: null == canPop ? _self.canPop : canPop // ignore: cast_nullable_to_non_nullable
-as bool,isSearchPage: null == isSearchPage ? _self.isSearchPage : isSearchPage // ignore: cast_nullable_to_non_nullable
+as List<String>,isSearchPage: null == isSearchPage ? _self.isSearchPage : isSearchPage // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }

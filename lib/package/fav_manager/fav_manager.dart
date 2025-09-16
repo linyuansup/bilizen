@@ -1,5 +1,5 @@
 import 'package:bilizen/data/api/fav/list.dart';
-import 'package:bilizen/logic/fav_manager/fav_list_result.dart';
+import 'package:bilizen/package/fav_manager/fav_list_result.dart';
 import 'package:bilizen/model/user.dart';
 import 'package:bilizen/model/video.dart';
 import 'package:injectable/injectable.dart';

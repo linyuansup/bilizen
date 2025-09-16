@@ -38,7 +38,7 @@ final class BottomBarProviderProvider
   }
 }
 
-String _$bottomBarProviderHash() => r'e459ca5af8ac96d5d667b411cd08097f1b665d56';
+String _$bottomBarProviderHash() => r'0ac9951f1097e721e6b88f74fb9198d3a41861b0';
 
 abstract class _$BottomBarProvider extends $Notifier<BottomBarState> {
   BottomBarState build();

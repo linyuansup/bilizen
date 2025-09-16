@@ -55,11 +55,11 @@ extension VideoCommentDetailStatePatterns on VideoCommentDetailState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( VideoCommentDetailStateLoading value)?  loading,TResult Function( VideoCommentDetailStateLoaded value)?  loaded,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Loading value)?  loading,TResult Function( _Loaded value)?  loaded,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case VideoCommentDetailStateLoading() when loading != null:
-return loading(_that);case VideoCommentDetailStateLoaded() when loaded != null:
+case _Loading() when loading != null:
+return loading(_that);case _Loaded() when loaded != null:
 return loaded(_that);case _:
   return orElse();
 
@@ -78,11 +78,11 @@ return loaded(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( VideoCommentDetailStateLoading value)  loading,required TResult Function( VideoCommentDetailStateLoaded value)  loaded,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Loading value)  loading,required TResult Function( _Loaded value)  loaded,}){
 final _that = this;
 switch (_that) {
-case VideoCommentDetailStateLoading():
-return loading(_that);case VideoCommentDetailStateLoaded():
+case _Loading():
+return loading(_that);case _Loaded():
 return loaded(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
@@ -97,11 +97,11 @@ return loaded(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( VideoCommentDetailStateLoading value)?  loading,TResult? Function( VideoCommentDetailStateLoaded value)?  loaded,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Loading value)?  loading,TResult? Function( _Loaded value)?  loaded,}){
 final _that = this;
 switch (_that) {
-case VideoCommentDetailStateLoading() when loading != null:
-return loading(_that);case VideoCommentDetailStateLoaded() when loaded != null:
+case _Loading() when loading != null:
+return loading(_that);case _Loaded() when loaded != null:
 return loaded(_that);case _:
   return null;
 
@@ -121,8 +121,8 @@ return loaded(_that);case _:
 
 @optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  loading,TResult Function( int upUid,  List<CommentData> comments)?  loaded,required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case VideoCommentDetailStateLoading() when loading != null:
-return loading();case VideoCommentDetailStateLoaded() when loaded != null:
+case _Loading() when loading != null:
+return loading();case _Loaded() when loaded != null:
 return loaded(_that.upUid,_that.comments);case _:
   return orElse();
 
@@ -143,8 +143,8 @@ return loaded(_that.upUid,_that.comments);case _:
 
 @optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  loading,required TResult Function( int upUid,  List<CommentData> comments)  loaded,}) {final _that = this;
 switch (_that) {
-case VideoCommentDetailStateLoading():
-return loading();case VideoCommentDetailStateLoaded():
+case _Loading():
+return loading();case _Loaded():
 return loaded(_that.upUid,_that.comments);}
 }
 /// A variant of `when` that fallback to returning `null`
@@ -161,8 +161,8 @@ return loaded(_that.upUid,_that.comments);}
 
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  loading,TResult? Function( int upUid,  List<CommentData> comments)?  loaded,}) {final _that = this;
 switch (_that) {
-case VideoCommentDetailStateLoading() when loading != null:
-return loading();case VideoCommentDetailStateLoaded() when loaded != null:
+case _Loading() when loading != null:
+return loading();case _Loaded() when loaded != null:
 return loaded(_that.upUid,_that.comments);case _:
   return null;
 
@@ -174,8 +174,8 @@ return loaded(_that.upUid,_that.comments);case _:
 /// @nodoc
 
 
-class VideoCommentDetailStateLoading implements VideoCommentDetailState {
-  const VideoCommentDetailStateLoading();
+class _Loading implements VideoCommentDetailState {
+  const _Loading();
   
 
 
@@ -185,7 +185,7 @@ class VideoCommentDetailStateLoading implements VideoCommentDetailState {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is VideoCommentDetailStateLoading);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Loading);
 }
 
 
@@ -206,8 +206,8 @@ String toString() {
 /// @nodoc
 
 
-class VideoCommentDetailStateLoaded implements VideoCommentDetailState {
-  const VideoCommentDetailStateLoaded({required this.upUid, required final  List<CommentData> comments}): _comments = comments;
+class _Loaded implements VideoCommentDetailState {
+  const _Loaded({required this.upUid, required final  List<CommentData> comments}): _comments = comments;
   
 
  final  int upUid;
@@ -223,13 +223,13 @@ class VideoCommentDetailStateLoaded implements VideoCommentDetailState {
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$VideoCommentDetailStateLoadedCopyWith<VideoCommentDetailStateLoaded> get copyWith => _$VideoCommentDetailStateLoadedCopyWithImpl<VideoCommentDetailStateLoaded>(this, _$identity);
+_$LoadedCopyWith<_Loaded> get copyWith => __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is VideoCommentDetailStateLoaded&&(identical(other.upUid, upUid) || other.upUid == upUid)&&const DeepCollectionEquality().equals(other._comments, _comments));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Loaded&&(identical(other.upUid, upUid) || other.upUid == upUid)&&const DeepCollectionEquality().equals(other._comments, _comments));
 }
 
 
@@ -245,8 +245,8 @@ String toString() {
 }
 
 /// @nodoc
-abstract mixin class $VideoCommentDetailStateLoadedCopyWith<$Res> implements $VideoCommentDetailStateCopyWith<$Res> {
-  factory $VideoCommentDetailStateLoadedCopyWith(VideoCommentDetailStateLoaded value, $Res Function(VideoCommentDetailStateLoaded) _then) = _$VideoCommentDetailStateLoadedCopyWithImpl;
+abstract mixin class _$LoadedCopyWith<$Res> implements $VideoCommentDetailStateCopyWith<$Res> {
+  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) = __$LoadedCopyWithImpl;
 @useResult
 $Res call({
  int upUid, List<CommentData> comments
@@ -257,17 +257,17 @@ $Res call({
 
 }
 /// @nodoc
-class _$VideoCommentDetailStateLoadedCopyWithImpl<$Res>
-    implements $VideoCommentDetailStateLoadedCopyWith<$Res> {
-  _$VideoCommentDetailStateLoadedCopyWithImpl(this._self, this._then);
+class __$LoadedCopyWithImpl<$Res>
+    implements _$LoadedCopyWith<$Res> {
+  __$LoadedCopyWithImpl(this._self, this._then);
 
-  final VideoCommentDetailStateLoaded _self;
-  final $Res Function(VideoCommentDetailStateLoaded) _then;
+  final _Loaded _self;
+  final $Res Function(_Loaded) _then;
 
 /// Create a copy of VideoCommentDetailState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? upUid = null,Object? comments = null,}) {
-  return _then(VideoCommentDetailStateLoaded(
+  return _then(_Loaded(
 upUid: null == upUid ? _self.upUid : upUid // ignore: cast_nullable_to_non_nullable
 as int,comments: null == comments ? _self._comments : comments // ignore: cast_nullable_to_non_nullable
 as List<CommentData>,

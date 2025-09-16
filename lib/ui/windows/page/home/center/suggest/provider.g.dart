@@ -38,7 +38,7 @@ final class HomePageProviderProvider
   }
 }
 
-String _$homePageProviderHash() => r'88c6e3fab4c30b7aa03e6781007bd4f5663bfa0a';
+String _$homePageProviderHash() => r'dae71c2f015e7ed3b078182ebb130eb4199fa048';
 
 abstract class _$HomePageProvider extends $Notifier<HomePageState> {
   HomePageState build();

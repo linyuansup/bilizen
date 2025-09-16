@@ -86,10 +86,10 @@ extension UserInfoTabStatePatterns on UserInfoTabState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( UserInfoTabStateDefault value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _UserInfoTabState value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case UserInfoTabStateDefault() when $default != null:
+case _UserInfoTabState() when $default != null:
 return $default(_that);case _:
   return orElse();
 
@@ -108,10 +108,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( UserInfoTabStateDefault value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _UserInfoTabState value)  $default,){
 final _that = this;
 switch (_that) {
-case UserInfoTabStateDefault():
+case _UserInfoTabState():
 return $default(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
@@ -126,10 +126,10 @@ return $default(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( UserInfoTabStateDefault value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _UserInfoTabState value)?  $default,){
 final _that = this;
 switch (_that) {
-case UserInfoTabStateDefault() when $default != null:
+case _UserInfoTabState() when $default != null:
 return $default(_that);case _:
   return null;
 
@@ -149,7 +149,7 @@ return $default(_that);case _:
 
 @optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int selectedIndex)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case UserInfoTabStateDefault() when $default != null:
+case _UserInfoTabState() when $default != null:
 return $default(_that.selectedIndex);case _:
   return orElse();
 
@@ -170,7 +170,7 @@ return $default(_that.selectedIndex);case _:
 
 @optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int selectedIndex)  $default,) {final _that = this;
 switch (_that) {
-case UserInfoTabStateDefault():
+case _UserInfoTabState():
 return $default(_that.selectedIndex);}
 }
 /// A variant of `when` that fallback to returning `null`
@@ -187,7 +187,7 @@ return $default(_that.selectedIndex);}
 
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int selectedIndex)?  $default,) {final _that = this;
 switch (_that) {
-case UserInfoTabStateDefault() when $default != null:
+case _UserInfoTabState() when $default != null:
 return $default(_that.selectedIndex);case _:
   return null;
 
@@ -199,8 +199,8 @@ return $default(_that.selectedIndex);case _:
 /// @nodoc
 
 
-class UserInfoTabStateDefault implements UserInfoTabState {
-  const UserInfoTabStateDefault({required this.selectedIndex});
+class _UserInfoTabState implements UserInfoTabState {
+  const _UserInfoTabState({required this.selectedIndex});
   
 
 @override final  int selectedIndex;
@@ -209,13 +209,13 @@ class UserInfoTabStateDefault implements UserInfoTabState {
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$UserInfoTabStateDefaultCopyWith<UserInfoTabStateDefault> get copyWith => _$UserInfoTabStateDefaultCopyWithImpl<UserInfoTabStateDefault>(this, _$identity);
+_$UserInfoTabStateCopyWith<_UserInfoTabState> get copyWith => __$UserInfoTabStateCopyWithImpl<_UserInfoTabState>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserInfoTabStateDefault&&(identical(other.selectedIndex, selectedIndex) || other.selectedIndex == selectedIndex));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserInfoTabState&&(identical(other.selectedIndex, selectedIndex) || other.selectedIndex == selectedIndex));
 }
 
 
@@ -231,8 +231,8 @@ String toString() {
 }
 
 /// @nodoc
-abstract mixin class $UserInfoTabStateDefaultCopyWith<$Res> implements $UserInfoTabStateCopyWith<$Res> {
-  factory $UserInfoTabStateDefaultCopyWith(UserInfoTabStateDefault value, $Res Function(UserInfoTabStateDefault) _then) = _$UserInfoTabStateDefaultCopyWithImpl;
+abstract mixin class _$UserInfoTabStateCopyWith<$Res> implements $UserInfoTabStateCopyWith<$Res> {
+  factory _$UserInfoTabStateCopyWith(_UserInfoTabState value, $Res Function(_UserInfoTabState) _then) = __$UserInfoTabStateCopyWithImpl;
 @override @useResult
 $Res call({
  int selectedIndex
@@ -243,17 +243,17 @@ $Res call({
 
 }
 /// @nodoc
-class _$UserInfoTabStateDefaultCopyWithImpl<$Res>
-    implements $UserInfoTabStateDefaultCopyWith<$Res> {
-  _$UserInfoTabStateDefaultCopyWithImpl(this._self, this._then);
+class __$UserInfoTabStateCopyWithImpl<$Res>
+    implements _$UserInfoTabStateCopyWith<$Res> {
+  __$UserInfoTabStateCopyWithImpl(this._self, this._then);
 
-  final UserInfoTabStateDefault _self;
-  final $Res Function(UserInfoTabStateDefault) _then;
+  final _UserInfoTabState _self;
+  final $Res Function(_UserInfoTabState) _then;
 
 /// Create a copy of UserInfoTabState
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? selectedIndex = null,}) {
-  return _then(UserInfoTabStateDefault(
+  return _then(_UserInfoTabState(
 selectedIndex: null == selectedIndex ? _self.selectedIndex : selectedIndex // ignore: cast_nullable_to_non_nullable
 as int,
   ));

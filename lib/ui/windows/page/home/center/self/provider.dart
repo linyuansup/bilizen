@@ -1,4 +1,4 @@
-import 'package:bilizen/logic/account_manager/account_manager.dart';
+import 'package:bilizen/package/account_manager/account_manager.dart';
 import 'package:bilizen/model/self.dart';
 import 'package:bilizen/inject/inject.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -39,11 +39,11 @@ class SelfProvider extends _$SelfProvider {
 
 @freezed
 sealed class SelfState with _$SelfState {
-  const factory SelfState.noLogin() = SelfStateNoLogin;
-  const factory SelfState.loading(Self self) = SelfStateLoading;
+  const factory SelfState.noLogin() = _NoLogin;
+  const factory SelfState.loading(Self self) = _Loading;
   const factory SelfState.loggedIn({
     required UserInfoCard userInfoCard,
-  }) = SelfStateLoggedIn;
+  }) = _LoggedIn;
 }
 
 @freezed
@@ -58,5 +58,5 @@ sealed class UserInfoCard with _$UserInfoCard {
     required int likeNum,
     required int fans,
     required int focus,
-  }) = UserInfoCardLoaded;
+  }) = _Loaded;
 }

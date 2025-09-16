@@ -25,7 +25,7 @@ class SettingProvider extends _$SettingProvider {
 sealed class SettingState with _$SettingState {
   const factory SettingState({
     required int selectedIndex,
-  }) = SettingStateDefault;
+  }) = _SettingState;
 }
 
 enum SettingTab {

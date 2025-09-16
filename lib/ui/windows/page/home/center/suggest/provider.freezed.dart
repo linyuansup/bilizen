@@ -55,11 +55,11 @@ extension HomePageStatePatterns on HomePageState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( HomePageStateLoading value)?  loading,TResult Function( HomePageStateLoaded value)?  loaded,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Loading value)?  loading,TResult Function( _Loaded value)?  loaded,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case HomePageStateLoading() when loading != null:
-return loading(_that);case HomePageStateLoaded() when loaded != null:
+case _Loading() when loading != null:
+return loading(_that);case _Loaded() when loaded != null:
 return loaded(_that);case _:
   return orElse();
 
@@ -78,11 +78,11 @@ return loaded(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( HomePageStateLoading value)  loading,required TResult Function( HomePageStateLoaded value)  loaded,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Loading value)  loading,required TResult Function( _Loaded value)  loaded,}){
 final _that = this;
 switch (_that) {
-case HomePageStateLoading():
-return loading(_that);case HomePageStateLoaded():
+case _Loading():
+return loading(_that);case _Loaded():
 return loaded(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
@@ -97,11 +97,11 @@ return loaded(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( HomePageStateLoading value)?  loading,TResult? Function( HomePageStateLoaded value)?  loaded,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Loading value)?  loading,TResult? Function( _Loaded value)?  loaded,}){
 final _that = this;
 switch (_that) {
-case HomePageStateLoading() when loading != null:
-return loading(_that);case HomePageStateLoaded() when loaded != null:
+case _Loading() when loading != null:
+return loading(_that);case _Loaded() when loaded != null:
 return loaded(_that);case _:
   return null;
 
@@ -121,8 +121,8 @@ return loaded(_that);case _:
 
 @optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  loading,TResult Function( List<VideoCardData> videoInfo)?  loaded,required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case HomePageStateLoading() when loading != null:
-return loading();case HomePageStateLoaded() when loaded != null:
+case _Loading() when loading != null:
+return loading();case _Loaded() when loaded != null:
 return loaded(_that.videoInfo);case _:
   return orElse();
 
@@ -143,8 +143,8 @@ return loaded(_that.videoInfo);case _:
 
 @optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  loading,required TResult Function( List<VideoCardData> videoInfo)  loaded,}) {final _that = this;
 switch (_that) {
-case HomePageStateLoading():
-return loading();case HomePageStateLoaded():
+case _Loading():
+return loading();case _Loaded():
 return loaded(_that.videoInfo);}
 }
 /// A variant of `when` that fallback to returning `null`
@@ -161,8 +161,8 @@ return loaded(_that.videoInfo);}
 
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  loading,TResult? Function( List<VideoCardData> videoInfo)?  loaded,}) {final _that = this;
 switch (_that) {
-case HomePageStateLoading() when loading != null:
-return loading();case HomePageStateLoaded() when loaded != null:
+case _Loading() when loading != null:
+return loading();case _Loaded() when loaded != null:
 return loaded(_that.videoInfo);case _:
   return null;
 
@@ -174,8 +174,8 @@ return loaded(_that.videoInfo);case _:
 /// @nodoc
 
 
-class HomePageStateLoading implements HomePageState {
-  const HomePageStateLoading();
+class _Loading implements HomePageState {
+  const _Loading();
   
 
 
@@ -185,7 +185,7 @@ class HomePageStateLoading implements HomePageState {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is HomePageStateLoading);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Loading);
 }
 
 
@@ -206,8 +206,8 @@ String toString() {
 /// @nodoc
 
 
-class HomePageStateLoaded implements HomePageState {
-  const HomePageStateLoaded(final  List<VideoCardData> videoInfo): _videoInfo = videoInfo;
+class _Loaded implements HomePageState {
+  const _Loaded(final  List<VideoCardData> videoInfo): _videoInfo = videoInfo;
   
 
  final  List<VideoCardData> _videoInfo;
@@ -222,13 +222,13 @@ class HomePageStateLoaded implements HomePageState {
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$HomePageStateLoadedCopyWith<HomePageStateLoaded> get copyWith => _$HomePageStateLoadedCopyWithImpl<HomePageStateLoaded>(this, _$identity);
+_$LoadedCopyWith<_Loaded> get copyWith => __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is HomePageStateLoaded&&const DeepCollectionEquality().equals(other._videoInfo, _videoInfo));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Loaded&&const DeepCollectionEquality().equals(other._videoInfo, _videoInfo));
 }
 
 
@@ -244,8 +244,8 @@ String toString() {
 }
 
 /// @nodoc
-abstract mixin class $HomePageStateLoadedCopyWith<$Res> implements $HomePageStateCopyWith<$Res> {
-  factory $HomePageStateLoadedCopyWith(HomePageStateLoaded value, $Res Function(HomePageStateLoaded) _then) = _$HomePageStateLoadedCopyWithImpl;
+abstract mixin class _$LoadedCopyWith<$Res> implements $HomePageStateCopyWith<$Res> {
+  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) = __$LoadedCopyWithImpl;
 @useResult
 $Res call({
  List<VideoCardData> videoInfo
@@ -256,17 +256,17 @@ $Res call({
 
 }
 /// @nodoc
-class _$HomePageStateLoadedCopyWithImpl<$Res>
-    implements $HomePageStateLoadedCopyWith<$Res> {
-  _$HomePageStateLoadedCopyWithImpl(this._self, this._then);
+class __$LoadedCopyWithImpl<$Res>
+    implements _$LoadedCopyWith<$Res> {
+  __$LoadedCopyWithImpl(this._self, this._then);
 
-  final HomePageStateLoaded _self;
-  final $Res Function(HomePageStateLoaded) _then;
+  final _Loaded _self;
+  final $Res Function(_Loaded) _then;
 
 /// Create a copy of HomePageState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? videoInfo = null,}) {
-  return _then(HomePageStateLoaded(
+  return _then(_Loaded(
 null == videoInfo ? _self._videoInfo : videoInfo // ignore: cast_nullable_to_non_nullable
 as List<VideoCardData>,
   ));

@@ -1,6 +1,8 @@
-import 'package:bilizen/logic/video_online_manager.dart';
+import 'package:bilizen/inject/inject.dart';
 import 'package:bilizen/model/play_item.dart';
 import 'package:bilizen/package/talker_extension/playback.dart';
+import 'package:bilizen/package/video_online_manager.dart';
+import 'package:bilizen/ui/windows/page/router.dart';
 import 'package:bilizen/util/toastification.dart';
 import 'package:injectable/injectable.dart';
 import 'package:media_kit/media_kit.dart';
@@ -47,6 +49,7 @@ class PlaybackManager {
   );
   final Talker _talker;
   final VideoOnlineManager _videoOnlineManager;
+  final WindowsRouter _router = getIt<WindowsRouter>();
 
   PlaybackManager({
     required Talker talker,
@@ -61,6 +64,10 @@ class PlaybackManager {
     });
     player.stream.completed.listen((complete) async {
       if (!complete) {
+        return;
+      }
+      if (_router.video.context.mounted) {
+        _talker.playback("In the video page, skip auto-next");
         return;
       }
       await next();
