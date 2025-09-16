@@ -3,7 +3,7 @@ import 'package:talker/talker.dart';
 class PlaybackLog extends TalkerLog {
   PlaybackLog(String super.message);
 
-  static get getTitle => 'Playback';
+  static get getTitle => 'playback';
 
   @override
   String get title => getTitle;

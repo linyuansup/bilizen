@@ -41,6 +41,9 @@ Future<FavListResult> get(FavListApi favListApi, int page, int mlid) async {
           user.setAvatar(item["upper"]["face"]);
           video.setUploadTime(item["ctime"]);
           video.setUploader(user);
+          video.setFavorite(item["cnt_info"]["collect"]);
+          video.setView(item["cnt_info"]["play"]);
+          video.setDanmaku(item["cnt_info"]["danmaku"]);
           return video;
         })
         .toList(),

@@ -1,8 +1,10 @@
 import 'package:bilizen/inject/inject.dart';
 import 'package:bilizen/model/play_item.dart';
+import 'package:bilizen/package/talker_extension/libmpv.dart';
 import 'package:bilizen/package/talker_extension/playback.dart';
 import 'package:bilizen/package/video_online_manager.dart';
 import 'package:bilizen/ui/windows/page/router.dart';
+import 'package:bilizen/ui/windows/page/video/page.dart';
 import 'package:bilizen/util/toastification.dart';
 import 'package:injectable/injectable.dart';
 import 'package:media_kit/media_kit.dart';
@@ -58,7 +60,7 @@ class PlaybackManager {
        _videoOnlineManager = videoOnlineManager {
     player.stream.volume.listen((v) => volume.add(v));
     player.stream.log.listen((log) {
-      _talker.playback(
+      _talker.libmpv(
         "Player log: ${log.text} (level: ${log.level}, prefix: ${log.prefix})",
       );
     });
@@ -66,7 +68,7 @@ class PlaybackManager {
       if (!complete) {
         return;
       }
-      if (_router.video.context.mounted) {
+      if (_router.home.currentPage is VideoPage) {
         _talker.playback("In the video page, skip auto-next");
         return;
       }
@@ -94,6 +96,7 @@ class PlaybackManager {
   }
 
   Future<void> next() async {
+    _talker.playback("Next item triggered");
     final current = currentPlaying.value;
     if (current == null) {
       await _startNew(playlist.value.first);
