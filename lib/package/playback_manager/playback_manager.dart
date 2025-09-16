@@ -214,6 +214,10 @@ class PlaybackManager {
   }
 
   Future<void> addPlayItem(PlayItem item) async {
+    if (_alreadyInPlaylist(item)) {
+      _startNew(item);
+      return;
+    }
     if (playlist.value.isEmpty) {
       playlist.add([item]);
       await _startNew(item);
@@ -238,6 +242,10 @@ class PlaybackManager {
   }
 
   void insertPlayItem(int index, PlayItem item) {
+    if (_alreadyInPlaylist(item)) {
+      _startNew(item);
+      return;
+    }
     playlist.add([
       ...playlist.value.sublist(0, index + 1),
       item,
@@ -273,6 +281,10 @@ class PlaybackManager {
     if (idx == -1) return null;
     return list[idx];
   }
+
+  bool _alreadyInPlaylist(PlayItem item) => playlist.value.any(
+    (e) => e.video.bid == item.video.bid && e.pIndex == item.pIndex,
+  );
 
   Future<void> _startNew(
     PlayItem item, [
