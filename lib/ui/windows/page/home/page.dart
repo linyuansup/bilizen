@@ -2,8 +2,8 @@ import 'package:bilizen/ui/windows/page/home/bottom_bar/bottom_bar.dart';
 import 'package:bilizen/ui/windows/page/home/center/page.dart';
 import 'package:bilizen/ui/windows/page/home/left_bar/page.dart';
 import 'package:bilizen/ui/windows/page/home/top_bar/page.dart';
-import 'package:bilizen/ui/windows/widget/window_draggable.dart';
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:window_manager/window_manager.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -16,7 +16,7 @@ class HomePage extends StatelessWidget {
         children: [
           Column(
             children: [
-              WindowDraggable(child: RepaintBoundary(child: TopBar())),
+              DragToMoveArea(child: RepaintBoundary(child: TopBar())),
               Expanded(
                 child: Row(
                   children: [

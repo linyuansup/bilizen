@@ -1,8 +1,8 @@
 import 'package:bilizen/ui/windows/page/video/center/page.dart';
 import 'package:bilizen/ui/windows/page/video/right_bar/page.dart';
 import 'package:bilizen/ui/windows/page/video/top_bar/page.dart';
-import 'package:bilizen/ui/windows/widget/window_draggable.dart';
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:window_manager/window_manager.dart';
 
 const _rightBarMinWidth = 380.0;
 
@@ -15,7 +15,7 @@ class VideoPage extends StatelessWidget {
       padding: EdgeInsets.zero,
       content: Column(
         children: [
-          RepaintBoundary(child: WindowDraggable(child: TopBar())),
+          RepaintBoundary(child: DragToMoveArea(child: TopBar())),
           Expanded(
             child: LayoutBuilder(
               builder: (context, constraints) {
