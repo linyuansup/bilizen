@@ -56,33 +56,46 @@ class _InfoArea extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var state = ref.watch(bottomBarProvider);
-    if (state is BottomBarStateNotPlaying) {
-      return SizedBox(width: 300);
-    }
-    state = state as BottomBarStatePlaying;
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(
-          width: 300,
-          height: 20,
-          child: RepaintBoundary(
-            child: Text(
-              state.video.title,
-              style: FluentTheme.of(context).typography.body,
-            ),
-          ),
-        ),
-        SizedBox(height: 4),
-        RepaintBoundary(
-          child: UploaderInfo(
-            avatar: state.video.uploaderAvatar,
-            name: state.video.uploader,
-          ),
-        ),
-      ],
+    final state = ref.watch(bottomBarProvider);
+    return state.when(
+      notPlaying: (volume, switchMode, videos) {
+        return SizedBox(width: 300);
+      },
+      playing:
+          (
+            video,
+            process,
+            isPlaying,
+            volume,
+            switchMode,
+            audioFormat,
+            videoFormat,
+            videos,
+          ) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: 300,
+                  height: 20,
+                  child: RepaintBoundary(
+                    child: Text(
+                      video.title,
+                      style: FluentTheme.of(context).typography.body,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 4),
+                RepaintBoundary(
+                  child: UploaderInfo(
+                    avatar: video.uploaderAvatar,
+                    name: video.uploader,
+                  ),
+                ),
+              ],
+            );
+          },
     );
   }
 }
@@ -92,19 +105,30 @@ class _CoverArea extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var state = ref.watch(bottomBarProvider);
-    final Widget child;
-    if (state is BottomBarStateNotPlaying) {
-      child = SizedBox(width: 96);
-    } else {
-      state = state as BottomBarStatePlaying;
-      child = RepaintBoundary(
-        child: CachedNetworkImage(
-          width: 96,
-          imageUrl: state.video.cover,
-        ),
-      );
-    }
+    final state = ref.watch(bottomBarProvider);
+    final Widget child = state.when(
+      notPlaying: (volume, switchMode, videos) {
+        return SizedBox(width: 96);
+      },
+      playing:
+          (
+            video,
+            process,
+            isPlaying,
+            volume,
+            switchMode,
+            audioFormat,
+            videoFormat,
+            videos,
+          ) {
+            return RepaintBoundary(
+              child: CachedNetworkImage(
+                width: 96,
+                imageUrl: video.cover,
+              ),
+            );
+          },
+    );
     return GestureDetector(
       onTap: () async {
         await GoRouter.of(
@@ -188,17 +212,24 @@ class _PlayButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final provider = ref.watch(bottomBarProvider);
-    IconData icon;
-    if (provider is BottomBarStateNotPlaying) {
-      icon = FluentIcons.play;
-    } else {
-      provider as BottomBarStatePlaying;
-      if (provider.isPlaying) {
-        icon = FluentIcons.pause;
-      } else {
-        icon = FluentIcons.play;
-      }
-    }
+    final IconData icon = provider.when(
+      notPlaying: (volume, switchMode, videos) {
+        return FluentIcons.play;
+      },
+      playing:
+          (
+            video,
+            process,
+            isPlaying,
+            volume,
+            switchMode,
+            audioFormat,
+            videoFormat,
+            videos,
+          ) {
+            return isPlaying ? FluentIcons.pause : FluentIcons.play;
+          },
+    );
     return RepaintBoundary(
       child: IconButton(
         icon: Icon(icon),
@@ -216,19 +247,33 @@ class _SlideArea extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final provider = ref.watch(bottomBarProvider);
-    if (provider is BottomBarStatePlaying) {
-      return Slider(
-        min: 0,
-        max: provider.video.duration.toDouble(),
-        value: provider.process.toDouble(),
-        onChanged: (value) {
-          ref.read(bottomBarProvider.notifier).seek(value.toInt());
-        },
-      );
-    }
-    return Slider(
-      value: 0,
-      onChanged: null,
+    return provider.when(
+      notPlaying: (volume, switchMode, videos) {
+        return Slider(
+          value: 0,
+          onChanged: null,
+        );
+      },
+      playing:
+          (
+            video,
+            process,
+            isPlaying,
+            volume,
+            switchMode,
+            audioFormat,
+            videoFormat,
+            videos,
+          ) {
+            return Slider(
+              min: 0,
+              max: video.duration.toDouble(),
+              value: process.toDouble(),
+              onChanged: (value) {
+                ref.read(bottomBarProvider.notifier).seek(value.toInt());
+              },
+            );
+          },
     );
   }
 }
@@ -239,10 +284,24 @@ class _EndTime extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final provider = ref.watch(bottomBarProvider);
-    if (provider is BottomBarStatePlaying) {
-      return Text(formatDuration(provider.video.duration));
-    }
-    return Text("00:00");
+    return provider.when(
+      notPlaying: (volume, switchMode, videos) {
+        return Text("00:00");
+      },
+      playing:
+          (
+            video,
+            process,
+            isPlaying,
+            volume,
+            switchMode,
+            audioFormat,
+            videoFormat,
+            videos,
+          ) {
+            return Text(formatDuration(video.duration));
+          },
+    );
   }
 }
 
@@ -252,10 +311,24 @@ class _StartTime extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final provider = ref.watch(bottomBarProvider);
-    if (provider is BottomBarStatePlaying) {
-      return RepaintBoundary(child: Text(formatDuration(provider.process)));
-    }
-    return Text("00:00");
+    return provider.when(
+      notPlaying: (volume, switchMode, videos) {
+        return Text("00:00");
+      },
+      playing:
+          (
+            video,
+            process,
+            isPlaying,
+            volume,
+            switchMode,
+            audioFormat,
+            videoFormat,
+            videos,
+          ) {
+            return RepaintBoundary(child: Text(formatDuration(process)));
+          },
+    );
   }
 }
 
@@ -476,16 +549,32 @@ class _VideoPlaylistItem extends ConsumerWidget {
               ),
             ],
           );
-          if (provider is BottomBarStatePlaying &&
-              provider.videos.indexOf(provider.video) == index) {
-            layout = Row(
-              spacing: 10,
-              children: [
-                Icon(FluentIcons.play),
-                layout,
-              ],
-            );
-          }
+          provider.when(
+            notPlaying: (volume, switchMode, videos) {
+              // 非播放状态下不需要显示播放图标
+            },
+            playing:
+                (
+                  currentVideo,
+                  process,
+                  isPlaying,
+                  volume,
+                  switchMode,
+                  audioFormat,
+                  videoFormat,
+                  videos,
+                ) {
+                  if (videos.indexOf(currentVideo) == index) {
+                    layout = Row(
+                      spacing: 10,
+                      children: [
+                        Icon(FluentIcons.play),
+                        layout,
+                      ],
+                    );
+                  }
+                },
+          );
           return layout;
         },
       ),
