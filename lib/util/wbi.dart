@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:bilizen/data/storage/pref/wbi.dart';
 import 'package:bilizen/inject/inject.dart';
+import 'package:bilizen/util/time.dart';
 import 'package:crypto/crypto.dart';
 import 'package:dio/dio.dart';
 
@@ -137,7 +138,7 @@ class WbiSign {
   ) async {
     final wbiKey = await _getWbiKeys();
     final mixinKey = _getMixinKey(wbiKey.imgKey + wbiKey.subKey);
-    final currTime = (DateTime.now().millisecondsSinceEpoch / 1000).round();
+    final currTime = DateTime.now().secondsSinceEpoch();
     const specialChars = r"[!\'\(\)*]";
     final chrFilter = RegExp(specialChars);
     final Map<String, dynamic> newParams = Map.from(params.toMap())
@@ -177,7 +178,9 @@ class WbiSign {
 
   static bool _isWbiKeysValid(WbiKey? keys, int? timestamp, DateTime now) {
     if (keys == null || timestamp == null) return false;
-    final DateTime storedDate = DateTime.fromMillisecondsSinceEpoch(timestamp);
+    final DateTime storedDate = DateTimeExtension.fromSecondsSinceEpoch(
+      timestamp,
+    );
     return storedDate.day == now.day;
   }
 
@@ -187,7 +190,7 @@ class WbiSign {
         imgKey: _extractKeyFromUrl(data.wbiImg.imgUrl),
         subKey: _extractKeyFromUrl(data.wbiImg.subUrl),
       ),
-      DateTime.now().millisecondsSinceEpoch,
+      DateTime.now().secondsSinceEpoch(),
     );
     return WbiKey(
       imgKey: _extractKeyFromUrl(data.wbiImg.imgUrl),

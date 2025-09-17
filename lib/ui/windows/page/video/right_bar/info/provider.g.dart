@@ -6,6 +6,9 @@ part of 'provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
 @ProviderFor(VideoInfoProvider)
 const videoInfoProvider = VideoInfoProviderProvider._();
 
@@ -38,7 +41,7 @@ final class VideoInfoProviderProvider
   }
 }
 
-String _$videoInfoProviderHash() => r'c7406643394d809f8029155f9024ba75b14f4bed';
+String _$videoInfoProviderHash() => r'5757a04c48eb4863d347610945b987a52b11cf86';
 
 abstract class _$VideoInfoProvider extends $Notifier<VideoInfoState> {
   VideoInfoState build();
@@ -58,6 +61,3 @@ abstract class _$VideoInfoProvider extends $Notifier<VideoInfoState> {
     element.handleValue(ref, created);
   }
 }
-
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

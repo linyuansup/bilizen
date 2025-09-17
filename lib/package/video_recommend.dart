@@ -1,6 +1,6 @@
 import 'package:bilizen/data/api/video/recommend.dart';
+import 'package:bilizen/inject/inject.dart';
 import 'package:bilizen/model/user.dart';
-import 'package:bilizen/package/video_recommend/homepage.dart';
 import 'package:bilizen/model/video.dart';
 import 'package:injectable/injectable.dart';
 
@@ -13,13 +13,31 @@ class VideoRecommend {
   Future<HomepageVideoRecommender> homepage() async {
     final data = (await _videoRecommendApi.homepage(1))["data"];
     return HomepageVideoRecommender(
-      current: get(data),
+      current: _get(data),
       page: 1,
     );
   }
 }
 
-List<Video> get(Map<String, dynamic> data) {
+class HomepageVideoRecommender {
+  final List<Video> current;
+  final int page;
+
+  HomepageVideoRecommender({
+    required this.current,
+    required this.page,
+  });
+
+  Future<HomepageVideoRecommender> nextPage() async {
+    final data = (await getIt<VideoRecommendApi>().homepage(page + 1))["data"];
+    return HomepageVideoRecommender(
+      current: _get(data),
+      page: page + 1,
+    );
+  }
+}
+
+List<Video> _get(Map<String, dynamic> data) {
   return (data["item"] as List)
       .where((e) => e["show_info"] == 1)
       .map((e) {

@@ -1,6 +1,6 @@
 import 'package:bilizen/package/window_state.dart';
 import 'package:bilizen/inject/inject.dart';
-import 'package:bilizen/package/playback_manager/playback_manager.dart';
+import 'package:bilizen/package/playback_manager/playback_controller.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:window_manager/window_manager.dart';
@@ -11,7 +11,7 @@ part 'provider.g.dart';
 @Riverpod(keepAlive: true, name: "topBarProvider")
 class TopBarProvider extends _$TopBarProvider {
   final _windowStateStream = getIt<WindowStateManager>().windowStateStream;
-  final _playbackManager = getIt<PlaybackManager>();
+  final _playbackManager = getIt<PlaybackController>();
 
   @override
   TopBarState build() {

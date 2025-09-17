@@ -1,3 +1,5 @@
+import 'package:bilizen/util/time.dart';
+
 int formatDurationToSecond(String time) {
   final parts = time.split(':');
   if (parts.length != 2) return 0;
@@ -7,7 +9,7 @@ int formatDurationToSecond(String time) {
 }
 
 String formatDate(int timestamp) {
-  final date = DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
+  final date = DateTimeExtension.fromSecondsSinceEpoch(timestamp);
   final year = date.year.toString().substring(2);
   var minute = date.minute.toString();
   if (minute.length == 1) {

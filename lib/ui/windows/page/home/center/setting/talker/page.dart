@@ -7,8 +7,11 @@ class SettingTalkerPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TalkerScreen(
-      talker: getIt<Talker>(),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 90),
+      child: TalkerScreen(
+        talker: getIt<Talker>(),
+      ),
     );
   }
 }

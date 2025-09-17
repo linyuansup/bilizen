@@ -3,10 +3,8 @@ import 'package:talker/talker.dart';
 class PlaybackLog extends TalkerLog {
   PlaybackLog(String super.message);
 
-  static get getTitle => 'playback';
-
   @override
-  String get title => getTitle;
+  String get title => 'playback';
 
   @override
   AnsiPen get pen => AnsiPen()..yellow();

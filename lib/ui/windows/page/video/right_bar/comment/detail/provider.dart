@@ -1,8 +1,7 @@
 import 'package:bilizen/inject/inject.dart';
-import 'package:bilizen/package/comment_manager/comment_manager.dart';
-import 'package:bilizen/package/comment_manager/get_reply_result.dart';
+import 'package:bilizen/package/comment_manager.dart';
 import 'package:bilizen/model/comment.dart';
-import 'package:bilizen/package/playback_manager/playback_manager.dart';
+import 'package:bilizen/package/playback_manager/playback_controller.dart';
 import 'package:bilizen/ui/windows/page/router.dart';
 import 'package:bilizen/ui/windows/page/video/right_bar/comment/list/provider.dart';
 import 'package:bilizen/util/bilibili.dart';
@@ -16,7 +15,7 @@ part 'provider.g.dart';
 @Riverpod(keepAlive: true, name: "videoCommentDetailProvider")
 class VideoCommentDetailProvider extends _$VideoCommentDetailProvider {
   final _commentManager = getIt<CommentManager>();
-  final _playbackManager = getIt<PlaybackManager>();
+  final _playbackManager = getIt<PlaybackController>();
   GetReplyResult? _currentComment;
 
   @override
@@ -47,7 +46,7 @@ class VideoCommentDetailProvider extends _$VideoCommentDetailProvider {
     state = VideoCommentDetailState.loaded(
       comments: await fromModelComment(_currentComment!.comments),
       upUid:
-          (await getIt<PlaybackManager>()
+          (await getIt<PlaybackController>()
                   .currentPlaying
                   .value!
                   .item

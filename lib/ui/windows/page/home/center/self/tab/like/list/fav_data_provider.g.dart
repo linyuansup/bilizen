@@ -6,6 +6,9 @@ part of 'fav_data_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
 @ProviderFor(FavDataProvider)
 const favDataProvider = FavDataProviderProvider._();
 
@@ -38,7 +41,7 @@ final class FavDataProviderProvider
   }
 }
 
-String _$favDataProviderHash() => r'f3f70c52da6cbcd91b72cdf614ad7c94aa31fce1';
+String _$favDataProviderHash() => r'fdd25eac6c1dc89bceaa9346eb4cee789fa7b461';
 
 abstract class _$FavDataProvider extends $Notifier<FavDataState> {
   FavDataState build();
@@ -58,6 +61,3 @@ abstract class _$FavDataProvider extends $Notifier<FavDataState> {
     element.handleValue(ref, created);
   }
 }
-
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

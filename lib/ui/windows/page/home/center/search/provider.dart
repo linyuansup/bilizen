@@ -1,5 +1,4 @@
-import 'package:bilizen/package/search/search_manager.dart';
-import 'package:bilizen/package/search/video_result.dart';
+import 'package:bilizen/package/search_manager.dart';
 import 'package:bilizen/inject/inject.dart';
 import 'package:bilizen/ui/windows/widget/video_card.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';

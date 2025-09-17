@@ -1,5 +1,4 @@
-import 'package:bilizen/package/video_recommend/homepage.dart';
-import 'package:bilizen/package/video_recommend/video_recommend.dart';
+import 'package:bilizen/package/video_recommend.dart';
 import 'package:bilizen/inject/inject.dart';
 import 'package:bilizen/ui/windows/widget/video_card.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';

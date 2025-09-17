@@ -1,13 +1,12 @@
 import 'package:bilizen/inject/inject.dart';
-import 'package:bilizen/package/account_manager/account_manager.dart';
-import 'package:bilizen/package/search/search_manager.dart';
-import 'package:bilizen/package/window_state.dart';
 import 'package:bilizen/model/self.dart';
+import 'package:bilizen/package/account_manager/account_manager.dart';
+import 'package:bilizen/package/search_manager.dart';
+import 'package:bilizen/package/window_state.dart';
 import 'package:bilizen/ui/windows/page/home/center/page.dart';
 import 'package:bilizen/ui/windows/page/router.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:talker/talker.dart';
 import 'package:window_manager/window_manager.dart';
 
 part 'provider.freezed.dart';
@@ -29,7 +28,6 @@ class TopBarProvider extends _$TopBarProvider {
       state = state.copyWith(userInfo: await _getUserInfo(self));
     });
     router.listen((value) {
-      getIt<Talker>().debug("canPop: ${value.canPop()}");
       state = state.copyWith(
         isSearchPage: value.state.name == HomePageKind.search.name,
       );

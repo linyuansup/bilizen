@@ -6,6 +6,9 @@ part of 'provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
 @ProviderFor(BottomBarProvider)
 const bottomBarProvider = BottomBarProviderProvider._();
 
@@ -38,7 +41,7 @@ final class BottomBarProviderProvider
   }
 }
 
-String _$bottomBarProviderHash() => r'0ac9951f1097e721e6b88f74fb9198d3a41861b0';
+String _$bottomBarProviderHash() => r'b30f40e853c7085d7c7601ed82c1bc53afebf651';
 
 abstract class _$BottomBarProvider extends $Notifier<BottomBarState> {
   BottomBarState build();
@@ -58,6 +61,3 @@ abstract class _$BottomBarProvider extends $Notifier<BottomBarState> {
     element.handleValue(ref, created);
   }
 }
-
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

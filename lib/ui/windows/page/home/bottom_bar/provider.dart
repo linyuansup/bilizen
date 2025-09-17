@@ -1,7 +1,7 @@
 import 'package:bilizen/model/play_item.dart';
 import 'package:bilizen/model/video.dart';
 import 'package:bilizen/inject/inject.dart';
-import 'package:bilizen/package/playback_manager/playback_manager.dart';
+import 'package:bilizen/package/playback_manager/playback_controller.dart';
 import 'package:bilizen/package/talker_extension/playback.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -13,7 +13,7 @@ part 'provider.g.dart';
 
 @Riverpod(keepAlive: true, name: "bottomBarProvider")
 class BottomBarProvider extends _$BottomBarProvider {
-  final _playbackManager = getIt<PlaybackManager>();
+  final _playbackManager = getIt<PlaybackController>();
 
   @override
   BottomBarState build() {
@@ -28,12 +28,11 @@ class BottomBarProvider extends _$BottomBarProvider {
       }
       state = (state as _Playing).copyWith(
         videos: await Future.wait(
-          _playbackManager.playlist.value
-              .map(
-                (element) =>
-                    VideoState.fromVideo(element.video, element.pIndex),
-              )
-              .toList(),
+          _playbackManager.playlist.value.map(
+            (element) async {
+              return await VideoState.fromVideo(element.video, element.pIndex);
+            },
+          ).toList(),
         ),
       );
     });
@@ -108,14 +107,10 @@ class BottomBarProvider extends _$BottomBarProvider {
       state = BottomBarState.notPlaying(
         volume: _playbackManager.volume.value,
         switchMode: _playbackManager.switchMode.value,
-        videos: await Future.wait(
-          _playbackManager.playlist.value
-              .map(
-                (element) =>
-                    VideoState.fromVideo(element.video, element.pIndex),
-              )
-              .toList(),
-        ),
+        videos: [
+          for (final element in _playbackManager.playlist.value)
+            await VideoState.fromVideo(element.video, element.pIndex),
+        ],
       );
       return;
     }

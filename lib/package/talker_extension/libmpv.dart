@@ -3,10 +3,8 @@ import 'package:talker/talker.dart';
 class LibmpvLog extends TalkerLog {
   LibmpvLog(String super.message);
 
-  static get getTitle => 'libmpv';
-
   @override
-  String get title => getTitle;
+  String get title => 'libmpv';
 
   @override
   AnsiPen get pen => AnsiPen()..magenta();

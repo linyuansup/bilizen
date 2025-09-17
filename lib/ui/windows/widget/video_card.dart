@@ -1,7 +1,7 @@
 import 'package:bilizen/inject/inject.dart';
 import 'package:bilizen/model/play_item.dart';
 import 'package:bilizen/model/video.dart';
-import 'package:bilizen/package/playback_manager/playback_manager.dart';
+import 'package:bilizen/package/playback_manager/playback_controller.dart';
 import 'package:bilizen/util/string.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fluent_ui/fluent_ui.dart';
@@ -216,7 +216,7 @@ class VideoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return HoverButton(
       onPressed: () async {
-        await getIt<PlaybackManager>().addPlayItem(
+        await getIt<PlaybackController>().addPlayItem(
           PlayItem(video: Video(bid: video.bvid), pIndex: 1),
         );
       },

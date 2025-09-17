@@ -24,4 +24,14 @@ class FavListApi {
     );
     return result.data!;
   }
+
+  Future<Map<String, dynamic>> getAllId(int mediaId) async {
+    final result = await _dio.get<Map<String, dynamic>>(
+      'https://api.bilibili.com/x/v3/fav/resource/ids',
+      queryParameters: {
+        "media_id": mediaId,
+      },
+    );
+    return result.data!;
+  }
 }

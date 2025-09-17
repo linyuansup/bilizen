@@ -161,7 +161,7 @@ class CommentCard extends StatelessWidget {
 
   Widget _buildRepliesPreview() {
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.fromLTRB(12, 12, 12, 4),
       decoration: BoxDecoration(
         color: Colors.black.withValues(alpha: 0.01),
         borderRadius: BorderRadius.circular(6),

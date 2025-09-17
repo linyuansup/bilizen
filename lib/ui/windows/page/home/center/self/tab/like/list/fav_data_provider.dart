@@ -1,21 +1,37 @@
 import 'package:bilizen/inject/inject.dart';
-import 'package:bilizen/package/fav_manager/fav_list_result.dart';
-import 'package:bilizen/package/fav_manager/fav_manager.dart';
+import 'package:bilizen/model/play_item.dart';
+import 'package:bilizen/package/fav_manager.dart';
+import 'package:bilizen/package/playback_manager/playback_controller.dart';
 import 'package:bilizen/ui/windows/widget/video_card.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'fav_data_provider.freezed.dart';
+
 part 'fav_data_provider.g.dart';
 
 @Riverpod(keepAlive: true, name: "favDataProvider")
 class FavDataProvider extends _$FavDataProvider {
   final _favManager = getIt<FavManager>();
   FavListResult? _currentFavListResult;
+  final _playbackManager = getIt<PlaybackController>();
 
   @override
   FavDataState build() {
     return const FavDataState.loading();
+  }
+
+  Future<void> addAll() async {
+    if (_currentFavListResult == null) {
+      return;
+    }
+    final videos = await _favManager.getAllFavVideo(
+      _currentFavListResult!.mlid,
+    );
+    _playbackManager.insertAllAtLast(
+      videos.map((e) => PlayItem(video: e, pIndex: 1)).toList(),
+    );
+    await _playbackManager.play();
   }
 
   Future<void> load(int id) async {
@@ -53,6 +69,7 @@ class FavDataProvider extends _$FavDataProvider {
 @freezed
 sealed class FavDataState with _$FavDataState {
   const factory FavDataState.loading() = _Loading;
+
   const factory FavDataState.success({
     required List<VideoCardData> items,
   }) = _Success;

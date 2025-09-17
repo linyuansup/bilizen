@@ -2,7 +2,7 @@ import 'package:bilizen/model/emoji.dart';
 import 'package:bilizen/model/play_item.dart';
 import 'package:bilizen/model/video.dart';
 import 'package:bilizen/inject/inject.dart';
-import 'package:bilizen/package/playback_manager/playback_manager.dart';
+import 'package:bilizen/package/playback_manager/playback_controller.dart';
 import 'package:bilizen/util/bilibili.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fluent_ui/fluent_ui.dart';
@@ -217,7 +217,7 @@ class _BiliFormatTextState extends State<BiliFormatText> {
         return _createClickableSpan(
           part,
           () async {
-            await getIt<PlaybackManager>().addPlayItem(
+            await getIt<PlaybackController>().addPlayItem(
               PlayItem(video: Video(bid: part), pIndex: 1),
             );
           },
@@ -226,7 +226,7 @@ class _BiliFormatTextState extends State<BiliFormatText> {
         return _createClickableSpan(
           part,
           () async {
-            await getIt<PlaybackManager>().addPlayItem(
+            await getIt<PlaybackController>().addPlayItem(
               PlayItem(
                 video: Video(bid: toBv(int.parse(part.substring(2)))),
                 pIndex: 1,

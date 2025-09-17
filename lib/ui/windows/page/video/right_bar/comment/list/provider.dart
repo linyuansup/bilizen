@@ -1,8 +1,7 @@
 import 'package:bilizen/inject/inject.dart';
-import 'package:bilizen/package/comment_manager/comment_manager.dart';
-import 'package:bilizen/package/comment_manager/get_comment_result.dart';
+import 'package:bilizen/package/comment_manager.dart';
 import 'package:bilizen/model/comment.dart';
-import 'package:bilizen/package/playback_manager/playback_manager.dart';
+import 'package:bilizen/package/playback_manager/playback_controller.dart';
 import 'package:bilizen/util/bilibili.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -13,7 +12,7 @@ part 'provider.g.dart';
 @Riverpod(keepAlive: true, name: "videoCommentListProvider")
 class VideoCommentListProvider extends _$VideoCommentListProvider {
   final _commentManager = getIt<CommentManager>();
-  final _playbackManager = getIt<PlaybackManager>();
+  final _playbackManager = getIt<PlaybackController>();
   GetCommentResult? _currentComment;
 
   @override
@@ -41,7 +40,7 @@ class VideoCommentListProvider extends _$VideoCommentListProvider {
       state = VideoCommentListState.loaded(
         comments: await fromModelComment(_currentComment!.comments),
         upUid:
-            (await getIt<PlaybackManager>()
+            (await getIt<PlaybackController>()
                     .currentPlaying
                     .value!
                     .item

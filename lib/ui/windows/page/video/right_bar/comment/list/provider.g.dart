@@ -6,6 +6,9 @@ part of 'provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
 @ProviderFor(VideoCommentListProvider)
 const videoCommentListProvider = VideoCommentListProviderProvider._();
 
@@ -39,7 +42,7 @@ final class VideoCommentListProviderProvider
 }
 
 String _$videoCommentListProviderHash() =>
-    r'1a99b6fecab790b611104144c90a4a033cb93100';
+    r'7f434174e78fb17f7bc9753da91ab4b7ec07d438';
 
 abstract class _$VideoCommentListProvider
     extends $Notifier<VideoCommentListState> {
@@ -60,6 +63,3 @@ abstract class _$VideoCommentListProvider
     element.handleValue(ref, created);
   }
 }
-
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

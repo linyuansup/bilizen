@@ -1,5 +1,5 @@
 import 'package:bilizen/inject/inject.dart';
-import 'package:bilizen/package/playback_manager/playback_manager.dart';
+import 'package:bilizen/package/playback_manager/playback_controller.dart';
 import 'package:bilizen/ui/windows/page/home/bottom_bar/provider.dart';
 import 'package:bilizen/ui/windows/page/router.dart';
 import 'package:bilizen/ui/windows/widget/video_card.dart';

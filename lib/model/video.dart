@@ -1,4 +1,6 @@
 import 'package:bilizen/data/api/video/info.dart';
+import 'package:bilizen/data/storage/db/user_cache.dart';
+import 'package:bilizen/data/storage/db/video_cache.dart';
 import 'package:bilizen/inject/inject.dart';
 import 'package:bilizen/model/comment_bar_info.dart';
 import 'package:bilizen/model/staff.dart';
@@ -14,6 +16,8 @@ part 'video.future.dart';
 class Video extends _$Video {
   final String bid;
   final _videoApi = getIt<VideoApi>();
+  final _videoCacheService = getIt<VideoCacheService>();
+  final _userCacheService = getIt<UserCacheService>();
 
   late CommentBarInfo commentBarInfo = CommentBarInfo(
     type: 1,
@@ -22,13 +26,13 @@ class Video extends _$Video {
 
   Video({required this.bid});
 
-  @FutureData(loader: "basicInfo")
+  @FutureData(loader: "plist")
   Future<int> get videosNum => $videosNum;
 
-  @FutureData(loader: "basicInfo")
+  @FutureData(loader: "cache")
   Future<String> get cover => $cover;
 
-  @FutureData(loader: "basicInfo")
+  @FutureData(loader: "cache")
   Future<String> get title => $title;
 
   @FutureData(loader: "basicInfo")
@@ -37,13 +41,13 @@ class Video extends _$Video {
   @FutureData(loader: "basicInfo")
   Future<int> get totalDuration => $totalDuration;
 
-  @FutureData(loader: "basicInfo")
+  @FutureData(loader: "cache")
   Future<User> get uploader => $uploader;
 
   @FutureData(loader: "basicInfo")
   Future<String> get argument => $argument;
 
-  @FutureData(loader: "basicInfo")
+  @FutureData(loader: "plist")
   Future<List<VideoPlaylist>> get playlist => $playlist;
 
   @FutureData(loader: "basicInfo")
@@ -129,5 +133,43 @@ class Video extends _$Video {
     setCoin(info["stat"]["coin"]);
     setShare(info["stat"]["share"]);
     setLike(info["stat"]["like"]);
+    await _userCacheService.put(
+      await UserCache.fromUser(user),
+    );
+    await _videoCacheService.put(
+      await VideoCache.fromVideo(this),
+    );
+  }
+
+  @override
+  Future<void> plist() async {
+    final response = await _videoApi.getVideoPlaylist(bid);
+    final data = response["data"] as List;
+    setVideosNum(data.length);
+    setPlaylist(
+      data
+          .map((item) {
+            return VideoPlaylist(
+              cid: item["cid"],
+              index: item["page"],
+              bvid: bid,
+              title: item["part"],
+              duration: item["duration"],
+            );
+          })
+          .toList(growable: false),
+    );
+  }
+
+  @override
+  Future<void> cache() async {
+    final video = await _videoCacheService.findByBvid(bid);
+    if (video == null) {
+      await basicInfo();
+      return;
+    }
+    setCover(video.cover);
+    setTitle(video.title);
+    setUploader(User(id: video.uid));
   }
 }

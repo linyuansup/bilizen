@@ -1,13 +1,13 @@
-import 'package:bilizen/inject/inject.dart';
 import 'package:bilizen/model/play_item.dart';
+import 'package:bilizen/package/playback_manager/auto_next_controller.dart';
+import 'package:bilizen/package/playback_manager/playlist_storage_controller.dart';
+import 'package:bilizen/package/playback_manager/video_online_controller.dart';
 import 'package:bilizen/package/talker_extension/libmpv.dart';
 import 'package:bilizen/package/talker_extension/playback.dart';
-import 'package:bilizen/package/video_online_manager.dart';
-import 'package:bilizen/ui/windows/page/router.dart';
-import 'package:bilizen/ui/windows/page/video/page.dart';
 import 'package:bilizen/util/toastification.dart';
 import 'package:injectable/injectable.dart';
 import 'package:media_kit/media_kit.dart';
+import 'package:bilizen/data/storage/pref/playing_item.dart' as storage;
 import 'package:rxdart/rxdart.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 
@@ -36,7 +36,8 @@ class PlayingItem {
 }
 
 @singleton
-class PlaybackManager {
+class PlaybackController
+    with AutoNextController, VideoOnlineController, PlaylistStorageController {
   final BehaviorSubject<List<PlayItem>> playlist =
       BehaviorSubject<List<PlayItem>>.seeded([]);
   final BehaviorSubject<PlayingItem?> currentPlaying =
@@ -50,14 +51,26 @@ class PlaybackManager {
     configuration: PlayerConfiguration(logLevel: MPVLogLevel.debug),
   );
   final Talker _talker;
-  final VideoOnlineManager _videoOnlineManager;
-  final WindowsRouter _router = getIt<WindowsRouter>();
 
-  PlaybackManager({
+  PlaybackController({
     required Talker talker,
-    required VideoOnlineManager videoOnlineManager,
-  }) : _talker = talker,
-       _videoOnlineManager = videoOnlineManager {
+  }) : _talker = talker {
+    playlist.stream.listen((playlist) {
+      savePlaylistToLocal(playlist);
+    });
+    currentPlaying.stream.listen((playing) {
+      if (playing == null) {
+        saveCurrentPlayState(null);
+        return;
+      }
+      saveCurrentPlayState(
+        storage.PlayingItem(
+          bvid: playing.item.video.bid,
+          pIndex: playing.item.pIndex,
+          position: playing.position.inSeconds,
+        ),
+      );
+    });
     player.stream.volume.listen((v) => volume.add(v));
     player.stream.log.listen((log) {
       _talker.libmpv(
@@ -68,7 +81,7 @@ class PlaybackManager {
       if (!complete) {
         return;
       }
-      if (_router.home.currentPage is VideoPage) {
+      if (!autoNext) {
         _talker.playback("In the video page, skip auto-next");
         return;
       }
@@ -78,11 +91,13 @@ class PlaybackManager {
       [
         player.stream.position,
         player.stream.playing,
-        _videoOnlineManager.stream,
+        userCountstream,
       ],
       (value) {
         final current = currentPlaying.value;
-        if (current == null) return null;
+        if (current == null) {
+          return null;
+        }
         return PlayingItem(
           item: current.item,
           position: value[0] as Duration,
@@ -92,7 +107,28 @@ class PlaybackManager {
           onlineUser: value[2] as String,
         );
       },
-    ).listen((playingItem) => currentPlaying.add(playingItem));
+    ).listen((playingItem) {
+      currentPlaying.add(playingItem);
+    });
+    final value = loadPlaylistFromLocal();
+    if (value.isNotEmpty) {
+      insertAllAtLast(value);
+      loadCurrentPlayState().then((state) {
+        if (state != null) {
+          final target = value.firstWhere(
+            (e) => e.video.bid == state.bvid && e.pIndex == state.pIndex,
+            orElse: () => value.first,
+          );
+          _startNew(
+            target,
+            position: Duration(seconds: state.position),
+            play: false,
+          );
+        } else {
+          _startNew(value.first, play: false);
+        }
+      });
+    }
   }
 
   Future<void> next() async {
@@ -174,7 +210,11 @@ class PlaybackManager {
 
   Future<void> play() async {
     if (currentPlaying.value == null) {
-      _talker.playback("No item is currently playing.");
+      if (playlist.value.isEmpty) {
+        _talker.playback("Playlist is empty, cannot play.");
+        return;
+      }
+      _startNew(playlist.value.first);
       return;
     }
     await player.play();
@@ -191,9 +231,9 @@ class PlaybackManager {
     if (chosen == null) return;
     await _startNew(
       currentPlaying.value!.item,
-      currentPlaying.value!.position,
-      chosen,
-      currentPlaying.value!.videoFormat,
+      position: currentPlaying.value!.position,
+      audioUrl: chosen,
+      videoUrl: currentPlaying.value!.videoFormat,
     );
   }
 
@@ -206,9 +246,9 @@ class PlaybackManager {
     if (chosen == null) return;
     await _startNew(
       currentPlaying.value!.item,
-      currentPlaying.value!.position,
-      currentPlaying.value!.audioFormat,
-      chosen,
+      position: currentPlaying.value!.position,
+      audioUrl: currentPlaying.value!.audioFormat,
+      videoUrl: chosen,
     );
   }
 
@@ -262,6 +302,12 @@ class PlaybackManager {
   void insertPlayItemAtLast(PlayItem item) =>
       playlist.add([...playlist.value, item]);
 
+  void insertAllAtLast(List<PlayItem> items) {
+    final newItems = items.where((item) => !_alreadyInPlaylist(item)).toList();
+    if (newItems.isEmpty) return;
+    playlist.add([...playlist.value, ...newItems]);
+  }
+
   Future<void> removePlayItem(int index) async {
     if (currentPlaying.value?.item == playlist.value[index]) {
       await player.stop();
@@ -290,11 +336,12 @@ class PlaybackManager {
   );
 
   Future<void> _startNew(
-    PlayItem item, [
+    PlayItem item, {
     Duration position = Duration.zero,
     AudioUrl? audioUrl,
     VideoUrl? videoUrl,
-  ]) async {
+    bool play = true,
+  }) async {
     audioUrl ??= (await item.audioUrl).reduce(
       (a, b) => a.format.id > b.format.id ? a : b,
     );
@@ -335,7 +382,7 @@ class PlaybackManager {
       "audio-files",
       audioUrl.url,
     );
-    await _videoOnlineManager.changeTo(item.video.bid, await item.getCid());
+    await userCountstreamChangeTo(item.video.bid, await item.getCid());
     currentPlaying.add(
       PlayingItem(
         item: item,
@@ -353,7 +400,9 @@ class PlaybackManager {
       );
       return;
     }
-    await player.play();
+    if (play) {
+      await player.play();
+    }
   }
 
   bool _hasAudioDevices() => player.state.audioDevices.length > 1;

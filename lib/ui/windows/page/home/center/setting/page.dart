@@ -29,7 +29,7 @@ class SettingPage extends StatelessWidget {
       children: [
         RepaintBoundary(
           child: Consumer(
-            builder: (_, WidgetRef ref, __) {
+            builder: (_, WidgetRef ref, _) {
               final selectedIndex = ref.watch(
                 settingProvider.select((state) => state.selectedIndex),
               );

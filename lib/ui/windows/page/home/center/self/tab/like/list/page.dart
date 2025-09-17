@@ -39,7 +39,24 @@ class _FavListItem extends ConsumerWidget {
         );
       },
       success: (data) {
-        return AutoScaleGridView(
+        return _FavListItemData(data: data);
+      },
+    );
+  }
+}
+
+class _FavListItemData extends ConsumerWidget {
+  const _FavListItemData({
+    required this.data,
+  });
+
+  final List<VideoCardData> data;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Stack(
+      children: [
+        AutoScaleGridView(
           itemSize: const Size(300, 266),
           onBottom: () async {
             await ref.read(favDataProvider.notifier).next();
@@ -49,8 +66,27 @@ class _FavListItem extends ConsumerWidget {
               video: video,
             );
           }).toList(),
-        );
-      },
+        ),
+        Positioned(
+          top: 16,
+          right: 16,
+          child: RepaintBoundary(
+            child: Button(
+              onPressed: () {
+                ref.read(favDataProvider.notifier).addAll();
+              },
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(FluentIcons.add),
+                  SizedBox(width: 4),
+                  Text('全部添加'),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

@@ -1,5 +1,5 @@
 import 'package:bilizen/inject/inject.dart';
-import 'package:bilizen/package/playback_manager/playback_manager.dart';
+import 'package:bilizen/package/playback_manager/playback_controller.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -8,7 +8,7 @@ part 'provider.g.dart';
 
 @Riverpod(keepAlive: true, name: "videoInfoProvider")
 class VideoInfoProvider extends _$VideoInfoProvider {
-  final _playbackManager = getIt<PlaybackManager>();
+  final _playbackManager = getIt<PlaybackController>();
 
   @override
   VideoInfoState build() {

@@ -13,10 +13,10 @@ dependencies:
 
   cupertino_icons: ^1.0.8
   dio: ^5.8.0+1
-  talker: ^4.9.3
+  talker: ^5.0.1
   meta: ^1.9.1
-  talker_flutter: ^4.9.3
-  talker_dio_logger: ^4.9.3
+  talker_flutter: ^5.0.1
+  talker_dio_logger: ^5.0.1
   talker_riverpod_logger:
     git:
       url: https://github.com/DmitrySboychakov/talker.git
@@ -27,8 +27,8 @@ dependencies:
   fluent_ui: ^4.12.0
   rxdart: ^0.28.0
   freezed_annotation: ^3.1.0
-  flutter_riverpod: ^3.0.0-dev.17
-  riverpod_annotation: ^3.0.0-dev.17
+  flutter_riverpod: ^3.0.0
+  riverpod_annotation: ^3.0.0
   dio_cookie_manager: ^3.2.0
   fixnum: ^1.1.1
   cookie_jar: ^4.0.8
@@ -53,20 +53,24 @@ dependencies:
   clipboard: ^2.0.2
   toastification: ^3.0.3
   nil: ^1.1.1
+  json_annotation: ^4.9.0
+  squadron: ^7.1.2+1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^5.0.0
+  flutter_lints: ^6.0.0
   injectable_generator: ^2.8.0
   build_runner: ^2.6.0
   freezed: ^3.2.0
-  riverpod_generator: ^3.0.0-dev.17
+  riverpod_generator: ^3.0.0
   custom_lint: ^0.8.0
-  riverpod_lint: ^3.0.0-dev.17
+  riverpod_lint: ^3.0.0
   test: ^1.24.0
   objectbox_generator: ^4.3.1
+  json_serializable: ^6.11.1
+  squadron_builder: ^7.1.6
 
 flutter:
   uses-material-design: true
@@ -75,7 +79,6 @@ flutter:
     - assets/bilibili_blue.png
 
 dependency_overrides:
-  source_gen: ^3.0.0
   media_kit:
     git:
       url: https://github.com/linyuansup/media-kit

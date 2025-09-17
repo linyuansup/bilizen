@@ -16,4 +16,14 @@ class VideoApi {
     );
     return result.data!;
   }
+
+  Future<Map<String, dynamic>> getVideoPlaylist(String bvid) async {
+    final result = await _dio.get<Map<String, dynamic>>(
+      'https://api.bilibili.com/x/player/pagelist',
+      queryParameters: {
+        "bvid": bvid,
+      },
+    );
+    return result.data!;
+  }
 }
