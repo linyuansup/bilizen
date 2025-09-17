@@ -42,7 +42,7 @@ class TopBarProvider extends _$TopBarProvider {
   }
 
   Future<void> onCloseClick() async {
-    await windowManager.close();
+    await windowManager.hide();
   }
 
   Future<void> onMaximumClick() async {

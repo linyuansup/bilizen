@@ -3,7 +3,6 @@ import 'package:bilizen/ui/windows/page/video/top_bar/provider.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:window_manager/window_manager.dart';
 
 class TopBar extends StatelessWidget {
   const TopBar({super.key});
@@ -137,11 +136,11 @@ class _AlwaysOnTopButton extends StatelessWidget {
   }
 }
 
-class _CloseButton extends StatelessWidget {
+class _CloseButton extends ConsumerWidget {
   const _CloseButton();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SizedBox(
       width: 46,
       height: 50,
@@ -162,7 +161,7 @@ class _CloseButton extends StatelessWidget {
             ),
           ),
           onPressed: () async {
-            await windowManager.close();
+            await ref.read(topBarProvider.notifier).onCloseClick();
           },
           child: Icon(
             FluentIcons.chrome_close,
@@ -175,11 +174,11 @@ class _CloseButton extends StatelessWidget {
   }
 }
 
-class _MaximumButton extends StatelessWidget {
+class _MaximumButton extends ConsumerWidget {
   const _MaximumButton();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SizedBox(
       width: 46,
       height: 50,
@@ -200,11 +199,7 @@ class _MaximumButton extends StatelessWidget {
             ),
           ),
           onPressed: () async {
-            if (await windowManager.isMaximized()) {
-              await windowManager.unmaximize();
-            } else {
-              await windowManager.maximize();
-            }
+            await ref.read(topBarProvider.notifier).onMaximumClick();
           },
           child: Consumer(
             builder: (context, ref, child) {
@@ -228,11 +223,11 @@ class _MaximumButton extends StatelessWidget {
   }
 }
 
-class _MinimumButton extends StatelessWidget {
+class _MinimumButton extends ConsumerWidget {
   const _MinimumButton();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SizedBox(
       width: 46,
       height: 50,
@@ -253,7 +248,7 @@ class _MinimumButton extends StatelessWidget {
             ),
           ),
           onPressed: () async {
-            await windowManager.minimize();
+            await ref.read(topBarProvider.notifier).onMinimumClick();
           },
           child: Icon(
             FluentIcons.chrome_minimize,

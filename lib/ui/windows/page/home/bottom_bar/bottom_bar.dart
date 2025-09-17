@@ -468,14 +468,26 @@ class _PlaylistFlyout extends ConsumerWidget {
         ),
         child: Column(
           children: [
-            Container(
-              height: 40,
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              alignment: Alignment.centerLeft,
-              child: Text(
-                "播放列表",
-                style: FluentTheme.of(context).typography.body,
-              ),
+            Row(
+              children: [
+                Container(
+                  height: 40,
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "播放列表",
+                    style: FluentTheme.of(context).typography.body,
+                  ),
+                ),
+                Spacer(),
+                Button(
+                  child: Text("清空"),
+                  onPressed: () async {
+                    await ref.read(bottomBarProvider.notifier).clear();
+                  },
+                ),
+                const SizedBox(width: 8),
+              ],
             ),
             Divider(),
             Expanded(

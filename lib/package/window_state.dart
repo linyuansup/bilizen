@@ -1,17 +1,27 @@
+import 'package:flutter/scheduler.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:window_manager/window_manager.dart';
 
 @singleton
 class WindowStateManager implements WindowListener {
+  bool _renderingEnabled = true;
+
   WindowStateManager() {
     windowManager.addListener(this);
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      if (!_renderingEnabled) {
+        SchedulerBinding.instance.scheduleFrame();
+      }
+    });
   }
 
   final windowStateStream = BehaviorSubject.seeded(WindowState.normal);
 
   @override
-  void onWindowBlur() {}
+  void onWindowBlur() {
+    _renderingEnabled = false;
+  }
 
   @override
   void onWindowClose() {}
@@ -23,7 +33,9 @@ class WindowStateManager implements WindowListener {
   void onWindowEnterFullScreen() {}
 
   @override
-  void onWindowEvent(String eventName) {}
+  void onWindowEvent(String eventName) {
+    print("Window Event: $eventName");
+  }
 
   @override
   void onWindowFocus() {}
@@ -34,11 +46,13 @@ class WindowStateManager implements WindowListener {
   @override
   void onWindowMaximize() {
     windowStateStream.add(WindowState.maximized);
+    _renderingEnabled = true;
   }
 
   @override
   void onWindowMinimize() {
     windowStateStream.add(WindowState.minimized);
+    _renderingEnabled = false;
   }
 
   @override
@@ -56,16 +70,19 @@ class WindowStateManager implements WindowListener {
   @override
   void onWindowRestore() {
     windowStateStream.add(WindowState.normal);
+    _renderingEnabled = true;
   }
 
   @override
   void onWindowUndocked() {
     windowStateStream.add(WindowState.normal);
+    _renderingEnabled = true;
   }
 
   @override
   void onWindowUnmaximize() {
     windowStateStream.add(WindowState.normal);
+    _renderingEnabled = true;
   }
 }
 

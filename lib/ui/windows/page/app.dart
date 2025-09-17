@@ -8,6 +8,8 @@ import 'package:go_router/go_router.dart';
 import 'package:talker/talker.dart';
 import 'package:talker_riverpod_logger/talker_riverpod_logger.dart';
 import 'package:toastification/toastification.dart';
+import 'package:tray_manager/tray_manager.dart';
+import 'package:window_manager/window_manager.dart';
 
 final _router = GoRouter(
   navigatorKey: getIt<WindowsRouter>().main.key,
@@ -29,8 +31,29 @@ final _router = GoRouter(
   ],
 );
 
-class WindowsApp extends StatelessWidget {
+class WindowsApp extends StatefulWidget {
   const WindowsApp({super.key});
+
+  @override
+  State<WindowsApp> createState() => _WindowsAppState();
+}
+
+class _WindowsAppState extends State<WindowsApp> with TrayListener {
+  @override
+  void initState() {
+    trayManager.addListener(this);
+    super.initState();
+  }
+
+  @override
+  void onTrayIconMouseDown() {
+    windowManager.show();
+  }
+
+  @override
+  void onTrayIconRightMouseDown() {
+    trayManager.popUpContextMenu();
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -8,6 +8,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   objectbox_flutter_libs
   screen_retriever_windows
   share_plus
+  tray_manager
   url_launcher_windows
   volume_controller
   window_manager

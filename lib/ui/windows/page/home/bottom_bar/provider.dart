@@ -177,6 +177,10 @@ class BottomBarProvider extends _$BottomBarProvider {
   Future<void> removeAt(int index) async {
     await _playbackManager.removePlayItem(index);
   }
+
+  Future<void> clear() async {
+    await _playbackManager.clear();
+  }
 }
 
 @freezed

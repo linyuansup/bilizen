@@ -46,6 +46,22 @@ class TopBarProvider extends _$TopBarProvider {
     await windowManager.setAlwaysOnTop(!state.onTop);
     state = state.copyWith(onTop: !state.onTop);
   }
+
+  Future<void> onCloseClick() async {
+    await windowManager.hide();
+  }
+
+  Future<void> onMaximumClick() async {
+    if (await windowManager.isMaximized()) {
+      await windowManager.unmaximize();
+    } else {
+      await windowManager.maximize();
+    }
+  }
+
+  Future<void> onMinimumClick() async {
+    await windowManager.minimize();
+  }
 }
 
 @freezed

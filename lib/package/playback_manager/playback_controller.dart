@@ -308,6 +308,12 @@ class PlaybackController
     playlist.add([...playlist.value, ...newItems]);
   }
 
+  Future<void> clear() async {
+    await player.stop();
+    currentPlaying.add(null);
+    playlist.add([]);
+  }
+
   Future<void> removePlayItem(int index) async {
     if (currentPlaying.value?.item == playlist.value[index]) {
       await player.stop();
