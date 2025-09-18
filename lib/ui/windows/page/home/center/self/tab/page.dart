@@ -3,7 +3,7 @@ import 'package:bilizen/ui/windows/page/home/center/self/tab/history/page.dart';
 import 'package:bilizen/ui/windows/page/home/center/self/tab/late/page.dart';
 import 'package:bilizen/ui/windows/page/home/center/self/tab/like/page.dart';
 import 'package:bilizen/ui/windows/page/home/center/self/tab/provider.dart';
-import 'package:bilizen/ui/windows/page/router.dart';
+import 'package:bilizen/package/windows_router.dart';
 import 'package:bilizen/ui/windows/widget/tab_bar.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

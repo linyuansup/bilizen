@@ -1,5 +1,5 @@
 import 'package:bilizen/inject/inject.dart';
-import 'package:bilizen/ui/windows/page/router.dart';
+import 'package:bilizen/package/windows_router.dart';
 import 'package:bilizen/ui/windows/page/video/right_bar/comment/detail/provider.dart';
 import 'package:bilizen/ui/windows/page/video/right_bar/comment/list/provider.dart';
 import 'package:bilizen/ui/windows/widget/comment_card.dart';

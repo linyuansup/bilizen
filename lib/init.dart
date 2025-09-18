@@ -39,7 +39,6 @@ Future<void> initTrayIcon() async {
 Future<void> init() async {
   WidgetsFlutterBinding.ensureInitialized();
   MediaKit.ensureInitialized();
-  await configureDependencies();
   if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
     await initWindowsManager();
     await initTrayIcon();
@@ -47,4 +46,5 @@ Future<void> init() async {
   if (Platform.isWindows) {
     await SMTCWindows.initialize();
   }
+  await configureDependencies();
 }
