@@ -73,30 +73,7 @@ class _FavListItemData extends ConsumerWidget {
           child: RepaintBoundary(
             child: Button(
               onPressed: () async {
-                final result = await showDialog<bool>(
-                  context: context,
-                  builder: (context) => ContentDialog(
-                    title: const Text('警告'),
-                    content: const Text(
-                      '该操作将对 API 进行大量请求，可能导致账号被短暂 412 风控，继续吗？',
-                    ),
-                    actions: [
-                      Button(
-                        child: const Text('继续'),
-                        onPressed: () {
-                          Navigator.pop(context, true);
-                        },
-                      ),
-                      FilledButton(
-                        child: const Text('取消'),
-                        onPressed: () => Navigator.pop(context, false),
-                      ),
-                    ],
-                  ),
-                );
-                if (result == true) {
-                  await ref.read(favDataProvider.notifier).addAll();
-                }
+                await ref.read(favDataProvider.notifier).addAll();
               },
               child: Row(
                 mainAxisSize: MainAxisSize.min,

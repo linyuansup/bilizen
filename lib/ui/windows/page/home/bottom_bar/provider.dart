@@ -19,7 +19,7 @@ class BottomBarProvider extends _$BottomBarProvider {
   BottomBarState build() {
     _playbackManager.playlist.listen((playlist) async {
       if (playlist.isEmpty) {
-        _setNotPlaying();
+        await _setNotPlaying();
         return;
       }
       if (state is _NotPlaying) {
@@ -39,7 +39,7 @@ class BottomBarProvider extends _$BottomBarProvider {
 
     _playbackManager.currentPlaying.listen((playing) async {
       if (playing == null) {
-        _setNotPlaying();
+        await _setNotPlaying();
         return;
       }
       if (state is _NotPlaying) {
@@ -75,23 +75,20 @@ class BottomBarProvider extends _$BottomBarProvider {
     return BottomBarState.notPlaying(
       volume: _playbackManager.volume.value,
       switchMode: _playbackManager.switchMode.value,
-      videos: _playbackManager.playlist.value
-          .map(
-            (element) => VideoState.fromVideo(element.video, element.pIndex),
-          )
-          .toList()
-          .cast<VideoState>(),
+      videos: [],
     );
   }
 
-  void _setNotPlaying() {
+  Future<void> _setNotPlaying() async {
     state = BottomBarState.notPlaying(
-      videos: _playbackManager.playlist.value
-          .map(
-            (element) => VideoState.fromVideo(element.video, element.pIndex),
-          )
-          .toList()
-          .cast<VideoState>(),
+      videos: await Future.wait(
+        _playbackManager.playlist.value
+            .map(
+              (element) async =>
+                  await VideoState.fromVideo(element.video, element.pIndex),
+            )
+            .toList(),
+      ),
       volume: _playbackManager.volume.value,
       switchMode: _playbackManager.switchMode.value,
     );

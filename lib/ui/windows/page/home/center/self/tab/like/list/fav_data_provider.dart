@@ -69,6 +69,7 @@ class FavDataProvider extends _$FavDataProvider {
         }),
       ),
     );
+    await _playbackManager.play();
   }
 
   Future<void> load(int id) async {
