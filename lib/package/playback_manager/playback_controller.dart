@@ -118,25 +118,26 @@ class PlaybackController with VideoOnlineController, PlaylistStorageController {
     ).listen((playingItem) {
       currentPlaying.add(playingItem);
     });
-    final value = _loadPlaylistFromLocal();
-    if (value.isNotEmpty) {
-      insertAllAtLast(value);
-      _loadCurrentPlayState().then((state) {
-        if (state != null) {
-          final target = value.firstWhere(
-            (e) => e.video.bid == state.bvid && e.pIndex == state.pIndex,
-            orElse: () => value.first,
-          );
-          _startNew(
-            target,
-            position: Duration(seconds: state.position),
-            play: false,
-          );
-        } else {
-          _startNew(value.first, play: false);
-        }
-      });
-    }
+    _loadPlaylistFromLocal().then((value) {
+      if (value.isNotEmpty) {
+        insertAllAtLast(value);
+        _loadCurrentPlayState().then((state) {
+          if (state != null) {
+            final target = value.firstWhere(
+              (e) => e.video.bid == state.bvid && e.pIndex == state.pIndex,
+              orElse: () => value.first,
+            );
+            _startNew(
+              target,
+              position: Duration(seconds: state.position),
+              play: false,
+            );
+          } else {
+            _startNew(value.first, play: false);
+          }
+        });
+      }
+    });
   }
 
   Future<void> next() async {

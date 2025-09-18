@@ -1,4 +1,5 @@
 import 'package:bilizen/objectbox.g.dart';
+import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 // ignore: unnecessary_import
 import 'package:objectbox/objectbox.dart';
@@ -25,12 +26,20 @@ class PlayListService {
 
   PlayListService(this._store);
 
-  List<PlayList> getAll() {
-    return box.getAll();
+  Future<List<PlayList>> getAll() async {
+    if (kDebugMode) {
+      return box.getAll();
+    }
+    return await box.getAllAsync();
   }
 
-  void clearAndPutAll(List<PlayList> items) {
-    box.removeAll();
-    box.putMany(items);
+  Future<void> clearAndPutAll(List<PlayList> items) async {
+    if (kDebugMode) {
+      box.removeAll();
+      box.putMany(items);
+    } else {
+      await box.removeAllAsync();
+      await box.putManyAsync(items);
+    }
   }
 }

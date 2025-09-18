@@ -23,6 +23,7 @@ class VideoCardData {
     required this.danmakuCount,
     required this.totalDuration,
     required this.bvid,
+    required this.uid,
   });
 
   final String title;
@@ -31,12 +32,14 @@ class VideoCardData {
   final String uploaderAvatar;
   final int viewCount;
   final int danmakuCount;
+  final int uid;
   final String bvid;
   final int totalDuration;
 
   static Future<VideoCardData> fromVideo(Video video) async {
     final uploader = await video.uploader;
     return VideoCardData(
+      uid: uploader.id,
       title: await video.title,
       bvid: video.bid,
       cover: await video.cover,

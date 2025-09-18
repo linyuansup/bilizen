@@ -5,7 +5,7 @@ mixin PlaylistStorageController {
   final _playingItemStorage = getIt<storage.PlayingItemStorage>();
 
   Future<void> _savePlaylistToLocal(List<PlayItem> items) async {
-    _playListService.clearAndPutAll(
+    await _playListService.clearAndPutAll(
       items
           .map(
             (e) => PlayList(
@@ -25,8 +25,8 @@ mixin PlaylistStorageController {
     return await _playingItemStorage.getPlayingItem();
   }
 
-  List<PlayItem> _loadPlaylistFromLocal() {
-    final playList = _playListService.getAll();
+  Future<List<PlayItem>> _loadPlaylistFromLocal() async {
+    final playList = await _playListService.getAll();
     return playList
         .map(
           (e) => PlayItem(
