@@ -1,0 +1,80 @@
+name: Flutter Build and Release
+
+on:
+  pull_request:
+    types: [closed]
+    branches: [main]
+
+jobs:
+  build-and-release:
+    if: github.event.pull_request.merged == true
+    runs-on: windows-latest
+    
+    permissions:
+      contents: write
+      
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.5'
+          channel: 'stable'
+          cache: true
+          
+      - name: Get dependencies
+        run: flutter pub get
+        
+      - name: Build Debug
+        run: flutter build windows --debug
+        
+      - name: Build Profile  
+        run: flutter build windows --profile
+        
+      - name: Build Release
+        run: flutter build windows --release
+        
+      - name: Get current date
+        id: date
+        run: echo "date=$(Get-Date -Format 'yyyy-MM-dd')" >> $env:GITHUB_OUTPUT
+        shell: pwsh
+        
+      - name: Create archives
+        run: |
+          # Create debug archive
+          Compress-Archive -Path "build\windows\x64\runner\Debug\*" -DestinationPath "bilizen-windows-debug-${{ steps.date.outputs.date }}.zip"
+          
+          # Create profile archive
+          Compress-Archive -Path "build\windows\x64\runner\Profile\*" -DestinationPath "bilizen-windows-profile-${{ steps.date.outputs.date }}.zip"
+          
+          # Create release archive
+          Compress-Archive -Path "build\windows\x64\runner\Release\*" -DestinationPath "bilizen-windows-release-${{ steps.date.outputs.date }}.zip"
+        shell: pwsh
+        
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.date.outputs.date }}
+          name: "Bilizen Release ${{ steps.date.outputs.date }}"
+          body: |
+            🚀 自动构建发布 - ${{ steps.date.outputs.date }}
+            
+            本次发布包含以下构建产物：
+            - **Debug版本**: 用于开发和调试，包含调试信息
+            - **Profile版本**: 性能分析版本，保留部分调试信息
+            - **Release版本**: 生产环境版本，经过优化
+            
+            ## 变更内容
+            本次发布基于PR: #${{ github.event.pull_request.number }}
+            ${{ github.event.pull_request.title }}
+            
+          files: |
+            bilizen-windows-debug-${{ steps.date.outputs.date }}.zip
+            bilizen-windows-profile-${{ steps.date.outputs.date }}.zip
+            bilizen-windows-release-${{ steps.date.outputs.date }}.zip
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
