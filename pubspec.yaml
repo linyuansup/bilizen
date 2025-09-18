@@ -56,6 +56,7 @@ dependencies:
   json_annotation: ^4.9.0
   squadron: ^7.1.2+1
   tray_manager: ^0.5.1
+  smtc_windows: ^1.1.0
 
 dev_dependencies:
   flutter_test:
@@ -79,6 +80,7 @@ flutter:
   assets:
     - assets/bilibili_blue.png
     - assets/app_icon.ico
+    - assets/app_icon.png
 
 dependency_overrides:
   media_kit:

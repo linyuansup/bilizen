@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:bilizen/inject/inject.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:media_kit/media_kit.dart';
+import 'package:smtc_windows/smtc_windows.dart';
 import 'package:tray_manager/tray_manager.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -42,5 +43,8 @@ Future<void> init() async {
   if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
     await initWindowsManager();
     await initTrayIcon();
+  }
+  if (Platform.isWindows) {
+    await SMTCWindows.initialize();
   }
 }

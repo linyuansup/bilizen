@@ -1,8 +1,4 @@
-import 'dart:async';
-
-import 'package:bilizen/data/api/video/online.dart';
-import 'package:bilizen/inject/inject.dart';
-import 'package:rxdart/rxdart.dart';
+part of 'playback_controller.dart';
 
 mixin VideoOnlineController {
   final userCountstream = BehaviorSubject<String>.seeded("0");
@@ -17,7 +13,7 @@ mixin VideoOnlineController {
     return response["data"]["total"];
   }
 
-  Future<void> userCountstreamChangeTo(String bvid, int cid) async {
+  Future<void> _userCountstreamChangeTo(String bvid, int cid) async {
     _timer?.cancel();
     userCountstream.add(await _fetchOnlineCount(bvid, cid));
     _timer = Timer.periodic(const Duration(seconds: 10), (_) async {

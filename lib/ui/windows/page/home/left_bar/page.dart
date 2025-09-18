@@ -26,8 +26,9 @@ class LeftBar extends StatelessWidget {
         children: [
           const SizedBox(height: 10),
           _buildNavItem(FluentIcons.home, HomePageKind.suggest),
-          const SizedBox(height: 5),
-          _buildNavItem(FluentIcons.heart, HomePageKind.focus),
+          // TODO
+          // const SizedBox(height: 5),
+          // _buildNavItem(FluentIcons.heart, HomePageKind.focus),
           const SizedBox(height: 5),
           _buildNavItem(FluentIcons.contact, HomePageKind.self),
           const SizedBox(height: 5),

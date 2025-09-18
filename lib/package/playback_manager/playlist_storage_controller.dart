@@ -1,14 +1,10 @@
-import 'package:bilizen/data/storage/db/playing_list.dart';
-import 'package:bilizen/data/storage/pref/playing_item.dart';
-import 'package:bilizen/inject/inject.dart';
-import 'package:bilizen/model/play_item.dart';
-import 'package:bilizen/model/video.dart';
+part of 'playback_controller.dart';
 
 mixin PlaylistStorageController {
   final _playListService = getIt<PlayListService>();
-  final _playingItemStorage = getIt<PlayingItemStorage>();
+  final _playingItemStorage = getIt<storage.PlayingItemStorage>();
 
-  Future<void> savePlaylistToLocal(List<PlayItem> items) async {
+  Future<void> _savePlaylistToLocal(List<PlayItem> items) async {
     _playListService.clearAndPutAll(
       items
           .map(
@@ -21,15 +17,15 @@ mixin PlaylistStorageController {
     );
   }
 
-  Future<void> saveCurrentPlayState(PlayingItem? item) async {
+  Future<void> _saveCurrentPlayState(storage.PlayingItem? item) async {
     await _playingItemStorage.setPlayingItem(item);
   }
 
-  Future<PlayingItem?> loadCurrentPlayState() async {
+  Future<storage.PlayingItem?> _loadCurrentPlayState() async {
     return await _playingItemStorage.getPlayingItem();
   }
 
-  List<PlayItem> loadPlaylistFromLocal() {
+  List<PlayItem> _loadPlaylistFromLocal() {
     final playList = _playListService.getAll();
     return playList
         .map(

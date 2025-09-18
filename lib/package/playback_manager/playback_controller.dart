@@ -1,15 +1,24 @@
+import 'dart:async';
+import 'dart:io';
+
+import 'package:bilizen/data/api/video/online.dart';
+import 'package:bilizen/data/storage/db/playing_list.dart';
+import 'package:bilizen/data/storage/pref/playing_item.dart' as storage;
+import 'package:bilizen/inject/inject.dart';
 import 'package:bilizen/model/play_item.dart';
-import 'package:bilizen/package/playback_manager/auto_next_controller.dart';
-import 'package:bilizen/package/playback_manager/playlist_storage_controller.dart';
-import 'package:bilizen/package/playback_manager/video_online_controller.dart';
+import 'package:bilizen/model/video.dart';
 import 'package:bilizen/package/talker_extension/libmpv.dart';
 import 'package:bilizen/package/talker_extension/playback.dart';
+import 'package:bilizen/ui/windows/page/router.dart';
 import 'package:bilizen/util/toastification.dart';
 import 'package:injectable/injectable.dart';
 import 'package:media_kit/media_kit.dart';
-import 'package:bilizen/data/storage/pref/playing_item.dart' as storage;
 import 'package:rxdart/rxdart.dart';
 import 'package:talker_flutter/talker_flutter.dart';
+
+part 'auto_next_controller.dart';
+part 'playlist_storage_controller.dart';
+part 'video_online_controller.dart';
 
 enum SwitchMode {
   random,
@@ -36,8 +45,7 @@ class PlayingItem {
 }
 
 @singleton
-class PlaybackController
-    with AutoNextController, VideoOnlineController, PlaylistStorageController {
+class PlaybackController with VideoOnlineController, PlaylistStorageController {
   final BehaviorSubject<List<PlayItem>> playlist =
       BehaviorSubject<List<PlayItem>>.seeded([]);
   final BehaviorSubject<PlayingItem?> currentPlaying =
@@ -56,14 +64,14 @@ class PlaybackController
     required Talker talker,
   }) : _talker = talker {
     playlist.stream.listen((playlist) {
-      savePlaylistToLocal(playlist);
+      _savePlaylistToLocal(playlist);
     });
     currentPlaying.stream.listen((playing) {
       if (playing == null) {
-        saveCurrentPlayState(null);
+        _saveCurrentPlayState(null);
         return;
       }
-      saveCurrentPlayState(
+      _saveCurrentPlayState(
         storage.PlayingItem(
           bvid: playing.item.video.bid,
           pIndex: playing.item.pIndex,
@@ -81,7 +89,7 @@ class PlaybackController
       if (!complete) {
         return;
       }
-      if (!autoNext) {
+      if (!_autoNext) {
         _talker.playback("In the video page, skip auto-next");
         return;
       }
@@ -110,10 +118,10 @@ class PlaybackController
     ).listen((playingItem) {
       currentPlaying.add(playingItem);
     });
-    final value = loadPlaylistFromLocal();
+    final value = _loadPlaylistFromLocal();
     if (value.isNotEmpty) {
       insertAllAtLast(value);
-      loadCurrentPlayState().then((state) {
+      _loadCurrentPlayState().then((state) {
         if (state != null) {
           final target = value.firstWhere(
             (e) => e.video.bid == state.bvid && e.pIndex == state.pIndex,
@@ -388,7 +396,7 @@ class PlaybackController
       "audio-files",
       audioUrl.url,
     );
-    await userCountstreamChangeTo(item.video.bid, await item.getCid());
+    await _userCountstreamChangeTo(item.video.bid, await item.getCid());
     currentPlaying.add(
       PlayingItem(
         item: item,

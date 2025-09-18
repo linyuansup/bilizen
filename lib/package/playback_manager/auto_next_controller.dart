@@ -1,10 +1,7 @@
-import 'dart:io';
+part of 'playback_controller.dart';
 
-import 'package:bilizen/inject/inject.dart';
-import 'package:bilizen/ui/windows/page/router.dart';
-
-mixin AutoNextController {
-  bool get autoNext {
+extension AutoNextController on PlaybackController {
+  bool get _autoNext {
     if (Platform.isWindows) {
       return getIt<WindowsRouter>().home.currentPage.value.state.name !=
           "video";
