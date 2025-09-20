@@ -1,7 +1,6 @@
 import 'package:bilizen/inject/inject.dart';
-import 'package:bilizen/ui/windows/page/home/page.dart';
-import 'package:bilizen/ui/windows/page/init.dart';
 import 'package:bilizen/package/windows_router.dart';
+import 'package:bilizen/ui/windows/page/home/page.dart';
 import 'package:bilizen/ui/windows/page/video/page.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,8 +8,6 @@ import 'package:go_router/go_router.dart';
 import 'package:talker/talker.dart';
 import 'package:talker_riverpod_logger/talker_riverpod_logger.dart';
 import 'package:toastification/toastification.dart';
-import 'package:tray_manager/tray_manager.dart';
-import 'package:window_manager/window_manager.dart';
 
 final _router = GoRouter(
   navigatorKey: getIt<WindowsRouter>().main.key,
@@ -32,36 +29,11 @@ final _router = GoRouter(
   ],
 );
 
-class WindowsApp extends StatefulWidget {
+class WindowsApp extends StatelessWidget {
   const WindowsApp({super.key});
 
   @override
-  State<WindowsApp> createState() => _WindowsAppState();
-}
-
-class _WindowsAppState extends State<WindowsApp> with TrayListener {
-  @override
-  void initState() {
-    trayManager.addListener(this);
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      initSmtc();
-    });
-    super.initState();
-  }
-
-  @override
-  void onTrayIconMouseDown() {
-    windowManager.show();
-  }
-
-  @override
-  void onTrayIconRightMouseDown() {
-    trayManager.popUpContextMenu();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    initUpdate(context);
     return ProviderScope(
       observers: [TalkerRiverpodObserver(talker: getIt<Talker>())],
       child: ToastificationWrapper(

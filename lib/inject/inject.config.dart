@@ -78,13 +78,13 @@ extension GetItInjectableX on _i174.GetIt {
       () => sharedPreferencesInjectable.prefs,
       preResolve: true,
     );
+    gh.singleton<_i591.SMTCWindows>(() => smtcInjectable.smtc);
+    gh.singleton<_i659.WindowsRouter>(() => _i659.WindowsRouter());
     gh.singleton<_i592.WindowStateManager>(() => _i592.WindowStateManager());
     await gh.singletonAsync<_i625.PathResolver>(
       () => _i625.PathResolver.create(),
       preResolve: true,
     );
-    gh.singleton<_i591.SMTCWindows>(() => smtcInjectable.smtc);
-    gh.singleton<_i659.WindowsRouter>(() => _i659.WindowsRouter());
     gh.singleton<_i361.Dio>(
       () => dioInjectable.dio(gh<_i557.PersistCookieJar>(), gh<_i993.Talker>()),
     );
@@ -99,6 +99,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.singleton<_i78.FavInfoApi>(() => _i78.FavInfoApi(gh<_i361.Dio>()));
     gh.singleton<_i158.FavListApi>(() => _i158.FavListApi(gh<_i361.Dio>()));
+    gh.singleton<_i478.GithubUpdateApi>(
+      () => _i478.GithubUpdateApi(gh<_i361.Dio>()),
+    );
     gh.singleton<_i348.QrLoginApi>(() => _i348.QrLoginApi(gh<_i361.Dio>()));
     gh.singleton<_i1038.LoginInfoApi>(
       () => _i1038.LoginInfoApi(gh<_i361.Dio>()),
@@ -119,9 +122,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.singleton<_i1029.VideoStreamUrlApi>(
       () => _i1029.VideoStreamUrlApi(gh<_i361.Dio>()),
-    );
-    gh.singleton<_i478.GithubUpdateApi>(
-      () => _i478.GithubUpdateApi(gh<_i361.Dio>()),
     );
     gh.singleton<_i1056.PlayListService>(
       () => _i1056.PlayListService(gh<_i740.Store>()),

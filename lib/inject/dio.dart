@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
+import 'package:dio/io.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:dio_smart_retry/dio_smart_retry.dart';
 import 'package:injectable/injectable.dart';
@@ -19,6 +22,13 @@ abstract class DioInjectable {
   @singleton
   Dio dio(PersistCookieJar persistCookieJar, Talker talker) {
     final dio = Dio();
+    (dio.httpClientAdapter as IOHttpClientAdapter).createHttpClient = () {
+      final client = HttpClient();
+      client.findProxy = (uri) {
+        return 'PROXY 127.0.0.1:7890';
+      };
+      return client;
+    };
     return dio
       ..options.sendTimeout = const Duration(seconds: 10)
       ..options.receiveTimeout = const Duration(seconds: 10)

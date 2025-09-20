@@ -10,7 +10,7 @@ import 'package:injectable/injectable.dart';
 
 part 'auto_update_manager.freezed.dart';
 
-const _kCurrentVersion = "v2025-09-17";
+const _kCurrentVersion = "v2025-09-20";
 typedef GithubUpdateData = Map<String, dynamic>;
 
 @freezed
@@ -110,10 +110,10 @@ class AutoUpdateManager {
     if (downloadUrl == null || digest == null) {
       return null;
     }
-    final sha256 = digest.substring(
-      digest.indexOf('sha256:') + 7,
-      digest.indexOf('\n', digest.indexOf('sha256:')),
-    );
+    final sha256 = digest
+        .replaceAll("sha256:", "")
+        .replaceAll(" ", "")
+        .replaceAll("\n", "");
     return UpdateInfo(downloadUrl: downloadUrl, digest: sha256);
   }
 
@@ -133,10 +133,18 @@ class AutoUpdateManager {
 
   String _getTargetName(String newVersionTag) {
     final platform = "windows";
-    return "bilizen-$platform-release-$newVersionTag.zip";
+    final String mode;
+    if (kDebugMode) {
+      mode = "debug";
+    } else if (kProfileMode) {
+      mode = "profile";
+    } else {
+      mode = "release";
+    }
+    return "bilizen-$platform-$mode-$newVersionTag.zip";
   }
 
-  Future<bool> _checkSha256(String digest) async {
+  static Future<bool> _checkSha256(String digest) async {
     final file = File('./bilizen-latest.zip');
     if (!await file.exists()) {
       return false;
