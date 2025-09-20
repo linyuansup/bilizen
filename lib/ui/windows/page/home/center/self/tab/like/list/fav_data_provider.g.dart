@@ -41,7 +41,7 @@ final class FavDataProviderProvider
   }
 }
 
-String _$favDataProviderHash() => r'fdd25eac6c1dc89bceaa9346eb4cee789fa7b461';
+String _$favDataProviderHash() => r'bc8046c00897e0fbc49690a8a454c97522dd7681';
 
 abstract class _$FavDataProvider extends $Notifier<FavDataState> {
   FavDataState build();

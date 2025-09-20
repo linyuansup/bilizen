@@ -4,7 +4,7 @@ import 'package:bilizen/ui/windows/page/home/center/search/page.dart';
 import 'package:bilizen/ui/windows/page/home/center/self/page.dart';
 import 'package:bilizen/ui/windows/page/home/center/setting/page.dart';
 import 'package:bilizen/ui/windows/page/home/center/suggest/page.dart';
-import 'package:bilizen/ui/windows/page/router.dart';
+import 'package:bilizen/package/windows_router.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:go_router/go_router.dart';
 

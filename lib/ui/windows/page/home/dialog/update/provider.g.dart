@@ -9,52 +9,53 @@ part of 'provider.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(BottomBarProvider)
-const bottomBarProvider = BottomBarProviderProvider._();
+@ProviderFor(UpdateDialogProvider)
+const updateDialogProvider = UpdateDialogProviderProvider._();
 
-final class BottomBarProviderProvider
-    extends $NotifierProvider<BottomBarProvider, BottomBarState> {
-  const BottomBarProviderProvider._()
+final class UpdateDialogProviderProvider
+    extends $NotifierProvider<UpdateDialogProvider, UpdateDialogState> {
+  const UpdateDialogProviderProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'bottomBarProvider',
+        name: r'updateDialogProvider',
         isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$bottomBarProviderHash();
+  String debugGetCreateSourceHash() => _$updateDialogProviderHash();
 
   @$internal
   @override
-  BottomBarProvider create() => BottomBarProvider();
+  UpdateDialogProvider create() => UpdateDialogProvider();
 
   /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(BottomBarState value) {
+  Override overrideWithValue(UpdateDialogState value) {
     return $ProviderOverride(
       origin: this,
-      providerOverride: $SyncValueProvider<BottomBarState>(value),
+      providerOverride: $SyncValueProvider<UpdateDialogState>(value),
     );
   }
 }
 
-String _$bottomBarProviderHash() => r'160d0a6595b936f0a65f67718725b9c8bee9a5bb';
+String _$updateDialogProviderHash() =>
+    r'76a7d93f3ebf0b70aaee7521d2dc0d8e5187b235';
 
-abstract class _$BottomBarProvider extends $Notifier<BottomBarState> {
-  BottomBarState build();
+abstract class _$UpdateDialogProvider extends $Notifier<UpdateDialogState> {
+  UpdateDialogState build();
   @$mustCallSuper
   @override
   void runBuild() {
     final created = build();
-    final ref = this.ref as $Ref<BottomBarState, BottomBarState>;
+    final ref = this.ref as $Ref<UpdateDialogState, UpdateDialogState>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<BottomBarState, BottomBarState>,
-              BottomBarState,
+              AnyNotifier<UpdateDialogState, UpdateDialogState>,
+              UpdateDialogState,
               Object?,
               Object?
             >;

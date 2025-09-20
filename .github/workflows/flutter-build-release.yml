@@ -35,6 +35,17 @@ jobs:
       - name: Build Release
         run: flutter build windows --release
         
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: stable
+          
+      - name: Build Rust project
+        run: |
+          cd update
+          cargo build --release
+        shell: pwsh
+        
       - name: Get current date
         id: date
         run: echo "date=$(Get-Date -Format 'yyyy-MM-dd')" >> $env:GITHUB_OUTPUT
@@ -42,6 +53,11 @@ jobs:
         
       - name: Create archives
         run: |
+          # Copy Rust executable to build directories
+          Copy-Item "update\target\release\update.exe" "build\windows\x64\runner\Debug\update.exe"
+          Copy-Item "update\target\release\update.exe" "build\windows\x64\runner\Profile\update.exe"
+          Copy-Item "update\target\release\update.exe" "build\windows\x64\runner\Release\update.exe"
+          
           # Create debug archive
           Compress-Archive -Path "build\windows\x64\runner\Debug\*" -DestinationPath "bilizen-windows-debug-${{ steps.date.outputs.date }}.zip"
           

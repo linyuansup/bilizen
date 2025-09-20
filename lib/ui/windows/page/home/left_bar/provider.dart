@@ -1,6 +1,6 @@
 import 'package:bilizen/inject/inject.dart';
 import 'package:bilizen/ui/windows/page/home/center/page.dart';
-import 'package:bilizen/ui/windows/page/router.dart';
+import 'package:bilizen/package/windows_router.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

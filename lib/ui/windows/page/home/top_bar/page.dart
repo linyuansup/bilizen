@@ -2,7 +2,7 @@ import 'package:bilizen/inject/inject.dart';
 import 'package:bilizen/package/window_state.dart' as manager;
 import 'package:bilizen/ui/windows/page/home/center/search/provider.dart';
 import 'package:bilizen/ui/windows/page/home/top_bar/provider.dart';
-import 'package:bilizen/ui/windows/page/router.dart';
+import 'package:bilizen/package/windows_router.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/services.dart';

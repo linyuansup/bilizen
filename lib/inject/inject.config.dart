@@ -12,6 +12,7 @@
 import 'package:bilizen/data/api/comment/list.dart' as _i937;
 import 'package:bilizen/data/api/fav/info.dart' as _i78;
 import 'package:bilizen/data/api/fav/list.dart' as _i158;
+import 'package:bilizen/data/api/github/update.dart' as _i478;
 import 'package:bilizen/data/api/login/login_action/qr.dart' as _i348;
 import 'package:bilizen/data/api/login/login_info.dart' as _i1038;
 import 'package:bilizen/data/api/search/request.dart' as _i61;
@@ -30,8 +31,10 @@ import 'package:bilizen/inject/dio.dart' as _i550;
 import 'package:bilizen/inject/logger.dart' as _i489;
 import 'package:bilizen/inject/object_box.dart' as _i1043;
 import 'package:bilizen/inject/shared_preferences.dart' as _i383;
+import 'package:bilizen/inject/smtc.dart' as _i788;
 import 'package:bilizen/objectbox.g.dart' as _i740;
 import 'package:bilizen/package/account_manager/account_manager.dart' as _i309;
+import 'package:bilizen/package/auto_update_manager.dart' as _i622;
 import 'package:bilizen/package/comment_manager.dart' as _i574;
 import 'package:bilizen/package/fav_manager.dart' as _i817;
 import 'package:bilizen/package/playback_manager/playback_controller.dart'
@@ -39,13 +42,14 @@ import 'package:bilizen/package/playback_manager/playback_controller.dart'
 import 'package:bilizen/package/search_manager.dart' as _i397;
 import 'package:bilizen/package/video_recommend.dart' as _i349;
 import 'package:bilizen/package/window_state.dart' as _i592;
-import 'package:bilizen/ui/windows/page/router.dart' as _i609;
+import 'package:bilizen/package/windows_router.dart' as _i659;
 import 'package:bilizen/util/path_resolver.dart' as _i625;
 import 'package:cookie_jar/cookie_jar.dart' as _i557;
 import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
+import 'package:smtc_windows/smtc_windows.dart' as _i591;
 import 'package:talker/talker.dart' as _i993;
 import 'package:talker_flutter/talker_flutter.dart' as _i207;
 
@@ -60,6 +64,7 @@ extension GetItInjectableX on _i174.GetIt {
     final loggerInjectable = _$LoggerInjectable();
     final objectBoxInjectable = _$ObjectBoxInjectable();
     final sharedPreferencesInjectable = _$SharedPreferencesInjectable();
+    final smtcInjectable = _$SmtcInjectable();
     final dioInjectable = _$DioInjectable();
     gh.singleton<_i557.PersistCookieJar>(
       () => persistCookieJarInjectable.cookieJar,
@@ -73,8 +78,9 @@ extension GetItInjectableX on _i174.GetIt {
       () => sharedPreferencesInjectable.prefs,
       preResolve: true,
     );
+    gh.singleton<_i591.SMTCWindows>(() => smtcInjectable.smtc);
+    gh.singleton<_i659.WindowsRouter>(() => _i659.WindowsRouter());
     gh.singleton<_i592.WindowStateManager>(() => _i592.WindowStateManager());
-    gh.singleton<_i609.WindowsRouter>(() => _i609.WindowsRouter());
     await gh.singletonAsync<_i625.PathResolver>(
       () => _i625.PathResolver.create(),
       preResolve: true,
@@ -93,6 +99,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.singleton<_i78.FavInfoApi>(() => _i78.FavInfoApi(gh<_i361.Dio>()));
     gh.singleton<_i158.FavListApi>(() => _i158.FavListApi(gh<_i361.Dio>()));
+    gh.singleton<_i478.GithubUpdateApi>(
+      () => _i478.GithubUpdateApi(gh<_i361.Dio>()),
+    );
     gh.singleton<_i348.QrLoginApi>(() => _i348.QrLoginApi(gh<_i361.Dio>()));
     gh.singleton<_i1038.LoginInfoApi>(
       () => _i1038.LoginInfoApi(gh<_i361.Dio>()),
@@ -138,6 +147,10 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i349.VideoRecommend>(
       () => _i349.VideoRecommend(gh<_i174.VideoRecommendApi>()),
     );
+    gh.singleton<_i622.AutoUpdateManager>(
+      () =>
+          _i622.AutoUpdateManager(gh<_i478.GithubUpdateApi>(), gh<_i361.Dio>()),
+    );
     gh.singleton<_i309.AccountManager>(
       () => _i309.AccountManager(
         gh<_i348.QrLoginApi>(),
@@ -158,5 +171,7 @@ class _$LoggerInjectable extends _i489.LoggerInjectable {}
 class _$ObjectBoxInjectable extends _i1043.ObjectBoxInjectable {}
 
 class _$SharedPreferencesInjectable extends _i383.SharedPreferencesInjectable {}
+
+class _$SmtcInjectable extends _i788.SmtcInjectable {}
 
 class _$DioInjectable extends _i550.DioInjectable {}

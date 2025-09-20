@@ -2,7 +2,7 @@ import 'package:bilizen/inject/inject.dart';
 import 'package:bilizen/package/comment_manager.dart';
 import 'package:bilizen/model/comment.dart';
 import 'package:bilizen/package/playback_manager/playback_controller.dart';
-import 'package:bilizen/ui/windows/page/router.dart';
+import 'package:bilizen/package/windows_router.dart';
 import 'package:bilizen/ui/windows/page/video/right_bar/comment/list/provider.dart';
 import 'package:bilizen/util/bilibili.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';

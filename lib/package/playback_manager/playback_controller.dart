@@ -9,7 +9,7 @@ import 'package:bilizen/model/play_item.dart';
 import 'package:bilizen/model/video.dart';
 import 'package:bilizen/package/talker_extension/libmpv.dart';
 import 'package:bilizen/package/talker_extension/playback.dart';
-import 'package:bilizen/ui/windows/page/router.dart';
+import 'package:bilizen/package/windows_router.dart';
 import 'package:bilizen/util/toastification.dart';
 import 'package:injectable/injectable.dart';
 import 'package:media_kit/media_kit.dart';
