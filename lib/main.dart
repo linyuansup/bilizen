@@ -8,10 +8,10 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:talker/talker.dart';
 
-void main() async {
+void main(List<String> args) async {
   runZonedGuarded(
     () async {
-      await init();
+      await init(args);
       Widget app;
       if (Platform.isWindows) {
         app = WindowsApp();
