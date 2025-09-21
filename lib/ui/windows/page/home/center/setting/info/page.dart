@@ -1,12 +1,55 @@
-import 'package:flutter/material.dart';
+import 'package:bilizen/ui/windows/page/home/center/setting/info/account/page.dart';
+import 'package:bilizen/ui/windows/page/home/center/setting/info/common/page.dart';
+import 'package:bilizen/ui/windows/widget/scroll_bar_single_child.dart';
+import 'package:fluent_ui/fluent_ui.dart';
 
 class SettingInfoPage extends StatelessWidget {
   const SettingInfoPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text("This is the Setting Info Page"),
+    return ScrollBarSingleChild(
+      padding: const EdgeInsets.all(12),
+      child: Column(
+        children:
+            [
+                  Expander(
+                    header: Text('账号'),
+                    content: AccountPage(),
+                  ),
+                  Expander(
+                    header: Text('常规'),
+                    content: CommonPage(),
+                  ),
+                  // Expander(
+                  //   header: Text('播放'),
+                  //   content: PlaybackPage(),
+                  // ),
+                  // Expander(
+                  //   header: Text('下载'),
+                  //   content: DownloadPage(),
+                  // ),
+                  // Expander(
+                  //   header: Text('工具'),
+                  //   content: ToolPage(),
+                  // ),
+                  // Expander(
+                  //   header: Text('系统'),
+                  //   content: SystemPage(),
+                  // ),
+                  // Expander(
+                  //   header: Text('快捷方式'),
+                  //   content: ShortcutPage(),
+                  // ),
+                ]
+                .map(
+                  (e) => Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: RepaintBoundary(child: e),
+                  ),
+                )
+                .toList(),
+      ),
     );
   }
 }

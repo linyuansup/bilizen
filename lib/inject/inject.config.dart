@@ -26,6 +26,7 @@ import 'package:bilizen/data/storage/db/playing_list.dart' as _i1056;
 import 'package:bilizen/data/storage/db/user_cache.dart' as _i93;
 import 'package:bilizen/data/storage/db/video_cache.dart' as _i519;
 import 'package:bilizen/data/storage/pref/playing_item.dart' as _i295;
+import 'package:bilizen/data/storage/pref/setting/common.dart' as _i30;
 import 'package:bilizen/data/storage/pref/wbi.dart' as _i408;
 import 'package:bilizen/inject/dio.dart' as _i550;
 import 'package:bilizen/inject/logger.dart' as _i489;
@@ -94,6 +95,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.singleton<_i408.WbiStorage>(
       () => _i408.WbiStorage(gh<_i460.SharedPreferences>()),
+    );
+    gh.singleton<_i30.CommonSettingStorage>(
+      () => _i30.CommonSettingStorage(gh<_i460.SharedPreferences>()),
     );
     gh.singleton<_i937.CommentListApi>(
       () => _i937.CommentListApi(gh<_i361.Dio>()),
