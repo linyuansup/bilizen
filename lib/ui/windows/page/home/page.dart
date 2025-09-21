@@ -1,6 +1,7 @@
+import 'package:bilizen/inject/inject.dart';
+import 'package:bilizen/package/auto_update_manager/auto_update_manager.dart';
 import 'package:bilizen/ui/windows/page/home/bottom_bar/bottom_bar.dart';
 import 'package:bilizen/ui/windows/page/home/center/page.dart';
-import 'package:bilizen/ui/windows/page/home/init.dart';
 import 'package:bilizen/ui/windows/page/home/left_bar/page.dart';
 import 'package:bilizen/ui/windows/page/home/top_bar/page.dart';
 import 'package:fluent_ui/fluent_ui.dart';
@@ -19,7 +20,7 @@ class _HomePageState extends State<HomePage> with TrayListener {
   void initState() {
     trayManager.addListener(this);
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      initUpdate(context);
+      getIt<AutoUpdateManager>().checkUpdate(context);
     });
     super.initState();
   }

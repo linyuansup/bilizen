@@ -29,5 +29,7 @@ sealed class SettingState with _$SettingState {
 }
 
 enum SettingTab {
+  info,
   talker,
+  about,
 }

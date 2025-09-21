@@ -12,17 +12,11 @@ part of 'auto_update_manager.dart';
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
-mixin _$DownloadState implements DiagnosticableTreeMixin {
+mixin _$DownloadState {
 
 
 
 
-@override
-void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
-    ..add(DiagnosticsProperty('type', 'DownloadState'))
-    ;
-}
 
 @override
 bool operator ==(Object other) {
@@ -34,7 +28,7 @@ bool operator ==(Object other) {
 int get hashCode => runtimeType.hashCode;
 
 @override
-String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+String toString() {
   return 'DownloadState()';
 }
 
@@ -186,7 +180,7 @@ return completed();case _:
 /// @nodoc
 
 
-class _Downloading with DiagnosticableTreeMixin implements DownloadState {
+class _Downloading implements DownloadState {
   const _Downloading(this.progress);
   
 
@@ -199,12 +193,6 @@ class _Downloading with DiagnosticableTreeMixin implements DownloadState {
 _$DownloadingCopyWith<_Downloading> get copyWith => __$DownloadingCopyWithImpl<_Downloading>(this, _$identity);
 
 
-@override
-void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
-    ..add(DiagnosticsProperty('type', 'DownloadState.downloading'))
-    ..add(DiagnosticsProperty('progress', progress));
-}
 
 @override
 bool operator ==(Object other) {
@@ -216,7 +204,7 @@ bool operator ==(Object other) {
 int get hashCode => Object.hash(runtimeType,progress);
 
 @override
-String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+String toString() {
   return 'DownloadState.downloading(progress: $progress)';
 }
 
@@ -258,7 +246,7 @@ as double,
 /// @nodoc
 
 
-class _Checking with DiagnosticableTreeMixin implements DownloadState {
+class _Checking implements DownloadState {
   const _Checking();
   
 
@@ -266,12 +254,6 @@ class _Checking with DiagnosticableTreeMixin implements DownloadState {
 
 
 
-@override
-void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
-    ..add(DiagnosticsProperty('type', 'DownloadState.checking'))
-    ;
-}
 
 @override
 bool operator ==(Object other) {
@@ -283,7 +265,7 @@ bool operator ==(Object other) {
 int get hashCode => runtimeType.hashCode;
 
 @override
-String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+String toString() {
   return 'DownloadState.checking()';
 }
 
@@ -296,7 +278,7 @@ String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
 /// @nodoc
 
 
-class _Completed with DiagnosticableTreeMixin implements DownloadState {
+class _Completed implements DownloadState {
   const _Completed();
   
 
@@ -304,12 +286,6 @@ class _Completed with DiagnosticableTreeMixin implements DownloadState {
 
 
 
-@override
-void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
-    ..add(DiagnosticsProperty('type', 'DownloadState.completed'))
-    ;
-}
 
 @override
 bool operator ==(Object other) {
@@ -321,7 +297,7 @@ bool operator ==(Object other) {
 int get hashCode => runtimeType.hashCode;
 
 @override
-String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+String toString() {
   return 'DownloadState.completed()';
 }
 
