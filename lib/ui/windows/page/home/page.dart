@@ -19,7 +19,6 @@ class _HomePageState extends State<HomePage> with TrayListener {
   void initState() {
     trayManager.addListener(this);
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      initSmtc();
       initUpdate(context);
     });
     super.initState();
