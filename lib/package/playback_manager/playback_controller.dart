@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:bilizen/data/api/video/online.dart';
+import 'package:bilizen/package/playback_manager/playback_controller.dart';
+import 'package:smtc_windows/smtc_windows.dart';
 import 'package:bilizen/data/storage/db/playing_list.dart';
 import 'package:bilizen/data/storage/pref/playing_item.dart' as storage;
 import 'package:bilizen/inject/inject.dart';
@@ -19,6 +21,7 @@ import 'package:talker_flutter/talker_flutter.dart';
 part 'auto_next_controller.dart';
 part 'playlist_storage_controller.dart';
 part 'video_online_controller.dart';
+part 'smtc_controller.dart';
 
 enum SwitchMode {
   random,
@@ -45,7 +48,8 @@ class PlayingItem {
 }
 
 @singleton
-class PlaybackController with VideoOnlineController, PlaylistStorageController {
+class PlaybackController
+    with VideoOnlineController, PlaylistStorageController, SmtcController {
   final BehaviorSubject<List<PlayItem>> playlist =
       BehaviorSubject<List<PlayItem>>.seeded([]);
   final BehaviorSubject<PlayingItem?> currentPlaying =
@@ -63,6 +67,7 @@ class PlaybackController with VideoOnlineController, PlaylistStorageController {
   PlaybackController({
     required Talker talker,
   }) : _talker = talker {
+    initSmtc(this);
     playlist.stream.listen((playlist) {
       _savePlaylistToLocal(playlist);
     });

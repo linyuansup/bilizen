@@ -26,6 +26,7 @@ import 'package:bilizen/data/storage/db/playing_list.dart' as _i1056;
 import 'package:bilizen/data/storage/db/user_cache.dart' as _i93;
 import 'package:bilizen/data/storage/db/video_cache.dart' as _i519;
 import 'package:bilizen/data/storage/pref/playing_item.dart' as _i295;
+import 'package:bilizen/data/storage/pref/setting/common.dart' as _i30;
 import 'package:bilizen/data/storage/pref/wbi.dart' as _i408;
 import 'package:bilizen/inject/dio.dart' as _i550;
 import 'package:bilizen/inject/logger.dart' as _i489;
@@ -34,7 +35,8 @@ import 'package:bilizen/inject/shared_preferences.dart' as _i383;
 import 'package:bilizen/inject/smtc.dart' as _i788;
 import 'package:bilizen/objectbox.g.dart' as _i740;
 import 'package:bilizen/package/account_manager/account_manager.dart' as _i309;
-import 'package:bilizen/package/auto_update_manager.dart' as _i622;
+import 'package:bilizen/package/auto_update_manager/auto_update_manager.dart'
+    as _i275;
 import 'package:bilizen/package/comment_manager.dart' as _i574;
 import 'package:bilizen/package/fav_manager.dart' as _i817;
 import 'package:bilizen/package/playback_manager/playback_controller.dart'
@@ -94,6 +96,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i408.WbiStorage>(
       () => _i408.WbiStorage(gh<_i460.SharedPreferences>()),
     );
+    gh.singleton<_i30.CommonSettingStorage>(
+      () => _i30.CommonSettingStorage(gh<_i460.SharedPreferences>()),
+    );
     gh.singleton<_i937.CommentListApi>(
       () => _i937.CommentListApi(gh<_i361.Dio>()),
     );
@@ -147,9 +152,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i349.VideoRecommend>(
       () => _i349.VideoRecommend(gh<_i174.VideoRecommendApi>()),
     );
-    gh.singleton<_i622.AutoUpdateManager>(
+    gh.singleton<_i275.AutoUpdateManager>(
       () =>
-          _i622.AutoUpdateManager(gh<_i478.GithubUpdateApi>(), gh<_i361.Dio>()),
+          _i275.AutoUpdateManager(gh<_i478.GithubUpdateApi>(), gh<_i361.Dio>()),
     );
     gh.singleton<_i309.AccountManager>(
       () => _i309.AccountManager(

@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:bilizen/inject/inject.dart';
-import 'package:bilizen/package/auto_update_manager.dart';
+import 'package:bilizen/package/auto_update_manager/auto_update_manager.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:talker/talker.dart';

@@ -6,6 +6,7 @@ import 'package:media_kit/media_kit.dart';
 import 'package:smtc_windows/smtc_windows.dart';
 import 'package:tray_manager/tray_manager.dart';
 import 'package:window_manager/window_manager.dart';
+import 'package:windows_single_instance/windows_single_instance.dart';
 
 Future<void> initWindowsManager() async {
   await windowManager.ensureInitialized();
@@ -36,15 +37,19 @@ Future<void> initTrayIcon() async {
   );
 }
 
-Future<void> init() async {
+Future<void> init(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
+  if (Platform.isWindows) {
+    await WindowsSingleInstance.ensureSingleInstance(
+      args,
+      "bilizen_single_instance_pipe",
+    );
+    await SMTCWindows.initialize();
+  }
   MediaKit.ensureInitialized();
   if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
     await initWindowsManager();
     await initTrayIcon();
-  }
-  if (Platform.isWindows) {
-    await SMTCWindows.initialize();
   }
   await configureDependencies();
 }
