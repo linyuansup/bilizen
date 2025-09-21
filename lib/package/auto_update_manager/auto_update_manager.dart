@@ -15,7 +15,7 @@ import 'package:talker/talker.dart';
 
 part 'auto_update_manager.freezed.dart';
 
-const _kCurrentVersion = "v2025-09-20";
+const _kCurrentVersion = "v2025-09-21";
 typedef GithubUpdateData = Map<String, dynamic>;
 
 @freezed
