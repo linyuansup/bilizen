@@ -1,4 +1,6 @@
 import 'package:bilizen/inject/inject.dart';
+import 'package:bilizen/ui/windows/page/home/center/setting/about/page.dart';
+import 'package:bilizen/ui/windows/page/home/center/setting/info/page.dart';
 import 'package:bilizen/ui/windows/page/home/center/setting/provider.dart';
 import 'package:bilizen/ui/windows/page/home/center/setting/talker/page.dart';
 import 'package:bilizen/package/windows_router.dart';
@@ -8,7 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 final _router = GoRouter(
-  initialLocation: "/talker",
+  initialLocation: "/info",
   observers: [getIt<WindowsRouter>().setting.observer],
   navigatorKey: getIt<WindowsRouter>().setting.key,
   routes: [
@@ -16,6 +18,16 @@ final _router = GoRouter(
       path: "/talker",
       name: "talker",
       builder: (context, state) => SettingTalkerPage(),
+    ),
+    GoRoute(
+      path: "/info",
+      name: "info",
+      builder: (context, state) => SettingInfoPage(),
+    ),
+    GoRoute(
+      path: "/about",
+      name: "about",
+      builder: (context, state) => SettingAboutPage(),
     ),
   ],
 );
@@ -37,8 +49,16 @@ class SettingPage extends StatelessWidget {
                 selectedIndex: selectedIndex,
                 items: [
                   FluentTabBarItem(
-                    label: "Talker",
-                    icon: FluentIcons.data_flow,
+                    label: "设置",
+                    icon: FluentIcons.settings,
+                  ),
+                  FluentTabBarItem(
+                    label: "日志",
+                    icon: FluentIcons.clipboard_list,
+                  ),
+                  FluentTabBarItem(
+                    label: "关于",
+                    icon: FluentIcons.info,
                   ),
                 ],
                 onTap: (value) {

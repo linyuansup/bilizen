@@ -42,7 +42,7 @@ final class UpdateDialogProviderProvider
 }
 
 String _$updateDialogProviderHash() =>
-    r'76a7d93f3ebf0b70aaee7521d2dc0d8e5187b235';
+    r'2a3cd595ea21d31b2ad2b256ad56b47523bdaf46';
 
 abstract class _$UpdateDialogProvider extends $Notifier<UpdateDialogState> {
   UpdateDialogState build();
