@@ -1,5 +1,6 @@
 import 'package:bilizen/inject/inject.dart';
 import 'package:bilizen/package/windows_router.dart';
+import 'package:bilizen/package/windows_toast/windows_toast_wrapper.dart';
 import 'package:bilizen/ui/windows/page/home/page.dart';
 import 'package:bilizen/ui/windows/page/video/page.dart';
 import 'package:fluent_ui/fluent_ui.dart';
@@ -7,7 +8,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:talker/talker.dart';
 import 'package:talker_riverpod_logger/talker_riverpod_logger.dart';
-import 'package:toastification/toastification.dart';
 
 final _router = GoRouter(
   navigatorKey: getIt<WindowsRouter>().main.key,
@@ -36,7 +36,7 @@ class WindowsApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ProviderScope(
       observers: [TalkerRiverpodObserver(talker: getIt<Talker>())],
-      child: ToastificationWrapper(
+      child: WindowsToastWrapper(
         child: FluentApp.router(
           debugShowCheckedModeBanner: false,
           theme: FluentThemeData(

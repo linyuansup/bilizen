@@ -9,52 +9,52 @@ part of 'provider.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(TopBarProvider)
-const topBarProvider = TopBarProviderProvider._();
+@ProviderFor(SystemProvider)
+const systemProvider = SystemProviderProvider._();
 
-final class TopBarProviderProvider
-    extends $NotifierProvider<TopBarProvider, TopBarState> {
-  const TopBarProviderProvider._()
+final class SystemProviderProvider
+    extends $NotifierProvider<SystemProvider, SystemState> {
+  const SystemProviderProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'topBarProvider',
+        name: r'systemProvider',
         isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$topBarProviderHash();
+  String debugGetCreateSourceHash() => _$systemProviderHash();
 
   @$internal
   @override
-  TopBarProvider create() => TopBarProvider();
+  SystemProvider create() => SystemProvider();
 
   /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(TopBarState value) {
+  Override overrideWithValue(SystemState value) {
     return $ProviderOverride(
       origin: this,
-      providerOverride: $SyncValueProvider<TopBarState>(value),
+      providerOverride: $SyncValueProvider<SystemState>(value),
     );
   }
 }
 
-String _$topBarProviderHash() => r'bca1a888b1696bdd46a9294d0e05cd1719c69047';
+String _$systemProviderHash() => r'3a41e5cba5493e736c55d58eb95f9bce2734f0d4';
 
-abstract class _$TopBarProvider extends $Notifier<TopBarState> {
-  TopBarState build();
+abstract class _$SystemProvider extends $Notifier<SystemState> {
+  SystemState build();
   @$mustCallSuper
   @override
   void runBuild() {
     final created = build();
-    final ref = this.ref as $Ref<TopBarState, TopBarState>;
+    final ref = this.ref as $Ref<SystemState, SystemState>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<TopBarState, TopBarState>,
-              TopBarState,
+              AnyNotifier<SystemState, SystemState>,
+              SystemState,
               Object?,
               Object?
             >;

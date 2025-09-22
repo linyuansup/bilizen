@@ -14,10 +14,11 @@ Future<void> initWindowsManager() async {
     minimumSize: const Size(800, 700),
     titleBarStyle: TitleBarStyle.hidden,
   );
-  windowManager.waitUntilReadyToShow(windowOptions, () async {
+  await windowManager.waitUntilReadyToShow(windowOptions, () async {
     await windowManager.show();
     await windowManager.focus();
   });
+  await windowManager.setPreventClose(true);
 }
 
 Future<void> initTrayIcon() async {

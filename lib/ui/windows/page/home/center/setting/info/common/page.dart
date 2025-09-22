@@ -27,20 +27,37 @@ class _EnablePlaybackHardwareCheckbox extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Checkbox(
-      content: Text('启动播放器硬件加速'),
-      checked: ref.watch(commonProvider).enablePlaybackHardwareAcceleration,
-      onChanged: (value) {
-        if (value == null) return;
-        final state = ref.read(commonProvider);
-        ref
-            .read(commonProvider.notifier)
-            .update(
-              state.copyWith(
-                enablePlaybackHardwareAcceleration: value,
-              ),
-            );
-      },
+    return Column(
+      spacing: 12,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Checkbox(
+          content: Text('启动播放器硬件加速'),
+          checked: ref.watch(commonProvider).enablePlaybackHardwareAcceleration,
+          onChanged: (value) {
+            if (value == null) return;
+            final state = ref.read(commonProvider);
+            ref
+                .read(commonProvider.notifier)
+                .update(
+                  state.copyWith(
+                    enablePlaybackHardwareAcceleration: value,
+                  ),
+                );
+          },
+        ),
+        SizedBox(
+          width: double.infinity,
+          child: InfoBar(
+            title: const Text('关于播放器硬件加速'),
+            content: const Text(
+              '启用硬件加速可以提高视频播放性能，但可能会导致某些设备出现黑屏。如果遇到播放问题，请尝试关闭此选项。',
+            ),
+            severity: InfoBarSeverity.info,
+            isLong: true,
+          ),
+        ),
+      ],
     );
   }
 }

@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:bilizen/data/api/video/online.dart';
 import 'package:bilizen/package/playback_manager/playback_controller.dart';
+import 'package:bilizen/package/windows_toast/windows_toast.dart';
 import 'package:smtc_windows/smtc_windows.dart';
 import 'package:bilizen/data/storage/db/playing_list.dart';
 import 'package:bilizen/data/storage/pref/playing_item.dart' as storage;
@@ -12,7 +13,6 @@ import 'package:bilizen/model/video.dart';
 import 'package:bilizen/package/talker_extension/libmpv.dart';
 import 'package:bilizen/package/talker_extension/playback.dart';
 import 'package:bilizen/package/windows_router.dart';
-import 'package:bilizen/util/toastification.dart';
 import 'package:injectable/injectable.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:rxdart/rxdart.dart';
@@ -414,9 +414,9 @@ class PlaybackController
       ),
     );
     if (!_hasAudioDevices()) {
-      Toast.error(
-        "音频引擎启动失败",
-        description: "请检查系统音频服务是否正常运行",
+      getIt<WindowsToast>().error(
+        title: "音频引擎启动失败",
+        content: "请检查系统音频服务是否正常运行",
       );
       return;
     }

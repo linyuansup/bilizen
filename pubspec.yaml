@@ -51,7 +51,6 @@ dependencies:
   go_router: ^16.1.0
   easy_debounce: ^2.0.3
   clipboard: ^2.0.2
-  toastification: ^3.0.3
   nil: ^1.1.1
   json_annotation: ^4.9.0
   squadron: ^7.1.2+1

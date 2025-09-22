@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:bilizen/data/api/github/update.dart';
 import 'package:bilizen/inject/inject.dart';
 import 'package:bilizen/package/auto_update_manager/update_dialog.dart';
-import 'package:bilizen/util/toastification.dart';
+import 'package:bilizen/package/windows_toast/windows_toast.dart';
 import 'package:crypto/crypto.dart';
 import 'package:dio/dio.dart';
 import 'package:fluent_ui/fluent_ui.dart';
@@ -45,8 +45,9 @@ class AutoUpdateManager {
     final updater = getIt<AutoUpdateManager>();
     updater.hasNewVersion().then((hasNewVersion) async {
       if (hasNewVersion && context.mounted) {
-        Toast.info(
-          "发现新版本",
+        getIt<WindowsToast>().info(
+          title: "发现新版本",
+          content: "点击更新",
           onTap: () async {
             await showDialog(
               context: context,
@@ -61,7 +62,10 @@ class AutoUpdateManager {
       if (hasUpdateFile) {
         await updateFile.delete();
         if (!hasNewVersion) {
-          Toast.success("更新完成");
+          getIt<WindowsToast>().success(
+            title: "更新完成",
+            content: "已是最新版本",
+          );
         }
       }
     });

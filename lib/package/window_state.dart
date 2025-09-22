@@ -1,3 +1,5 @@
+import 'package:bilizen/data/storage/pref/setting/system.dart';
+import 'package:bilizen/inject/inject.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:window_manager/window_manager.dart';
@@ -14,7 +16,15 @@ class WindowStateManager implements WindowListener {
   void onWindowBlur() {}
 
   @override
-  void onWindowClose() {}
+  void onWindowClose() {
+    if (getIt<SystemSettingStorage>().getSystemSetting().closeMainPanelToTray) {
+      windowManager.hide().then((value) {
+        windowStateStream.add(WindowState.minimized);
+      });
+    } else {
+      windowManager.destroy();
+    }
+  }
 
   @override
   void onWindowDocked() {}

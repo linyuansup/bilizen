@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:fluent_ui/fluent_ui.dart';
 
 class ToolPage extends StatelessWidget {
   const ToolPage({super.key});

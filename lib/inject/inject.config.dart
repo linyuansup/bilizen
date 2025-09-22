@@ -27,6 +27,7 @@ import 'package:bilizen/data/storage/db/user_cache.dart' as _i93;
 import 'package:bilizen/data/storage/db/video_cache.dart' as _i519;
 import 'package:bilizen/data/storage/pref/playing_item.dart' as _i295;
 import 'package:bilizen/data/storage/pref/setting/common.dart' as _i30;
+import 'package:bilizen/data/storage/pref/setting/system.dart' as _i156;
 import 'package:bilizen/data/storage/pref/wbi.dart' as _i408;
 import 'package:bilizen/inject/dio.dart' as _i550;
 import 'package:bilizen/inject/logger.dart' as _i489;
@@ -45,6 +46,7 @@ import 'package:bilizen/package/search_manager.dart' as _i397;
 import 'package:bilizen/package/video_recommend.dart' as _i349;
 import 'package:bilizen/package/window_state.dart' as _i592;
 import 'package:bilizen/package/windows_router.dart' as _i659;
+import 'package:bilizen/package/windows_toast/windows_toast.dart' as _i830;
 import 'package:bilizen/util/path_resolver.dart' as _i625;
 import 'package:cookie_jar/cookie_jar.dart' as _i557;
 import 'package:dio/dio.dart' as _i361;
@@ -82,6 +84,7 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.singleton<_i591.SMTCWindows>(() => smtcInjectable.smtc);
     gh.singleton<_i659.WindowsRouter>(() => _i659.WindowsRouter());
+    gh.singleton<_i830.WindowsToast>(() => _i830.WindowsToast());
     gh.singleton<_i592.WindowStateManager>(() => _i592.WindowStateManager());
     await gh.singletonAsync<_i625.PathResolver>(
       () => _i625.PathResolver.create(),
@@ -93,11 +96,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i295.PlayingItemStorage>(
       () => _i295.PlayingItemStorage(gh<_i460.SharedPreferences>()),
     );
+    gh.singleton<_i30.CommonSettingStorage>(
+      () => _i30.CommonSettingStorage(gh<_i460.SharedPreferences>()),
+    );
     gh.singleton<_i408.WbiStorage>(
       () => _i408.WbiStorage(gh<_i460.SharedPreferences>()),
     );
-    gh.singleton<_i30.CommonSettingStorage>(
-      () => _i30.CommonSettingStorage(gh<_i460.SharedPreferences>()),
+    gh.singleton<_i156.SystemSettingStorage>(
+      () => _i156.SystemSettingStorage(gh<_i460.SharedPreferences>()),
     );
     gh.singleton<_i937.CommentListApi>(
       () => _i937.CommentListApi(gh<_i361.Dio>()),
