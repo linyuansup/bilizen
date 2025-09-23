@@ -1,0 +1,84 @@
+name: 🐛 Bug 报告
+description: 报告一个bug来帮助我们改进
+title: "[Bug]: "
+labels: ["bug", "待处理"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢您花时间填写这个bug报告！请提供尽可能详细的信息以帮助我们快速定位和解决问题。
+
+  - type: checkboxes
+    id: existing-issue
+    attributes:
+      label: 确认没有重复问题
+      description: 请先搜索现有的issues，确保您的问题没有被报告过
+      options:
+        - label: 我已经搜索了现有的issues，确认这不是重复问题
+          required: true
+
+  - type: dropdown
+    id: platform
+    attributes:
+      label: 平台
+      description: 请选择出现问题的平台
+      options:
+        - Windows
+      default: 0
+    validations:
+      required: true
+
+  - type: textarea
+    id: bug-description
+    attributes:
+      label: Bug 描述
+      description: 请详细描述您遇到的问题
+      placeholder: |
+        请描述：
+        1. 您期望发生什么
+        2. 实际发生了什么
+        3. 重现步骤（如果可能的话）
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: 日志文件
+      description: 请提供相关的日志文件内容
+      placeholder: |
+        请粘贴相关的日志内容，或者附上日志文件。
+        如果日志很长，请只包含相关部分或使用附件。
+      render: text
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: 截图和附件
+      description: 如果适用，请添加截图或其他附件来说明问题
+      placeholder: |
+        您可以：
+        1. 拖拽图片到这里
+        2. 复制粘贴图片
+        3. 使用 GitHub 的附件功能
+
+  - type: input
+    id: version
+    attributes:
+      label: 版本号
+      description: 请提供您使用的软件版本，可在设置 - 关于中查看
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: 其他信息
+      description: 其他任何可能有助于解决问题的信息
+      placeholder: |
+        例如：
+        - 系统版本
+        - 硬件配置
+        - 相关软件版本
+        - 网络环境
+        - 其他可能相关的信息
