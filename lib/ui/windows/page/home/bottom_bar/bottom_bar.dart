@@ -1,10 +1,9 @@
 import 'package:bilizen/inject/inject.dart';
 import 'package:bilizen/package/playback_manager/playback_controller.dart';
-import 'package:bilizen/ui/windows/page/home/bottom_bar/provider.dart';
 import 'package:bilizen/package/windows_router.dart';
+import 'package:bilizen/ui/windows/page/home/bottom_bar/provider.dart';
 import 'package:bilizen/ui/windows/widget/video_card.dart';
 import 'package:bilizen/util/string.dart';
-import 'package:bilizen/util/toastification.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -345,7 +344,18 @@ class _MoreControlArea extends StatelessWidget {
           builder: (context, ref, child) {
             return _buildMoreControlButton(FluentIcons.link, () async {
               await ref.read(bottomBarProvider.notifier).copyLink();
-              Toast.success("链接已复制");
+              if (context.mounted) {
+                await displayInfoBar(
+                  context,
+                  builder: (context, close) {
+                    return const InfoBar(
+                      title: Text('链接已复制'),
+                      content: Text('链接已成功复制到剪贴板。'),
+                      severity: InfoBarSeverity.success,
+                    );
+                  },
+                );
+              }
             });
           },
         ),
@@ -562,9 +572,7 @@ class _VideoPlaylistItem extends ConsumerWidget {
             ],
           );
           provider.when(
-            notPlaying: (volume, switchMode, videos) {
-              // 非播放状态下不需要显示播放图标
-            },
+            notPlaying: (volume, switchMode, videos) {},
             playing:
                 (
                   currentVideo,

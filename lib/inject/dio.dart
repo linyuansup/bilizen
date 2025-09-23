@@ -1,34 +1,62 @@
 import 'dart:io';
 
+import 'package:bilizen/data/storage/pref/setting/tool.dart';
+import 'package:bilizen/package/talker_extension/dio.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:dio_smart_retry/dio_smart_retry.dart';
 import 'package:injectable/injectable.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:talker/talker.dart';
 import 'package:talker_dio_logger/talker_dio_logger.dart';
 
 @module
 abstract class PersistCookieJarInjectable {
   @singleton
-  PersistCookieJar get cookieJar => PersistCookieJar(
-    ignoreExpires: true,
-  );
+  @preResolve
+  Future<PersistCookieJar> get cookieJar async {
+    final dir = await getApplicationSupportDirectory();
+    return PersistCookieJar(
+      ignoreExpires: true,
+      storage: FileStorage(
+        "${dir.path}/cookie",
+      ),
+    );
+  }
 }
 
 @module
 abstract class DioInjectable {
   @singleton
-  Dio dio(PersistCookieJar persistCookieJar, Talker talker) {
+  Dio dio(
+    PersistCookieJar persistCookieJar,
+    Talker talker,
+    ToolSettingStorage toolSettingStorage,
+  ) {
     final dio = Dio();
-    (dio.httpClientAdapter as IOHttpClientAdapter).createHttpClient = () {
-      final client = HttpClient();
-      client.findProxy = (uri) {
-        return 'PROXY 127.0.0.1:7890';
-      };
-      return client;
-    };
+    final setting = toolSettingStorage.getToolSetting();
+    if (setting.useProxy) {
+      if (_isValidProxy(setting)) {
+        (dio.httpClientAdapter as IOHttpClientAdapter).createHttpClient = () {
+          final client = HttpClient();
+          client.findProxy = (uri) {
+            return 'PROXY ${setting.proxyAddress}:${setting.proxyPort}';
+          };
+          return client;
+        };
+      } else {
+        talker.dio("代理设置不完整，回滚代理");
+        toolSettingStorage.setToolSetting(
+          setting.copyWith(
+            useProxy: false,
+            proxyAddress: null,
+            proxyPort: null,
+          ),
+        );
+      }
+    }
     return dio
       ..options.sendTimeout = const Duration(seconds: 10)
       ..options.receiveTimeout = const Duration(seconds: 10)
@@ -63,5 +91,36 @@ abstract class DioInjectable {
       )
       ..interceptors.add(RetryInterceptor(dio: dio))
       ..interceptors.add(CookieManager(persistCookieJar));
+  }
+
+  bool _isValidProxy(ToolSetting setting) {
+    final address = setting.proxyAddress;
+    final port = setting.proxyPort;
+    if (address == null || address.isEmpty) {
+      return false;
+    }
+    if (!_isValidIPv4(address)) {
+      return false;
+    }
+    final intPort = int.tryParse(port ?? "");
+    if (intPort == null || intPort <= 0 || intPort > 65535) {
+      return false;
+    }
+    return true;
+  }
+
+  bool _isValidIPv4(String address) {
+    final ipv4Regex = RegExp(r'^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$');
+    final match = ipv4Regex.firstMatch(address);
+    if (match == null) {
+      return false;
+    }
+    for (int i = 1; i <= 4; i++) {
+      final part = int.tryParse(match.group(i)!);
+      if (part == null || part < 0 || part > 255) {
+        return false;
+      }
+    }
+    return true;
   }
 }

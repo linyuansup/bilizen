@@ -39,7 +39,6 @@ class HomepageVideoRecommender {
 
 List<Video> _get(Map<String, dynamic> data) {
   return (data["item"] as List)
-      .where((e) => e["show_info"] == 1)
       .map((e) {
         final video = Video(bid: e["bvid"]);
         video.setTotalDuration(e["duration"]);

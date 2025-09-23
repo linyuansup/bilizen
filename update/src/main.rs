@@ -6,8 +6,8 @@ use std::process::{exit, Command};
 use zip::ZipArchive;
 
 fn main() {
-    thread::sleep(std::time::Duration::from_millis(1000));
     println!("Bilizen 更新程序启动...");
+    thread::sleep(std::time::Duration::from_millis(1000));
 
     let current_exe = match env::current_exe() {
         Ok(exe_path) => exe_path,
@@ -75,6 +75,9 @@ fn extract_zip(zip_path: &Path, extract_to: &Path) -> Result<(), Box<dyn std::er
             Some(path) => extract_to.join(path),
             None => continue,
         };
+        if file.name() == "update.exe" {
+            continue;
+        }
 
         if file.name().ends_with('/') {
             println!("创建目录: {}", outpath.display());

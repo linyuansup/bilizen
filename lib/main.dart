@@ -5,7 +5,6 @@ import 'package:bilizen/init.dart';
 import 'package:bilizen/inject/inject.dart';
 import 'package:bilizen/ui/windows/page/app.dart';
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:talker/talker.dart';
 
 void main(List<String> args) async {
@@ -18,7 +17,7 @@ void main(List<String> args) async {
       } else {
         app = WindowsApp();
       }
-      runApp(ProviderScope(child: app));
+      runApp(app);
     },
     (error, stackTrace) {
       getIt<Talker>().handle(error, stackTrace, 'Uncaught app exception');

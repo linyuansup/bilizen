@@ -16,7 +16,9 @@ final _router = GoRouter(
     GoRoute(
       path: '/suggest',
       name: "suggest",
-      builder: (context, state) => SuggestPage(),
+      builder: (context, state) {
+        return SuggestPage();
+      },
     ),
     GoRoute(
       path: '/focus',

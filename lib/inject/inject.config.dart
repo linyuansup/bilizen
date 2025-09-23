@@ -27,6 +27,10 @@ import 'package:bilizen/data/storage/db/user_cache.dart' as _i93;
 import 'package:bilizen/data/storage/db/video_cache.dart' as _i519;
 import 'package:bilizen/data/storage/pref/playing_item.dart' as _i295;
 import 'package:bilizen/data/storage/pref/setting/common.dart' as _i30;
+import 'package:bilizen/data/storage/pref/setting/hotkey.dart' as _i742;
+import 'package:bilizen/data/storage/pref/setting/playback.dart' as _i283;
+import 'package:bilizen/data/storage/pref/setting/system.dart' as _i156;
+import 'package:bilizen/data/storage/pref/setting/tool.dart' as _i636;
 import 'package:bilizen/data/storage/pref/wbi.dart' as _i408;
 import 'package:bilizen/inject/dio.dart' as _i550;
 import 'package:bilizen/inject/logger.dart' as _i489;
@@ -45,7 +49,7 @@ import 'package:bilizen/package/search_manager.dart' as _i397;
 import 'package:bilizen/package/video_recommend.dart' as _i349;
 import 'package:bilizen/package/window_state.dart' as _i592;
 import 'package:bilizen/package/windows_router.dart' as _i659;
-import 'package:bilizen/util/path_resolver.dart' as _i625;
+import 'package:bilizen/package/windows_toast/windows_toast.dart' as _i830;
 import 'package:cookie_jar/cookie_jar.dart' as _i557;
 import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
@@ -68,8 +72,9 @@ extension GetItInjectableX on _i174.GetIt {
     final sharedPreferencesInjectable = _$SharedPreferencesInjectable();
     final smtcInjectable = _$SmtcInjectable();
     final dioInjectable = _$DioInjectable();
-    gh.singleton<_i557.PersistCookieJar>(
+    await gh.singletonAsync<_i557.PersistCookieJar>(
       () => persistCookieJarInjectable.cookieJar,
+      preResolve: true,
     );
     gh.singleton<_i993.Talker>(() => loggerInjectable.talker);
     await gh.singletonAsync<_i740.Store>(
@@ -82,22 +87,47 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.singleton<_i591.SMTCWindows>(() => smtcInjectable.smtc);
     gh.singleton<_i659.WindowsRouter>(() => _i659.WindowsRouter());
+    gh.singleton<_i830.WindowsToast>(() => _i830.WindowsToast());
     gh.singleton<_i592.WindowStateManager>(() => _i592.WindowStateManager());
-    await gh.singletonAsync<_i625.PathResolver>(
-      () => _i625.PathResolver.create(),
-      preResolve: true,
-    );
-    gh.singleton<_i361.Dio>(
-      () => dioInjectable.dio(gh<_i557.PersistCookieJar>(), gh<_i993.Talker>()),
-    );
     gh.singleton<_i295.PlayingItemStorage>(
       () => _i295.PlayingItemStorage(gh<_i460.SharedPreferences>()),
+    );
+    gh.singleton<_i30.CommonSettingStorage>(
+      () => _i30.CommonSettingStorage(gh<_i460.SharedPreferences>()),
+    );
+    gh.singleton<_i283.PlaybackSettingStorage>(
+      () => _i283.PlaybackSettingStorage(gh<_i460.SharedPreferences>()),
+    );
+    gh.singleton<_i156.SystemSettingStorage>(
+      () => _i156.SystemSettingStorage(gh<_i460.SharedPreferences>()),
     );
     gh.singleton<_i408.WbiStorage>(
       () => _i408.WbiStorage(gh<_i460.SharedPreferences>()),
     );
-    gh.singleton<_i30.CommonSettingStorage>(
-      () => _i30.CommonSettingStorage(gh<_i460.SharedPreferences>()),
+    gh.singleton<_i742.HotkeySettingStorage>(
+      () => _i742.HotkeySettingStorage(gh<_i460.SharedPreferences>()),
+    );
+    gh.singleton<_i636.ToolSettingStorage>(
+      () => _i636.ToolSettingStorage(gh<_i460.SharedPreferences>()),
+    );
+    gh.singleton<_i1056.PlayListService>(
+      () => _i1056.PlayListService(gh<_i740.Store>()),
+    );
+    gh.singleton<_i93.UserCacheService>(
+      () => _i93.UserCacheService(gh<_i740.Store>()),
+    );
+    gh.singleton<_i519.VideoCacheService>(
+      () => _i519.VideoCacheService(gh<_i740.Store>()),
+    );
+    gh.singleton<_i1071.PlaybackController>(
+      () => _i1071.PlaybackController(talker: gh<_i207.Talker>()),
+    );
+    gh.singleton<_i361.Dio>(
+      () => dioInjectable.dio(
+        gh<_i557.PersistCookieJar>(),
+        gh<_i993.Talker>(),
+        gh<_i636.ToolSettingStorage>(),
+      ),
     );
     gh.singleton<_i937.CommentListApi>(
       () => _i937.CommentListApi(gh<_i361.Dio>()),
@@ -127,18 +157,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.singleton<_i1029.VideoStreamUrlApi>(
       () => _i1029.VideoStreamUrlApi(gh<_i361.Dio>()),
-    );
-    gh.singleton<_i1056.PlayListService>(
-      () => _i1056.PlayListService(gh<_i740.Store>()),
-    );
-    gh.singleton<_i93.UserCacheService>(
-      () => _i93.UserCacheService(gh<_i740.Store>()),
-    );
-    gh.singleton<_i519.VideoCacheService>(
-      () => _i519.VideoCacheService(gh<_i740.Store>()),
-    );
-    gh.singleton<_i1071.PlaybackController>(
-      () => _i1071.PlaybackController(talker: gh<_i207.Talker>()),
     );
     gh.singleton<_i574.CommentManager>(
       () => _i574.CommentManager(gh<_i937.CommentListApi>()),
