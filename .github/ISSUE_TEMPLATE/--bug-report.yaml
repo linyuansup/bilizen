@@ -1,7 +1,7 @@
 name: 🐛 Bug 报告
 description: 报告一个bug来帮助我们改进
 title: "[Bug]: "
-labels: ["bug", "待处理"]
+labels: ["bug"]
 body:
   - type: markdown
     attributes:

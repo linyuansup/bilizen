@@ -1,7 +1,7 @@
 name: 💡 功能需求
 description: 建议一个新功能来改进项目
 title: "[功能需求]: "
-labels: [功能需求]
+labels: ["enhancement"]
 body:
 - type: markdown
   attributes:
