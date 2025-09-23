@@ -48,7 +48,7 @@ class _ScrollBarSingleChildState extends State<ScrollBarSingleChild> {
     if (!_controller.hasClients) return false;
     final maxScroll = _controller.position.maxScrollExtent;
     final currentScroll = _controller.offset;
-    return currentScroll >= maxScroll - 200; // 距离底部200像素时触发
+    return currentScroll >= maxScroll - 200;
   }
 
   @override

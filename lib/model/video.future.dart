@@ -37,7 +37,7 @@ abstract class _$Video extends FutureClassBase {
       return getCached<String>(_coverKey)!;
     }
 
-    await cache();
+    await basicInfo();
     return getCached<String>(_coverKey)!;
   }
 
@@ -49,7 +49,7 @@ abstract class _$Video extends FutureClassBase {
     clearCached(_coverKey);
   }
 
-  Future<void> cache();
+  Future<void> basicInfo();
 
   static const String _titleKey = 'title';
 
@@ -58,7 +58,7 @@ abstract class _$Video extends FutureClassBase {
       return getCached<String>(_titleKey)!;
     }
 
-    await cache();
+    await basicInfo();
     return getCached<String>(_titleKey)!;
   }
 
@@ -89,8 +89,6 @@ abstract class _$Video extends FutureClassBase {
     clearCached(_descriptionKey);
   }
 
-  Future<void> basicInfo();
-
   static const String _totalDurationKey = 'totalDuration';
 
   Future<int> get $totalDuration async {
@@ -117,7 +115,7 @@ abstract class _$Video extends FutureClassBase {
       return getCached<User>(_uploaderKey)!;
     }
 
-    await cache();
+    await basicInfo();
     return getCached<User>(_uploaderKey)!;
   }
 

@@ -6,15 +6,23 @@ import 'package:dio/io.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:dio_smart_retry/dio_smart_retry.dart';
 import 'package:injectable/injectable.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:talker/talker.dart';
 import 'package:talker_dio_logger/talker_dio_logger.dart';
 
 @module
 abstract class PersistCookieJarInjectable {
   @singleton
-  PersistCookieJar get cookieJar => PersistCookieJar(
-    ignoreExpires: true,
-  );
+  @preResolve
+  Future<PersistCookieJar> get cookieJar async {
+    final dir = await getApplicationSupportDirectory();
+    return PersistCookieJar(
+      ignoreExpires: true,
+      storage: FileStorage(
+        "${dir.path}/cookie",
+      ),
+    );
+  }
 }
 
 @module

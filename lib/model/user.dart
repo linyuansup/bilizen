@@ -1,6 +1,5 @@
 import 'package:bilizen/data/api/fav/info.dart';
 import 'package:bilizen/data/api/user/info.dart';
-import 'package:bilizen/data/storage/db/user_cache.dart';
 import 'package:bilizen/inject/inject.dart';
 import 'package:bilizen/model/fav_list.dart';
 import 'package:bilizen/package/future_class/annotations.dart';
@@ -14,14 +13,14 @@ class User extends _$User {
 
   final _userInfoApi = getIt<UserInfoApi>();
   final _favInfoApi = getIt<FavInfoApi>();
-  final _userCacheService = getIt<UserCacheService>();
+  // final _userCacheService = getIt<UserCacheService>();
 
   User({required this.id});
 
-  @FutureData(loader: 'cache')
+  @FutureData(loader: 'basicInfo')
   Future<String> get nickName => $nickName;
 
-  @FutureData(loader: "cache")
+  @FutureData(loader: "basicInfo")
   Future<String> get avatar => $avatar;
 
   @FutureData(loader: "basicInfo")
@@ -59,9 +58,9 @@ class User extends _$User {
     setSex(user["data"]["sex"]);
     setLevel(user["data"]["level"]);
     setIsFollowing(user["data"]["is_followed"]);
-    await _userCacheService.put(
-      await UserCache.fromUser(this),
-    );
+    // await _userCacheService.put(
+    // await UserCache.fromUser(this),
+    // );
   }
 
   @override
@@ -90,14 +89,14 @@ class User extends _$User {
     setFavLists(list);
   }
 
-  @override
-  Future<void> cache() async {
-    final user = await _userCacheService.findByUid(id);
-    if (user == null) {
-      await basicInfo();
-      return;
-    }
-    setNickName(user.name);
-    setAvatar(user.face);
-  }
+  // @override
+  // Future<void> cache() async {
+  //   final user = await _userCacheService.findByUid(id);
+  //   if (user == null) {
+  //     await basicInfo();
+  //     return;
+  //   }
+  //   setNickName(user.name);
+  //   setAvatar(user.face);
+  // }
 }

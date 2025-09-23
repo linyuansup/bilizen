@@ -9,7 +9,7 @@ class SystemPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: 12,
+      spacing: 24,
       children: [
         _CloseMainPanel(),
       ],

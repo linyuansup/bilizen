@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:bilizen/inject/inject.dart';
+import 'package:bilizen/ui/windows/widget/hotkey.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:smtc_windows/smtc_windows.dart';
@@ -53,4 +54,7 @@ Future<void> init(List<String> args) async {
     await initTrayIcon();
   }
   await configureDependencies();
+  if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+    await registerHotkey();
+  }
 }

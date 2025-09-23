@@ -13,18 +13,25 @@ final _router = GoRouter(
   navigatorKey: getIt<WindowsRouter>().main.key,
   observers: [getIt<WindowsRouter>().main.observer],
   routes: [
-    GoRoute(
-      path: "/",
-      builder: (context, state) {
-        return HomePage();
+    ShellRoute(
+      builder: (context, state, child) {
+        return WindowsToastWrapper(child: child);
       },
-    ),
-    GoRoute(
-      path: "/video",
-      name: "video",
-      builder: (context, state) {
-        return VideoPage();
-      },
+      routes: [
+        GoRoute(
+          path: "/",
+          builder: (context, state) {
+            return HomePage();
+          },
+        ),
+        GoRoute(
+          path: "/video",
+          name: "video",
+          builder: (context, state) {
+            return VideoPage();
+          },
+        ),
+      ],
     ),
   ],
 );
@@ -36,15 +43,13 @@ class WindowsApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ProviderScope(
       observers: [TalkerRiverpodObserver(talker: getIt<Talker>())],
-      child: WindowsToastWrapper(
-        child: FluentApp.router(
-          debugShowCheckedModeBanner: false,
-          theme: FluentThemeData(
-            accentColor: Colors.blue,
-            fontFamily: 'Microsoft YaHei',
-          ),
-          routerConfig: _router,
+      child: FluentApp.router(
+        debugShowCheckedModeBanner: false,
+        theme: FluentThemeData(
+          accentColor: Colors.blue,
+          fontFamily: 'Microsoft YaHei',
         ),
+        routerConfig: _router,
       ),
     );
   }

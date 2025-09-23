@@ -16,7 +16,7 @@ abstract class _$User extends FutureClassBase {
       return getCached<String>(_nickNameKey)!;
     }
 
-    await cache();
+    await basicInfo();
     return getCached<String>(_nickNameKey)!;
   }
 
@@ -28,7 +28,7 @@ abstract class _$User extends FutureClassBase {
     clearCached(_nickNameKey);
   }
 
-  Future<void> cache();
+  Future<void> basicInfo();
 
   static const String _avatarKey = 'avatar';
 
@@ -37,7 +37,7 @@ abstract class _$User extends FutureClassBase {
       return getCached<String>(_avatarKey)!;
     }
 
-    await cache();
+    await basicInfo();
     return getCached<String>(_avatarKey)!;
   }
 
@@ -67,8 +67,6 @@ abstract class _$User extends FutureClassBase {
   void clearSex() {
     clearCached(_sexKey);
   }
-
-  Future<void> basicInfo();
 
   static const String _levelKey = 'level';
 

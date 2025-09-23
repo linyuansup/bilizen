@@ -1,5 +1,6 @@
 import 'package:bilizen/ui/windows/page/home/center/setting/info/account/page.dart';
 import 'package:bilizen/ui/windows/page/home/center/setting/info/common/page.dart';
+import 'package:bilizen/ui/windows/page/home/center/setting/info/hotkey/page.dart';
 import 'package:bilizen/ui/windows/page/home/center/setting/info/playback/page.dart';
 import 'package:bilizen/ui/windows/page/home/center/setting/info/system/page.dart';
 import 'package:bilizen/ui/windows/widget/scroll_bar_single_child.dart';
@@ -41,10 +42,10 @@ class SettingInfoPage extends StatelessWidget {
                     header: Text('系统'),
                     content: SystemPage(),
                   ),
-                  // Expander(
-                  //   header: Text('快捷方式'),
-                  //   content: ShortcutPage(),
-                  // ),
+                  Expander(
+                    header: Text('快捷键'),
+                    content: HotkeyPage(),
+                  ),
                 ]
                 .map(
                   (e) => Padding(

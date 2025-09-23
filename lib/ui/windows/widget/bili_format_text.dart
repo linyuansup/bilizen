@@ -74,7 +74,6 @@ class _BiliFormatTextState extends State<BiliFormatText> {
   }
 
   void _checkTextOverflow() {
-    // 只有在启用更多按钮时才检测溢出
     if (!widget.showMoreButton) return;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -84,7 +83,6 @@ class _BiliFormatTextState extends State<BiliFormatText> {
           final box = renderObject as RenderBox;
           if (!box.hasSize) return;
 
-          // 使用实际的格式化文本（包含emoji）来检测溢出
           final parts = _BiliTextParser.splitFormattedText(
             widget.text,
             widget.emojis,
@@ -109,7 +107,6 @@ class _BiliFormatTextState extends State<BiliFormatText> {
     });
   }
 
-  // 用于测量的InlineSpan创建方法，避免复杂的Widget
   InlineSpan _createInlineSpanForMeasurement(String part) {
     final textType = _BiliTextParser.getTextType(part, widget.emojis);
 
@@ -118,7 +115,7 @@ class _BiliFormatTextState extends State<BiliFormatText> {
         return TextSpan(
           text: part,
           style: widget.style?.merge(
-            TextStyle(color: Colors.blue, fontFamily: "Microsoft YaHei"),
+            TextStyle(color: Colors.blue),
           ),
         );
       case BiliTextType.bvNumber:
@@ -126,19 +123,18 @@ class _BiliFormatTextState extends State<BiliFormatText> {
         return TextSpan(
           text: part,
           style: widget.style?.merge(
-            TextStyle(color: Colors.blue, fontFamily: "Microsoft YaHei"),
+            TextStyle(color: Colors.blue),
           ),
         );
       case BiliTextType.emoji:
-        // 用占位符文本来模拟emoji的空间占用
         return TextSpan(
-          text: '🙂', // 使用固定的emoji字符作为占位符
-          style: widget.style?.merge(TextStyle(fontFamily: "Microsoft YaHei")),
+          text: '🙂',
+          style: widget.style,
         );
       case BiliTextType.normal:
         return TextSpan(
           text: part,
-          style: widget.style?.merge(TextStyle(fontFamily: "Microsoft YaHei")),
+          style: widget.style,
         );
     }
   }
@@ -151,7 +147,6 @@ class _BiliFormatTextState extends State<BiliFormatText> {
     );
     final spans = parts.map(_createInlineSpan).toList();
 
-    // 如果不显示更多按钮，则直接显示全部内容
     final shouldShowExpandButton = widget.showMoreButton && _hasMoreContent;
     final maxLines = (!widget.showMoreButton || _isExpanded)
         ? null
@@ -186,12 +181,10 @@ class _BiliFormatTextState extends State<BiliFormatText> {
                       widget.style?.merge(
                         TextStyle(
                           color: Colors.blue,
-                          fontFamily: "Microsoft YaHei",
                         ),
                       ) ??
                       TextStyle(
                         color: Colors.blue,
-                        fontFamily: "Microsoft YaHei",
                       ),
                 ),
               ),
@@ -248,7 +241,7 @@ class _BiliFormatTextState extends State<BiliFormatText> {
     return TextSpan(
       text: text,
       style: widget.style?.merge(
-        TextStyle(color: Colors.blue, fontFamily: "Microsoft YaHei"),
+        TextStyle(color: Colors.blue),
       ),
       recognizer: onTap != null
           ? (TapGestureRecognizer()..onTap = onTap)
@@ -276,9 +269,7 @@ class _BiliFormatTextState extends State<BiliFormatText> {
             errorWidget: (context, error, stackTrace) {
               return Text(
                 emojiText,
-                style: widget.style?.merge(
-                  TextStyle(fontFamily: "Microsoft YaHei"),
-                ),
+                style: widget.style,
               );
             },
           ),
@@ -308,11 +299,9 @@ class _BiliTextParser {
     final result = <String>[];
     int lastEnd = 0;
 
-    // 创建emoji文本的正则表达式
     final emojiTexts = emojis.map((e) => RegExp.escape(e.text)).join('|');
     final emojiRegex = emojiTexts.isNotEmpty ? RegExp('($emojiTexts)') : null;
 
-    // 合并所有匹配模式
     final allPatterns = [
       r'@[^ \n]+',
       r'BV[A-Za-z0-9]{10}',

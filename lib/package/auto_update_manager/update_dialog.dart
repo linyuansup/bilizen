@@ -233,7 +233,7 @@ class _UpdatingPage extends StatelessWidget {
       ),
       actions: [
         Button(
-          onPressed: null, // 禁用取消按钮，防止中断更新
+          onPressed: null,
           child: const Text('取消'),
         ),
       ],

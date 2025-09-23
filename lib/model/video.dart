@@ -1,6 +1,4 @@
 import 'package:bilizen/data/api/video/info.dart';
-import 'package:bilizen/data/storage/db/user_cache.dart';
-import 'package:bilizen/data/storage/db/video_cache.dart';
 import 'package:bilizen/inject/inject.dart';
 import 'package:bilizen/model/comment_bar_info.dart';
 import 'package:bilizen/model/staff.dart';
@@ -16,8 +14,8 @@ part 'video.future.dart';
 class Video extends _$Video {
   final String bid;
   final _videoApi = getIt<VideoApi>();
-  final _videoCacheService = getIt<VideoCacheService>();
-  final _userCacheService = getIt<UserCacheService>();
+  // final _videoCacheService = getIt<VideoCacheService>();
+  // final _userCacheService = getIt<UserCacheService>();
 
   late CommentBarInfo commentBarInfo = CommentBarInfo(
     type: 1,
@@ -29,10 +27,10 @@ class Video extends _$Video {
   @FutureData(loader: "plist")
   Future<int> get videosNum => $videosNum;
 
-  @FutureData(loader: "cache")
+  @FutureData(loader: "basicInfo")
   Future<String> get cover => $cover;
 
-  @FutureData(loader: "cache")
+  @FutureData(loader: "basicInfo")
   Future<String> get title => $title;
 
   @FutureData(loader: "basicInfo")
@@ -41,7 +39,7 @@ class Video extends _$Video {
   @FutureData(loader: "basicInfo")
   Future<int> get totalDuration => $totalDuration;
 
-  @FutureData(loader: "cache")
+  @FutureData(loader: "basicInfo")
   Future<User> get uploader => $uploader;
 
   @FutureData(loader: "basicInfo")
@@ -133,12 +131,12 @@ class Video extends _$Video {
     setCoin(info["stat"]["coin"]);
     setShare(info["stat"]["share"]);
     setLike(info["stat"]["like"]);
-    await _userCacheService.put(
-      await UserCache.fromUser(user),
-    );
-    await _videoCacheService.put(
-      await VideoCache.fromVideo(this),
-    );
+    // await _userCacheService.put(
+    // await UserCache.fromUser(user),
+    // );
+    // await _videoCacheService.put(
+    // await VideoCache.fromVideo(this),
+    // );
   }
 
   @override
@@ -161,15 +159,15 @@ class Video extends _$Video {
     );
   }
 
-  @override
-  Future<void> cache() async {
-    final video = await _videoCacheService.findByBvid(bid);
-    if (video == null) {
-      await basicInfo();
-      return;
-    }
-    setCover(video.cover);
-    setTitle(video.title);
-    setUploader(User(id: video.uid));
-  }
+  // @override
+  // Future<void> cache() async {
+  //   final video = await _videoCacheService.findByBvid(bid);
+  //   if (video == null) {
+  //     await basicInfo();
+  //     return;
+  //   }
+  //   setCover(video.cover);
+  //   setTitle(video.title);
+  //   setUploader(User(id: video.uid));
+  // }
 }

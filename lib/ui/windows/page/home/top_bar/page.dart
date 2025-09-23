@@ -30,23 +30,9 @@ class TopBar extends StatelessWidget {
           _Logo(),
           _SearchBar(),
           _UserIcon(),
-          // _TestButton(),
           _WindowController(),
         ],
       ),
-    );
-  }
-}
-
-// ignore: unused_element
-class _TestButton extends StatelessWidget {
-  const _TestButton();
-
-  @override
-  Widget build(BuildContext context) {
-    return Button(
-      child: Text("data"),
-      onPressed: () async {},
     );
   }
 }

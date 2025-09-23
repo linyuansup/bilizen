@@ -11,7 +11,6 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
-import 'package:talker/talker.dart';
 
 part 'auto_update_manager.freezed.dart';
 
@@ -58,7 +57,6 @@ class AutoUpdateManager {
       }
       final updateFile = File('./bilizen-latest.zip');
       final hasUpdateFile = await updateFile.exists();
-      getIt<Talker>().debug("检查更新文件: $hasUpdateFile");
       if (hasUpdateFile) {
         await updateFile.delete();
         if (!hasNewVersion) {

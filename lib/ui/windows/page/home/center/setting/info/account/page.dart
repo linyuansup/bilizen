@@ -3,8 +3,23 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AccountPage extends ConsumerWidget {
+class AccountPage extends StatelessWidget {
   const AccountPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      spacing: 24,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _Account(),
+      ],
+    );
+  }
+}
+
+class _Account extends ConsumerWidget {
+  const _Account();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -86,23 +101,25 @@ class _LoginContent extends StatelessWidget {
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(30),
-            child: CachedNetworkImage(
-              imageUrl: avatarUrl,
-              fit: BoxFit.cover,
-              placeholder: (context, url) => Container(
-                color: theme.inactiveColor.withValues(alpha: 0.1),
-                child: Icon(
-                  FluentIcons.contact,
-                  size: 32,
-                  color: theme.inactiveColor,
+            child: RepaintBoundary(
+              child: CachedNetworkImage(
+                imageUrl: avatarUrl,
+                fit: BoxFit.cover,
+                placeholder: (context, url) => Container(
+                  color: theme.inactiveColor.withValues(alpha: 0.1),
+                  child: Icon(
+                    FluentIcons.contact,
+                    size: 32,
+                    color: theme.inactiveColor,
+                  ),
                 ),
-              ),
-              errorWidget: (context, url, error) => Container(
-                color: theme.inactiveColor.withValues(alpha: 0.1),
-                child: Icon(
-                  FluentIcons.contact,
-                  size: 32,
-                  color: theme.inactiveColor,
+                errorWidget: (context, url, error) => Container(
+                  color: theme.inactiveColor.withValues(alpha: 0.1),
+                  child: Icon(
+                    FluentIcons.contact,
+                    size: 32,
+                    color: theme.inactiveColor,
+                  ),
                 ),
               ),
             ),
@@ -131,14 +148,16 @@ class _LoginContent extends StatelessWidget {
             ],
           ),
         ),
-        FilledButton(
-          onPressed: () => _showLogoutDialog(context),
-          style: ButtonStyle(
-            backgroundColor: WidgetStateProperty.all(
-              Colors.red.withValues(alpha: 0.8),
+        RepaintBoundary(
+          child: FilledButton(
+            onPressed: () => _showLogoutDialog(context),
+            style: ButtonStyle(
+              backgroundColor: WidgetStateProperty.all(
+                Colors.red.withValues(alpha: 0.8),
+              ),
             ),
+            child: const Text('退出登录'),
           ),
-          child: const Text('退出登录'),
         ),
       ],
     );
@@ -154,7 +173,6 @@ class _NoLoginContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        // 默认头像
         Container(
           width: 64,
           height: 64,
@@ -173,7 +191,6 @@ class _NoLoginContent extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 16),
-        // 未登录信息
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

@@ -105,7 +105,6 @@ class CommentCard extends StatelessWidget {
             fontWeight: FontWeight.w600,
           ),
         ),
-        // UP标签 - 显示在昵称右上角
         if (comment.sender.uid == upUid)
           Positioned(
             right: -12,

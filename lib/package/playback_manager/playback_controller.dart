@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:bilizen/data/api/video/online.dart';
+import 'package:bilizen/data/storage/pref/setting/playback.dart';
 import 'package:bilizen/package/playback_manager/playback_controller.dart';
 import 'package:bilizen/package/windows_toast/windows_toast.dart';
 import 'package:smtc_windows/smtc_windows.dart';
@@ -27,6 +28,16 @@ enum SwitchMode {
   random,
   order,
   repeat,
+}
+
+class AudioDeviceInfo {
+  final List<AudioDevice> devices;
+  final int? currentIndex;
+
+  AudioDeviceInfo({
+    required this.devices,
+    required this.currentIndex,
+  });
 }
 
 class PlayingItem {
@@ -58,6 +69,14 @@ class PlaybackController
   final BehaviorSubject<SwitchMode> switchMode = BehaviorSubject.seeded(
     SwitchMode.order,
   );
+  late final audioDevices = BehaviorSubject.seeded(
+    AudioDeviceInfo(
+      devices: player.state.audioDevices,
+      currentIndex: player.state.audioDevices.indexOf(
+        player.state.audioDevice,
+      ),
+    ),
+  );
 
   final Player player = Player(
     configuration: PlayerConfiguration(logLevel: MPVLogLevel.debug),
@@ -83,6 +102,22 @@ class PlaybackController
           position: playing.position.inSeconds,
         ),
       );
+    });
+    CombineLatestStream(
+      [
+        player.stream.audioDevices,
+        player.stream.audioDevice,
+      ],
+      (a) {
+        final devices = a[0] as List<AudioDevice>;
+        final current = a[1] as AudioDevice;
+        return AudioDeviceInfo(
+          devices: devices,
+          currentIndex: devices.indexOf(current),
+        );
+      },
+    ).listen((info) {
+      audioDevices.add(info);
     });
     player.stream.volume.listen((v) => volume.add(v));
     player.stream.log.listen((log) {
@@ -135,14 +170,25 @@ class PlaybackController
             _startNew(
               target,
               position: Duration(seconds: state.position),
-              play: false,
+              play: getIt<PlaybackSettingStorage>()
+                  .getPlaybackSetting()
+                  .playOnStart,
             );
           } else {
-            _startNew(value.first, play: false);
+            _startNew(
+              value.first,
+              play: getIt<PlaybackSettingStorage>()
+                  .getPlaybackSetting()
+                  .playOnStart,
+            );
           }
         });
       }
     });
+  }
+
+  Future<void> setAudioDevice(AudioDevice device) async {
+    await player.setAudioDevice(device);
   }
 
   Future<void> next() async {
@@ -426,4 +472,12 @@ class PlaybackController
   }
 
   bool _hasAudioDevices() => player.state.audioDevices.length > 1;
+
+  Future<void> playOrPause() async {
+    if (player.state.playing) {
+      await pause();
+    } else {
+      await play();
+    }
+  }
 }

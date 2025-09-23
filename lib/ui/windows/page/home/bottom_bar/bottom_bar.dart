@@ -572,9 +572,7 @@ class _VideoPlaylistItem extends ConsumerWidget {
             ],
           );
           provider.when(
-            notPlaying: (volume, switchMode, videos) {
-              // 非播放状态下不需要显示播放图标
-            },
+            notPlaying: (volume, switchMode, videos) {},
             playing:
                 (
                   currentVideo,

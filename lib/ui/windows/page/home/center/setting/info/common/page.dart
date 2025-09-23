@@ -8,7 +8,7 @@ class CommonPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      spacing: 12,
+      spacing: 24,
       crossAxisAlignment: CrossAxisAlignment.start,
       children:
           [
@@ -31,20 +31,24 @@ class _EnablePlaybackHardwareCheckbox extends ConsumerWidget {
       spacing: 12,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Checkbox(
-          content: Text('启动播放器硬件加速'),
-          checked: ref.watch(commonProvider).enablePlaybackHardwareAcceleration,
-          onChanged: (value) {
-            if (value == null) return;
-            final state = ref.read(commonProvider);
-            ref
-                .read(commonProvider.notifier)
-                .update(
-                  state.copyWith(
-                    enablePlaybackHardwareAcceleration: value,
-                  ),
-                );
-          },
+        RepaintBoundary(
+          child: Checkbox(
+            content: Text('启动播放器硬件加速'),
+            checked: ref
+                .watch(commonProvider)
+                .enablePlaybackHardwareAcceleration,
+            onChanged: (value) {
+              if (value == null) return;
+              final state = ref.read(commonProvider);
+              ref
+                  .read(commonProvider.notifier)
+                  .update(
+                    state.copyWith(
+                      enablePlaybackHardwareAcceleration: value,
+                    ),
+                  );
+            },
+          ),
         ),
         SizedBox(
           width: double.infinity,
