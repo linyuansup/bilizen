@@ -3,6 +3,7 @@ import 'package:bilizen/ui/windows/page/home/center/setting/info/common/page.dar
 import 'package:bilizen/ui/windows/page/home/center/setting/info/hotkey/page.dart';
 import 'package:bilizen/ui/windows/page/home/center/setting/info/playback/page.dart';
 import 'package:bilizen/ui/windows/page/home/center/setting/info/system/page.dart';
+import 'package:bilizen/ui/windows/page/home/center/setting/info/tool/page.dart';
 import 'package:bilizen/ui/windows/widget/scroll_bar_single_child.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 
@@ -34,10 +35,10 @@ class SettingInfoPage extends StatelessWidget {
                   //   header: Text('下载'),
                   //   content: DownloadPage(),
                   // ),
-                  // Expander(
-                  //   header: Text('工具'),
-                  //   content: ToolPage(),
-                  // ),
+                  Expander(
+                    header: Text('工具'),
+                    content: ToolPage(),
+                  ),
                   Expander(
                     header: Text('系统'),
                     content: SystemPage(),
