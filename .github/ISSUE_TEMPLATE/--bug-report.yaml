@@ -49,7 +49,6 @@ body:
       placeholder: |
         请粘贴相关的日志内容，或者附上日志文件。
         如果日志很长，请只包含相关部分或使用附件。
-      render: text
 
   - type: textarea
     id: screenshots
