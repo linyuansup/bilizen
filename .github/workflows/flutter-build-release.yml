@@ -26,12 +26,6 @@ jobs:
       - name: Get dependencies
         run: flutter pub get
         
-      - name: Build Debug
-        run: flutter build windows --debug
-        
-      - name: Build Profile  
-        run: flutter build windows --profile
-        
       - name: Build Release
         run: flutter build windows --release
         
@@ -54,15 +48,7 @@ jobs:
       - name: Create archives
         run: |
           # Copy Rust executable to build directories
-          Copy-Item "update\target\release\update.exe" "build\windows\x64\runner\Debug\update.exe"
-          Copy-Item "update\target\release\update.exe" "build\windows\x64\runner\Profile\update.exe"
           Copy-Item "update\target\release\update.exe" "build\windows\x64\runner\Release\update.exe"
-          
-          # Create debug archive
-          Compress-Archive -Path "build\windows\x64\runner\Debug\*" -DestinationPath "bilizen-windows-debug-${{ steps.date.outputs.date }}.zip"
-          
-          # Create profile archive
-          Compress-Archive -Path "build\windows\x64\runner\Profile\*" -DestinationPath "bilizen-windows-profile-${{ steps.date.outputs.date }}.zip"
           
           # Create release archive
           Compress-Archive -Path "build\windows\x64\runner\Release\*" -DestinationPath "bilizen-windows-release-${{ steps.date.outputs.date }}.zip"
@@ -76,18 +62,11 @@ jobs:
           body: |
             🚀 自动构建发布 - ${{ steps.date.outputs.date }}
             
-            本次发布包含以下构建产物：
-            - **Debug版本**: 用于开发和调试，包含调试信息
-            - **Profile版本**: 性能分析版本，保留部分调试信息
-            - **Release版本**: 生产环境版本，经过优化
-            
             ## 变更内容
             本次发布基于PR: #${{ github.event.pull_request.number }}
             ${{ github.event.pull_request.title }}
             
           files: |
-            bilizen-windows-debug-${{ steps.date.outputs.date }}.zip
-            bilizen-windows-profile-${{ steps.date.outputs.date }}.zip
             bilizen-windows-release-${{ steps.date.outputs.date }}.zip
           draft: false
           prerelease: false
