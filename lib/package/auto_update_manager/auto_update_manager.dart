@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:bilizen/data/api/github/update.dart';
 import 'package:bilizen/inject/inject.dart';
 import 'package:bilizen/package/auto_update_manager/update_dialog.dart';
+import 'package:bilizen/package/talker_extension/update.dart';
 import 'package:bilizen/package/windows_toast/windows_toast.dart';
 import 'package:crypto/crypto.dart';
 import 'package:dio/dio.dart';
@@ -11,6 +12,7 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:talker_flutter/talker_flutter.dart';
 
 part 'auto_update_manager.freezed.dart';
 
@@ -43,6 +45,7 @@ class AutoUpdateManager {
   void checkUpdate(BuildContext context) {
     final updater = getIt<AutoUpdateManager>();
     updater.hasNewVersion().then((hasNewVersion) async {
+      getIt<Talker>().update("Has new version: $hasNewVersion");
       if (hasNewVersion && context.mounted) {
         getIt<WindowsToast>().info(
           title: "发现新版本",

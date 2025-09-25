@@ -116,52 +116,116 @@ class _Proxy extends StatelessWidget {
   }
 }
 
-class _ProxySettingArea extends ConsumerWidget {
+class _ProxySettingArea extends StatelessWidget {
   const _ProxySettingArea();
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return Row(
       spacing: 12,
       children: [
         Text("服务器"),
         Expanded(
-          child: TextBox(
-            onChanged: (value) async {
-              await ref
-                  .read(
-                    toolPageProvider.notifier,
-                  )
-                  .setToolSetting(
-                    ref
-                        .read(toolPageProvider)
-                        .copyWith(
-                          proxyAddress: value,
-                        ),
-                  );
-            },
-          ),
+          child: _ServerProxy(),
         ),
         Text("端口"),
         Expanded(
-          child: TextBox(
-            keyboardType: TextInputType.number,
-            onChanged: (value) async {
-              await ref
-                  .read(
-                    toolPageProvider.notifier,
-                  )
-                  .setToolSetting(
-                    ref
-                        .read(toolPageProvider)
-                        .copyWith(
-                          proxyPort: value,
-                        ),
-                  );
-            },
-          ),
+          child: _PortProxy(),
         ),
       ],
+    );
+  }
+}
+
+class _PortProxy extends ConsumerStatefulWidget {
+  const _PortProxy();
+
+  @override
+  ConsumerState<_PortProxy> createState() => _PortProxyState();
+}
+
+class _PortProxyState extends ConsumerState<_PortProxy> {
+  final _controller = TextEditingController();
+
+  @override
+  void initState() {
+    _controller.text = ref.read(
+      toolPageProvider.select((value) => value.proxyPort ?? ""),
+    );
+    _controller.addListener(() async {
+      final value = _controller.text;
+      await ref
+          .read(
+            toolPageProvider.notifier,
+          )
+          .setToolSetting(
+            ref
+                .read(toolPageProvider)
+                .copyWith(
+                  proxyPort: value,
+                ),
+          );
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return TextBox(
+      keyboardType: TextInputType.number,
+      controller: _controller,
+    );
+  }
+}
+
+class _ServerProxy extends ConsumerStatefulWidget {
+  const _ServerProxy();
+
+  @override
+  ConsumerState<_ServerProxy> createState() => _ServerProxyState();
+}
+
+class _ServerProxyState extends ConsumerState<_ServerProxy> {
+  final _controller = TextEditingController();
+
+  @override
+  void initState() {
+    _controller.text = ref.read(
+      toolPageProvider.select((value) => value.proxyAddress ?? ""),
+    );
+    _controller.addListener(() async {
+      final value = _controller.text;
+      await ref
+          .read(
+            toolPageProvider.notifier,
+          )
+          .setToolSetting(
+            ref
+                .read(toolPageProvider)
+                .copyWith(
+                  proxyAddress: value,
+                ),
+          );
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return TextBox(
+      controller: _controller,
     );
   }
 }
