@@ -128,7 +128,6 @@ class CommentContent {
               packageId: e["package_id"],
               text: e["text"],
               url: e["url"],
-              type: EmojiType.values.firstWhere((type) => type.id == e["type"]),
             );
           }).toList() ??
           [],

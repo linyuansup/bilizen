@@ -1,6 +1,7 @@
 import 'package:bilizen/ui/windows/page/home/center/setting/info/hotkey/provider.dart';
 import 'package:bilizen/ui/windows/page/home/center/setting/info/hotkey/recorder/page.dart';
 import 'package:bilizen/ui/windows/page/home/center/setting/info/hotkey/recorder/provider.dart';
+import 'package:bilizen/util/keyboard.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hotkey_manager/hotkey_manager.dart';
@@ -107,7 +108,7 @@ class _HotkeyButton extends ConsumerWidget {
         if (jsonKey == null || jsonKey.isEmpty) {
           return "空";
         } else {
-          return HotKey.fromJson(jsonKey).debugName;
+          return HotKey.fromJson(jsonKey).displayName;
         }
       }),
     );

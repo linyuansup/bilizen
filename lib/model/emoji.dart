@@ -3,14 +3,12 @@ class Emoji {
   final int packageId;
   final String text;
   final String url;
-  final EmojiType type;
 
   Emoji({
     required this.id,
     required this.packageId,
     required this.text,
     required this.url,
-    required this.type,
   });
 }
 

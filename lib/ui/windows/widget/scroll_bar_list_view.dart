@@ -26,6 +26,7 @@ class ScrollBarListView extends StatefulWidget {
 class _ScrollBarListViewState extends State<ScrollBarListView> {
   late ScrollController _controller;
   bool _isFetching = false;
+  bool _hasCheckedInitialLoad = false;
   late Function() _listener;
 
   void _addListener() {
@@ -37,6 +38,26 @@ class _ScrollBarListViewState extends State<ScrollBarListView> {
       }
     };
     _controller.addListener(_listener);
+  }
+
+  void _checkInitialLoad() {
+    if (_hasCheckedInitialLoad || !_controller.hasClients) return;
+    _hasCheckedInitialLoad = true;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!_controller.hasClients) return;
+
+      final maxScroll = _controller.position.maxScrollExtent;
+      if (maxScroll == 0 && widget.onBottom != null) {
+        Future.microtask(() async {
+          if (!_isFetching) {
+            _isFetching = true;
+            await widget.onBottom?.call();
+            _isFetching = false;
+          }
+        });
+      }
+    });
   }
 
   @override
@@ -59,6 +80,7 @@ class _ScrollBarListViewState extends State<ScrollBarListView> {
       builder: (context, controller, physics) {
         _controller = controller;
         _addListener();
+        _checkInitialLoad();
         return Scrollbar(
           controller: _controller,
           child: ListView.builder(

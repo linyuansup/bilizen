@@ -1,4 +1,5 @@
 import 'package:bilizen/ui/windows/page/home/center/setting/info/hotkey/recorder/provider.dart';
+import 'package:bilizen/util/keyboard.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -129,7 +130,7 @@ class _RecordArea extends StatelessWidget {
                 child: Text(
                   currentKey == null
                       ? '空'
-                      : HotKey.fromJson(currentKey).debugName,
+                      : HotKey.fromJson(currentKey).displayName,
                   style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.w600,
