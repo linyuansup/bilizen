@@ -29,6 +29,7 @@ class AutoScaleGridView extends StatefulWidget {
 class _AutoScaleGridViewState extends State<AutoScaleGridView> {
   late ScrollController _scrollController;
   bool _isFetching = false;
+  bool _hasCheckedInitialLoad = false;
   late Function() _listener;
 
   void _addListener() {
@@ -40,6 +41,26 @@ class _AutoScaleGridViewState extends State<AutoScaleGridView> {
       }
     };
     _scrollController.addListener(_listener);
+  }
+
+  void _checkInitialLoad() {
+    if (_hasCheckedInitialLoad || !_scrollController.hasClients) return;
+    _hasCheckedInitialLoad = true;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!_scrollController.hasClients) return;
+
+      final maxScroll = _scrollController.position.maxScrollExtent;
+      if (maxScroll == 0 && widget.onBottom != null) {
+        Future.microtask(() async {
+          if (!_isFetching) {
+            _isFetching = true;
+            await widget.onBottom?.call();
+            _isFetching = false;
+          }
+        });
+      }
+    });
   }
 
   @override
@@ -71,6 +92,7 @@ class _AutoScaleGridViewState extends State<AutoScaleGridView> {
               builder: (context, controller, physics) {
                 _scrollController = controller;
                 _addListener();
+                _checkInitialLoad();
                 return Padding(
                   padding: widget.padding,
                   child: _buildGrid(crossAxisCount, availableWidth, physics),

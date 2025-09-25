@@ -54,7 +54,7 @@ class _PlaybackDevice extends StatelessWidget {
                     .map(
                       (e) => ComboBoxItem<AudioDevice>(
                         value: e,
-                        child: Text("${e.name} (${e.description})"),
+                        child: Text("${e.description} (${e.name})"),
                       ),
                     )
                     .toList(),
