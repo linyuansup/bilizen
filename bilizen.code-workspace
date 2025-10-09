@@ -1,0 +1,121 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"workbench.colorCustomizations": {
+			"editor.lineHighlightBorder": "#ffffff3d",
+			"activityBar.activeBackground": "#1f6fd0",
+			"activityBar.background": "#1f6fd0",
+			"activityBar.foreground": "#e7e7e7",
+			"activityBar.inactiveForeground": "#e7e7e799",
+			"activityBarBadge.background": "#ee90bb",
+			"activityBarBadge.foreground": "#15202b",
+			"commandCenter.border": "#e7e7e799",
+			"sash.hoverBorder": "#1f6fd0",
+			"statusBar.background": "#1857a4",
+			"statusBar.foreground": "#e7e7e7",
+			"statusBarItem.hoverBackground": "#1f6fd0",
+			"statusBarItem.remoteBackground": "#1857a4",
+			"statusBarItem.remoteForeground": "#e7e7e7",
+			"titleBar.activeBackground": "#1857a4",
+			"titleBar.activeForeground": "#e7e7e7",
+			"titleBar.inactiveBackground": "#1857a499",
+			"titleBar.inactiveForeground": "#e7e7e799"
+		},
+		"cmake.ignoreCMakeListsMissing": true,
+		"files.exclude": {
+			"**/.git": true,
+			"**/.svn": true,
+			"**/.hg": true,
+			"**/.DS_Store": true,
+			"**/Thumbs.db": true,
+			"**/*.freezed.dart": true,
+			"**/*.config.dart": true,
+			"**/*.g.dart": true,
+			"**/.gitignore": true,
+			"**/*.future.dart": true,
+			"**/target": true,
+			".idea": true,
+			".dart_tool": true,
+			"build": true,
+			".flutter-plugins-dependencies": true,
+			".metadata": true,
+			".cookies": true,
+			"pubspec.lock": true,
+			"**/objectbox-model.json": true,
+			"bilizen.iml": true,
+			"custom_lint.log": true,
+		},
+		"cSpell.words": [
+			"Backlink",
+			"bili",
+			"bilibili",
+			"bilizen",
+			"buildlog",
+			"bvid",
+			"cupertino",
+			"Danmaku",
+			"dtolnay",
+			"elems",
+			"fixnum",
+			"flac",
+			"fontsize",
+			"inapp",
+			"KHTML",
+			"kichiku",
+			"Libmpv",
+			"linyuansup",
+			"mlid",
+			"objectbox",
+			"outpath",
+			"prefs",
+			"pubdate",
+			"pubspec",
+			"pwsh",
+			"rcount",
+			"Rpid",
+			"rxdart",
+			"scaletempo",
+			"SMTC",
+			"softprops",
+			"subosito",
+			"swiftpm",
+			"Symbolication",
+			"toastification",
+			"Uids",
+			"Undocked",
+			"unmaximize",
+			"upic",
+			"uploaders"
+		],
+		"peacock.color": "#1857a4"
+	},
+	"launch": {
+		"version": "0.2.0",
+		"configurations": [
+			{
+				"name": "Debug",
+				"type": "dart",
+				"request": "launch",
+				"program": "lib/main.dart"
+			},
+			{
+				"name": "Profile",
+				"type": "dart",
+				"request": "launch",
+				"program": "lib/main.dart",
+				"flutterMode": "profile"
+			},
+			{
+				"name": "Release",
+				"type": "dart",
+				"request": "launch",
+				"program": "lib/main.dart",
+				"flutterMode": "release"
+			},
+		]
+	}
+}

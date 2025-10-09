@@ -1,0 +1,483 @@
+import 'dart:async';
+import 'dart:io';
+
+import 'package:bilizen/data/api/video/online.dart';
+import 'package:bilizen/data/storage/pref/setting/playback.dart';
+import 'package:bilizen/package/playback_manager/playback_controller.dart';
+import 'package:bilizen/package/windows_toast/windows_toast.dart';
+import 'package:smtc_windows/smtc_windows.dart';
+import 'package:bilizen/data/storage/db/playing_list.dart';
+import 'package:bilizen/data/storage/pref/playing_item.dart' as storage;
+import 'package:bilizen/inject/inject.dart';
+import 'package:bilizen/model/play_item.dart';
+import 'package:bilizen/model/video.dart';
+import 'package:bilizen/package/talker_extension/libmpv.dart';
+import 'package:bilizen/package/talker_extension/playback.dart';
+import 'package:bilizen/package/windows_router.dart';
+import 'package:injectable/injectable.dart';
+import 'package:media_kit/media_kit.dart';
+import 'package:rxdart/rxdart.dart';
+import 'package:talker_flutter/talker_flutter.dart';
+
+part 'auto_next_controller.dart';
+part 'playlist_storage_controller.dart';
+part 'video_online_controller.dart';
+part 'smtc_controller.dart';
+
+enum SwitchMode {
+  random,
+  order,
+  repeat,
+}
+
+class AudioDeviceInfo {
+  final List<AudioDevice> devices;
+  final int? currentIndex;
+
+  AudioDeviceInfo({
+    required this.devices,
+    required this.currentIndex,
+  });
+}
+
+class PlayingItem {
+  final PlayItem item;
+  final Duration position;
+  final bool isPlaying;
+  final AudioUrl audioFormat;
+  final VideoUrl videoFormat;
+  final String onlineUser;
+
+  PlayingItem({
+    required this.item,
+    required this.position,
+    required this.isPlaying,
+    required this.audioFormat,
+    required this.videoFormat,
+    required this.onlineUser,
+  });
+}
+
+@singleton
+class PlaybackController
+    with VideoOnlineController, PlaylistStorageController, SmtcController {
+  final BehaviorSubject<List<PlayItem>> playlist =
+      BehaviorSubject<List<PlayItem>>.seeded([]);
+  final BehaviorSubject<PlayingItem?> currentPlaying =
+      BehaviorSubject<PlayingItem?>.seeded(null);
+  final BehaviorSubject<double> volume = BehaviorSubject.seeded(100.0);
+  final BehaviorSubject<SwitchMode> switchMode = BehaviorSubject.seeded(
+    SwitchMode.order,
+  );
+  late final audioDevices = BehaviorSubject.seeded(
+    AudioDeviceInfo(
+      devices: player.state.audioDevices,
+      currentIndex: player.state.audioDevices.indexOf(
+        player.state.audioDevice,
+      ),
+    ),
+  );
+
+  final Player player = Player(
+    configuration: PlayerConfiguration(logLevel: MPVLogLevel.debug),
+  );
+  final Talker _talker;
+
+  PlaybackController({
+    required Talker talker,
+  }) : _talker = talker {
+    initSmtc(this);
+    playlist.stream.listen((playlist) {
+      _savePlaylistToLocal(playlist);
+    });
+    currentPlaying.stream.listen((playing) {
+      if (playing == null) {
+        _saveCurrentPlayState(null);
+        return;
+      }
+      _saveCurrentPlayState(
+        storage.PlayingItem(
+          bvid: playing.item.video.bid,
+          pIndex: playing.item.pIndex,
+          position: playing.position.inSeconds,
+        ),
+      );
+    });
+    CombineLatestStream(
+      [
+        player.stream.audioDevices,
+        player.stream.audioDevice,
+      ],
+      (a) {
+        final devices = a[0] as List<AudioDevice>;
+        final current = a[1] as AudioDevice;
+        return AudioDeviceInfo(
+          devices: devices,
+          currentIndex: devices.indexOf(current),
+        );
+      },
+    ).listen((info) {
+      audioDevices.add(info);
+    });
+    player.stream.volume.listen((v) => volume.add(v));
+    player.stream.log.listen((log) {
+      _talker.libmpv(
+        "Player log: ${log.text} (level: ${log.level}, prefix: ${log.prefix})",
+      );
+    });
+    player.stream.completed.listen((complete) async {
+      if (!complete) {
+        return;
+      }
+      if (!_autoNext) {
+        _talker.playback("In the video page, skip auto-next");
+        return;
+      }
+      await next();
+    });
+    CombineLatestStream(
+      [
+        player.stream.position,
+        player.stream.playing,
+        userCountstream,
+      ],
+      (value) {
+        final current = currentPlaying.value;
+        if (current == null) {
+          return null;
+        }
+        return PlayingItem(
+          item: current.item,
+          position: value[0] as Duration,
+          isPlaying: value[1] as bool,
+          audioFormat: current.audioFormat,
+          videoFormat: current.videoFormat,
+          onlineUser: value[2] as String,
+        );
+      },
+    ).listen((playingItem) {
+      currentPlaying.add(playingItem);
+    });
+    _loadPlaylistFromLocal().then((value) {
+      if (value.isNotEmpty) {
+        insertAllAtLast(value);
+        _loadCurrentPlayState().then((state) {
+          if (state != null) {
+            final target = value.firstWhere(
+              (e) => e.video.bid == state.bvid && e.pIndex == state.pIndex,
+              orElse: () => value.first,
+            );
+            _startNew(
+              target,
+              position: Duration(seconds: state.position),
+              play: getIt<PlaybackSettingStorage>()
+                  .getPlaybackSetting()
+                  .playOnStart,
+            );
+          } else {
+            _startNew(
+              value.first,
+              play: getIt<PlaybackSettingStorage>()
+                  .getPlaybackSetting()
+                  .playOnStart,
+            );
+          }
+        });
+      }
+    });
+  }
+
+  Future<void> setAudioDevice(AudioDevice device) async {
+    await player.setAudioDevice(device);
+  }
+
+  Future<void> next() async {
+    _talker.playback("Next item triggered");
+    final current = currentPlaying.value;
+    if (current == null) {
+      await _startNew(playlist.value.first);
+      return;
+    }
+    final int nextIndex;
+    switch (switchMode.value) {
+      case SwitchMode.random:
+        nextIndex = (playlist.value..shuffle()).indexWhere(
+          (item) => item != current.item,
+        );
+        break;
+      case SwitchMode.order:
+        nextIndex = _indexOfItem(current.item) + 1 > playlist.value.length - 1
+            ? 0
+            : _indexOfItem(current.item) + 1;
+        break;
+      case SwitchMode.repeat:
+        nextIndex = _indexOfItem(current.item);
+        break;
+    }
+    await _startNew(playlist.value[nextIndex]);
+  }
+
+  Future<void> previous() async {
+    final current = currentPlaying.value;
+    if (current == null) {
+      await _startNew(playlist.value.last);
+      return;
+    }
+    final int prevIndex;
+    switch (switchMode.value) {
+      case SwitchMode.random:
+        prevIndex = (playlist.value..shuffle()).indexWhere(
+          (item) => item != current.item,
+        );
+        break;
+      case SwitchMode.order:
+        prevIndex = _indexOfItem(current.item) - 1 < 0
+            ? playlist.value.length - 1
+            : _indexOfItem(current.item) - 1;
+        break;
+      case SwitchMode.repeat:
+        prevIndex = _indexOfItem(current.item);
+        break;
+    }
+    await _startNew(playlist.value[prevIndex]);
+  }
+
+  Future<void> seekTo(int index) async {
+    if (playlist.value.isEmpty) {
+      _talker.playback("Playlist is empty.");
+      return;
+    }
+    if (index < 0 || index >= playlist.value.length) {
+      _talker.playback("Index out of bounds: $index");
+      return;
+    }
+    await _startNew(playlist.value[index]);
+  }
+
+  Future<void> seek(Duration duration) async {
+    final playing = currentPlaying.value;
+    if (playing == null) {
+      _talker.playback("No item is currently playing.");
+      return;
+    }
+    if ((await playing.item.video.playlist)[playing.item.pIndex - 1].duration <
+        duration.inSeconds) {
+      _talker.playback("Seeking beyond video duration.");
+      return;
+    }
+    await player.seek(duration);
+  }
+
+  Future<void> play() async {
+    if (currentPlaying.value == null) {
+      if (playlist.value.isEmpty) {
+        _talker.playback("Playlist is empty, cannot play.");
+        return;
+      }
+      _startNew(playlist.value.first);
+      return;
+    }
+    await player.play();
+  }
+
+  Future<void> pause() async => await player.pause();
+
+  Future<void> setAudioFormat(AudioFormat format) async {
+    final available = await currentPlaying.value?.item.audioUrl;
+    final chosen = _selectByPredicate<AudioUrl>(
+      available,
+      (a) => a.format == format,
+    );
+    if (chosen == null) return;
+    await _startNew(
+      currentPlaying.value!.item,
+      position: currentPlaying.value!.position,
+      audioUrl: chosen,
+      videoUrl: currentPlaying.value!.videoFormat,
+    );
+  }
+
+  Future<void> setVideoFormat(VideoFormat format) async {
+    final available = await currentPlaying.value?.item.videoUrl;
+    final chosen = _selectByPredicate<VideoUrl>(
+      available,
+      (v) => v.format == format,
+    );
+    if (chosen == null) return;
+    await _startNew(
+      currentPlaying.value!.item,
+      position: currentPlaying.value!.position,
+      audioUrl: currentPlaying.value!.audioFormat,
+      videoUrl: chosen,
+    );
+  }
+
+  Future<void> setVolume(double vol) async {
+    await player.setVolume(vol);
+  }
+
+  Future<void> addPlayItem(PlayItem item) async {
+    if (_alreadyInPlaylist(item)) {
+      _startNew(item);
+      return;
+    }
+    if (playlist.value.isEmpty) {
+      playlist.add([item]);
+      await _startNew(item);
+      return;
+    }
+    if (currentPlaying.value == null) {
+      insertPlayItemAtLast(item);
+      await _startNew(item);
+      return;
+    }
+    final index = _indexOfItem(currentPlaying.value!.item);
+    if (index == -1) {
+      _talker.playback(
+        "Item not found in playlist: ${currentPlaying.value!.item.video.bid} at p${currentPlaying.value!.item.pIndex}",
+      );
+      insertPlayItemAtLast(item);
+      await _startNew(item);
+      return;
+    }
+    insertPlayItem(index, item);
+    await _startNew(item);
+  }
+
+  void insertPlayItem(int index, PlayItem item) {
+    if (_alreadyInPlaylist(item)) {
+      _startNew(item);
+      return;
+    }
+    playlist.add([
+      ...playlist.value.sublist(0, index + 1),
+      item,
+      ...playlist.value.sublist(index + 1),
+    ]);
+  }
+
+  void insertPlayItemAtFirst(PlayItem item) =>
+      playlist.add([item, ...playlist.value]);
+
+  void insertPlayItemAtLast(PlayItem item) =>
+      playlist.add([...playlist.value, item]);
+
+  void insertAllAtLast(List<PlayItem> items) {
+    final newItems = items.where((item) => !_alreadyInPlaylist(item)).toList();
+    if (newItems.isEmpty) return;
+    playlist.add([...playlist.value, ...newItems]);
+  }
+
+  Future<void> clear() async {
+    await player.stop();
+    currentPlaying.add(null);
+    playlist.add([]);
+  }
+
+  Future<void> removePlayItem(int index) async {
+    if (currentPlaying.value?.item == playlist.value[index]) {
+      await player.stop();
+      currentPlaying.add(null);
+    }
+    playlist.add([
+      ...playlist.value.sublist(0, index),
+      ...playlist.value.sublist(index + 1),
+    ]);
+  }
+
+  void setSwitchMode(SwitchMode mode) => switchMode.add(mode);
+
+  int _indexOfItem(PlayItem item) =>
+      playlist.value.indexWhere((e) => e == item);
+
+  T? _selectByPredicate<T>(List<T>? list, bool Function(T) predicate) {
+    if (list == null) return null;
+    final idx = list.indexWhere(predicate);
+    if (idx == -1) return null;
+    return list[idx];
+  }
+
+  bool _alreadyInPlaylist(PlayItem item) => playlist.value.any(
+    (e) => e.video.bid == item.video.bid && e.pIndex == item.pIndex,
+  );
+
+  Future<void> _startNew(
+    PlayItem item, {
+    Duration position = Duration.zero,
+    AudioUrl? audioUrl,
+    VideoUrl? videoUrl,
+    bool play = true,
+  }) async {
+    audioUrl ??= (await item.audioUrl).reduce(
+      (a, b) => a.format.id > b.format.id ? a : b,
+    );
+    videoUrl ??= (await item.videoUrl).reduce(
+      (a, b) => a.format.id > b.format.id ? a : b,
+    );
+
+    await player.pause();
+    await player.open(
+      Media(
+        videoUrl.url,
+        httpHeaders: {
+          "accept": "*/*",
+          "referer": "https://www.bilibili.com/video/${item.video.bid}/",
+          "user-agent":
+              "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36 Edg/139.0.0.0",
+          "accept-encoding": "identity",
+          "accept-language":
+              "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6,ja;q=0.5",
+          "cache-control": "no-cache",
+          "dnt": "1",
+          "origin": "https://www.bilibili.com",
+          "pragma": "no-cache",
+          "priority": "u=1, i",
+          "sec-ch-ua":
+              "\"Not;A=Brand\";v=\"99\", \"Microsoft Edge\";v=\"139\", \"Chromium\";v=\"139\"",
+          "sec-ch-ua-mobile": "?0",
+          "sec-ch-ua-platform": "\"Windows\"",
+          "sec-fetch-dest": "empty",
+          "sec-fetch-mode": "cors",
+          "sec-fetch-site": "cross-site",
+        },
+        start: position,
+      ),
+      play: false,
+    );
+    await (player.platform as NativePlayer).setProperty(
+      "audio-files",
+      audioUrl.url,
+    );
+    await _userCountstreamChangeTo(item.video.bid, await item.getCid());
+    currentPlaying.add(
+      PlayingItem(
+        item: item,
+        position: position,
+        isPlaying: true,
+        audioFormat: audioUrl,
+        videoFormat: videoUrl,
+        onlineUser: "0",
+      ),
+    );
+    if (!_hasAudioDevices()) {
+      getIt<WindowsToast>().error(
+        title: "音频引擎启动失败",
+        content: "请检查系统音频服务是否正常运行",
+      );
+      return;
+    }
+    if (play) {
+      await player.play();
+    }
+  }
+
+  bool _hasAudioDevices() => player.state.audioDevices.length > 1;
+
+  Future<void> playOrPause() async {
+    if (player.state.playing) {
+      await pause();
+    } else {
+      await play();
+    }
+  }
+}

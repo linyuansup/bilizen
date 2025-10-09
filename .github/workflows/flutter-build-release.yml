@@ -1,0 +1,74 @@
+name: Flutter Build and Release
+
+on:
+  pull_request:
+    types: [closed]
+    branches: [main]
+
+jobs:
+  build-and-release:
+    if: github.event.pull_request.merged == true
+    runs-on: windows-latest
+    
+    permissions:
+      contents: write
+      
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+          
+      - name: Get dependencies
+        run: flutter pub get
+        
+      - name: Build Release
+        run: flutter build windows --release
+        
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: stable
+          
+      - name: Build Rust project
+        run: |
+          cd update
+          cargo build --release
+        shell: pwsh
+        
+      - name: Get current date
+        id: date
+        run: echo "date=$(Get-Date -Format 'yyyy-MM-dd')" >> $env:GITHUB_OUTPUT
+        shell: pwsh
+        
+      - name: Create archives
+        run: |
+          # Copy Rust executable to build directories
+          Copy-Item "update\target\release\update.exe" "build\windows\x64\runner\Release\update.exe"
+          
+          # Create release archive
+          Compress-Archive -Path "build\windows\x64\runner\Release\*" -DestinationPath "bilizen-windows-release-${{ steps.date.outputs.date }}.zip"
+        shell: pwsh
+        
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.date.outputs.date }}
+          name: "Bilizen Release ${{ steps.date.outputs.date }}"
+          body: |
+            🚀 自动构建发布 - ${{ steps.date.outputs.date }}
+            
+            ## 变更内容
+            本次发布基于PR: #${{ github.event.pull_request.number }}
+            ${{ github.event.pull_request.title }}
+            
+          files: |
+            bilizen-windows-release-${{ steps.date.outputs.date }}.zip
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

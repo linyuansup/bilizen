@@ -1,0 +1,58 @@
+import 'package:bilizen/data/api/video/recommend.dart';
+import 'package:bilizen/inject/inject.dart';
+import 'package:bilizen/model/user.dart';
+import 'package:bilizen/model/video.dart';
+import 'package:injectable/injectable.dart';
+
+@singleton
+class VideoRecommend {
+  final VideoRecommendApi _videoRecommendApi;
+
+  VideoRecommend(this._videoRecommendApi);
+
+  Future<HomepageVideoRecommender> homepage() async {
+    final data = (await _videoRecommendApi.homepage(1))["data"];
+    return HomepageVideoRecommender(
+      current: _get(data),
+      page: 1,
+    );
+  }
+}
+
+class HomepageVideoRecommender {
+  final List<Video> current;
+  final int page;
+
+  HomepageVideoRecommender({
+    required this.current,
+    required this.page,
+  });
+
+  Future<HomepageVideoRecommender> nextPage() async {
+    final data = (await getIt<VideoRecommendApi>().homepage(page + 1))["data"];
+    return HomepageVideoRecommender(
+      current: _get(data),
+      page: page + 1,
+    );
+  }
+}
+
+List<Video> _get(Map<String, dynamic> data) {
+  return (data["item"] as List)
+      .map((e) {
+        final video = Video(bid: e["bvid"]);
+        video.setTotalDuration(e["duration"]);
+        final user = User(id: e["owner"]["mid"]);
+        user.setNickName(e["owner"]["name"]);
+        user.setAvatar(e["owner"]["face"]);
+        video.setUploader(user);
+        video.setCover(e["pic"]);
+        video.setUploadTime(e["pubdate"]);
+        video.setTitle(e["title"]);
+        video.setView(e["stat"]["view"]);
+        video.setDanmaku(e["stat"]["danmaku"]);
+        video.setLike(e["stat"]["like"]);
+        return video;
+      })
+      .toList(growable: false);
+}
