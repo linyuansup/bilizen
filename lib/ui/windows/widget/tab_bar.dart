@@ -65,6 +65,7 @@ class FluentTabBar extends StatelessWidget {
           minWidth: minTabWidth,
         ),
         child: ScrollBarSingleChild(
+          padding: padding,
           child: Column(
             children: items.asMap().entries.map((entry) {
               return Padding(

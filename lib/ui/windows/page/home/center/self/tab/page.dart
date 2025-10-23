@@ -52,11 +52,11 @@ class UserInfoTabPage extends StatelessWidget {
                     label: "收藏",
                     icon: FluentIcons.like,
                   ),
+                  FluentTabBarItem(
+                    label: "历史记录",
+                    icon: FluentIcons.full_history,
+                  ),
                   // TODO
-                  // FluentTabBarItem(
-                  //   label: "历史记录",
-                  //   icon: FluentIcons.full_history,
-                  // ),
                   // FluentTabBarItem(
                   //   label: "稍后再看",
                   //   icon: FluentIcons.red_eye,
