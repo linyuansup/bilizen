@@ -1,4 +1,4 @@
-import 'package:bilizen/data/storage/pref/setting/system.dart';
+import 'package:bilizen/data/storage/setting/system.dart';
 import 'package:bilizen/inject/inject.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

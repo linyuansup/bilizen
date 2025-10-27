@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:bilizen/data/storage/pref/setting/hotkey.dart';
+import 'package:bilizen/data/storage/setting/hotkey.dart';
 import 'package:bilizen/inject/inject.dart';
 import 'package:bilizen/package/playback_manager/playback_controller.dart';
 import 'package:bilizen/ui/windows/widget/hotkey.dart';

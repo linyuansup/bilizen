@@ -24,18 +24,21 @@ class HistoryPage extends ConsumerWidget {
   }
 }
 
-class _HistoryPageData extends StatelessWidget {
+class _HistoryPageData extends ConsumerWidget {
   const _HistoryPageData({required this.data});
 
   final List<HistoryVideoCardData> data;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return AutoScaleGridView(
       itemSize: const Size(300, 266),
       children: data.map((video) {
         return HistoryVideoCard(video: video);
       }).toList(),
+      onBottom: () async {
+        await ref.read(historyProvider.notifier).fetch();
+      },
     );
   }
 }

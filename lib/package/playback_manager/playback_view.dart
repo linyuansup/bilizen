@@ -1,4 +1,4 @@
-import 'package:bilizen/data/storage/pref/setting/common.dart';
+import 'package:bilizen/data/storage/setting/common.dart';
 import 'package:bilizen/inject/inject.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:media_kit/media_kit.dart';

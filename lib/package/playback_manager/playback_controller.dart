@@ -2,27 +2,22 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:bilizen/data/api/video/online.dart';
-import 'package:bilizen/data/storage/pref/setting/playback.dart';
-import 'package:bilizen/package/playback_manager/playback_controller.dart';
-import 'package:bilizen/package/windows_toast/windows_toast.dart';
-import 'package:smtc_windows/smtc_windows.dart';
-import 'package:bilizen/data/storage/db/playing_list.dart';
-import 'package:bilizen/data/storage/pref/playing_item.dart' as storage;
 import 'package:bilizen/inject/inject.dart';
 import 'package:bilizen/model/play_item.dart';
-import 'package:bilizen/model/video.dart';
+import 'package:bilizen/package/playback_manager/playback_controller.dart';
 import 'package:bilizen/package/talker_extension/libmpv.dart';
 import 'package:bilizen/package/talker_extension/playback.dart';
 import 'package:bilizen/package/windows_router.dart';
+import 'package:bilizen/package/windows_toast/windows_toast.dart';
 import 'package:injectable/injectable.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:smtc_windows/smtc_windows.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 
 part 'auto_next_controller.dart';
-part 'playlist_storage_controller.dart';
-part 'video_online_controller.dart';
 part 'smtc_controller.dart';
+part 'video_online_controller.dart';
 
 enum SwitchMode {
   random,
@@ -59,8 +54,7 @@ class PlayingItem {
 }
 
 @singleton
-class PlaybackController
-    with VideoOnlineController, PlaylistStorageController, SmtcController {
+class PlaybackController with VideoOnlineController, SmtcController {
   final BehaviorSubject<List<PlayItem>> playlist =
       BehaviorSubject<List<PlayItem>>.seeded([]);
   final BehaviorSubject<PlayingItem?> currentPlaying =
@@ -87,22 +81,6 @@ class PlaybackController
     required Talker talker,
   }) : _talker = talker {
     initSmtc(this);
-    playlist.stream.listen((playlist) {
-      _savePlaylistToLocal(playlist);
-    });
-    currentPlaying.stream.listen((playing) {
-      if (playing == null) {
-        _saveCurrentPlayState(null);
-        return;
-      }
-      _saveCurrentPlayState(
-        storage.PlayingItem(
-          bvid: playing.item.video.bid,
-          pIndex: playing.item.pIndex,
-          position: playing.position.inSeconds,
-        ),
-      );
-    });
     CombineLatestStream(
       [
         player.stream.audioDevices,
@@ -157,33 +135,6 @@ class PlaybackController
       },
     ).listen((playingItem) {
       currentPlaying.add(playingItem);
-    });
-    _loadPlaylistFromLocal().then((value) {
-      if (value.isNotEmpty) {
-        insertAllAtLast(value);
-        _loadCurrentPlayState().then((state) {
-          if (state != null) {
-            final target = value.firstWhere(
-              (e) => e.video.bid == state.bvid && e.pIndex == state.pIndex,
-              orElse: () => value.first,
-            );
-            _startNew(
-              target,
-              position: Duration(seconds: state.position),
-              play: getIt<PlaybackSettingStorage>()
-                  .getPlaybackSetting()
-                  .playOnStart,
-            );
-          } else {
-            _startNew(
-              value.first,
-              play: getIt<PlaybackSettingStorage>()
-                  .getPlaybackSetting()
-                  .playOnStart,
-            );
-          }
-        });
-      }
     });
   }
 

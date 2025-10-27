@@ -1,4 +1,4 @@
-import 'package:bilizen/data/storage/pref/setting/system.dart';
+import 'package:bilizen/data/storage/setting/system.dart';
 import 'package:bilizen/inject/inject.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';

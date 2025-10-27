@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:bilizen/data/storage/pref/setting/tool.dart';
+import 'package:bilizen/data/storage/setting/tool.dart';
 import 'package:bilizen/package/talker_extension/dio.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
